@@ -29,6 +29,10 @@ export default (initialState = INITIAL_STATE) => {
             return
         }
 
+        if( state.items.includes(text) ) {
+            return
+        }
+
         state.items.push(text)
 
         invokes()
