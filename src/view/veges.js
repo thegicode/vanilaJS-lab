@@ -15,7 +15,7 @@ const getElement = (item) => {
 export default (state) => {
     const { items } = state
     const fragment = new DocumentFragment()
-    const newApp = document.querySelector('[data-component=list]')
+    const newApp = document.querySelector('#market [data-component=list]')
     newApp.innerHTML = ''
     items
         .map( item => getElement(item) )
