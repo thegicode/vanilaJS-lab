@@ -11,19 +11,22 @@
     <div id="root">
 
         <section id="market">
-            <div data-component="list"></div>
+            
+            <div data-component="market-list"></div>
             <button type="button" data-button="add">Add</button>
-            <!-- <button type="button" data-button="edit">Edit</button> -->
+            <button type="button" data-button="edit">Edit(index 2 -> 무)</button>
+            <button type="button" data-button="delete">Delete(index 1)</button>
+
+            <template data-template="market-item">
+                <div class="item">
+                    <span class="__text" data-text="item"></span>
+                </div>
+            </template>
+
         </section>
         
     </div>
 
-    <template data-template="item">
-        <div class="item">
-            <span class="__text" data-text="item"></span>
-        </div>
-    </template>
-    
     <script type="module" src="./src/index.js"></script>
 </body>
 </html>

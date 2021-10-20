@@ -4,11 +4,12 @@ const INITIAL_STATE = {
 }
 
 export default (initialState = INITIAL_STATE) => {
+    
     const state = initialState
 
     const listeners = []
 
-    const addInvokes = fn => {
+    const addInvokes = (fn) => {
         if( listeners.includes(fn) ) {
             return
         }
@@ -16,8 +17,8 @@ export default (initialState = INITIAL_STATE) => {
         listeners.push(fn)
     }
 
-    const invokes = () => {
-        listeners.forEach( fn => fn(state) )
+    const invokes = (param) => {
+        listeners.forEach( fn => fn(state, param) )
     }
 
     const getState = () => {
@@ -38,10 +39,50 @@ export default (initialState = INITIAL_STATE) => {
         invokes()
     }
 
+    const updateItem = (index, text) => {
+        if (index < 0) {
+            return
+        }
+        if (!text) {
+            return
+        }
+
+        if (!state.items[index]) {
+            return
+        }
+
+        state.items[index] = text
+
+        const param = {
+            type: 'update', 
+            index, 
+            text}
+
+        invokes(param)
+
+    }
+
+    const deleteItem = (index) => {
+        if (index < 0) {
+            return
+        }
+
+        if (!state.items[index]) {
+            return
+        }
+
+        state.items.splice(index, 1)
+
+        invokes()
+
+    }
+
     return {
         addInvokes,
         invokes,
         getState,
-        addItem
+        addItem,
+        updateItem,
+        deleteItem
     }
 }
