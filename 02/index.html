@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vaniljs-test 02</title>
+</head>
+<body>
+
+    <div id="root">
+
+        <section id="market">
+            
+            <div data-component="market-list"></div>
+            <button type="button" data-button="add">Add</button>
+            <button type="button" data-button="edit">Edit(index 2 -> 무)</button>
+            <button type="button" data-button="delete">Delete(index 1)</button>
+
+            <template data-template="market-item">
+                <div class="item">
+                    <span class="__text" data-text="item"></span>
+                </div>
+            </template>
+
+        </section>
+        
+    </div>
+
+    <script type="module" src="index.js"></script>
+</body>
+</html>

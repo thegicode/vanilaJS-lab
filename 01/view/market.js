@@ -1,8 +1,8 @@
-import marketModel from '/src/model/market.js'
-import vegesView from '/src/view/veges.js'
+import marketModel from '../model/market.js'
+import vegesView from './veges.js'
 
 export default () => {
-    const cpnt = document.querySelector('#market')
+    const app = document.querySelector('#market')
     const events = marketModel()
 
     events.addInvokes( vegesView )
@@ -11,17 +11,17 @@ export default () => {
     events.invokes()
     
     // 버튼 
-    cpnt
+    app
         .querySelector('[data-button=add]')
         .addEventListener('click', (e) => {
             events.addItem('배추')
         })  
-    cpnt
+    app
         .querySelector('[data-button=edit]')
         .addEventListener('click', (e) => {
             events.updateItem(2, '무')
         }) 
-    cpnt
+    app
         .querySelector('[data-button=delete]')
         .addEventListener('click', (e) => {
             events.deleteItem(1)

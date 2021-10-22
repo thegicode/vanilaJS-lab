@@ -1,3 +1,4 @@
+const app = document.querySelector('#market')
 
 const getElement = (item, index) => {
     const newNode = 
@@ -12,9 +13,9 @@ const getElement = (item, index) => {
     return newNode
 }
 
-const updateElement = (cpnt, param) => {
+const updateElement = (param) => {
     const {index, text} = param
-    cpnt
+    app
         .querySelector(`[data-index="${index}"] [data-text="item"]`)
         .textContent = text
 }
@@ -22,9 +23,9 @@ const updateElement = (cpnt, param) => {
 export default (state, param) => {
     const { items } = state
     const fragment = new DocumentFragment()
-    const cpnt = document.querySelector('#market [data-component=market-list]')
+    const cpnt = app.querySelector('[data-component=market-list]')
     if (param && param.type === 'update') {
-        updateElement(cpnt, param)
+        updateElement(param)
         return
     }
     cpnt.innerHTML = ''
