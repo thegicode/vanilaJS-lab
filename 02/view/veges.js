@@ -23,9 +23,9 @@ const addEvents = (newNode, index, dispatch) => {
         })
 }
 
-const getElement = (vege, index, dispatch) => {
+const getElement = (app, vege, index, dispatch) => {
     const newNode = 
-        document.querySelector('[data-template=market-item]')
+        app.querySelector('[data-template=market-item]')
         .content
         .firstElementChild
         .cloneNode(true)
@@ -38,17 +38,18 @@ const getElement = (vege, index, dispatch) => {
 }
 
 
-
 export default (app, state, dispatch) => {
     const { veges } = state
     const fragment = new DocumentFragment()
-    const cpnt = app.querySelector('[data-component=market-list]')
-    cpnt.innerHTML = ''
     veges
-        .map( (vege, index) => getElement(vege, index, dispatch) )
+        .map( (vege, index) => getElement(app, vege, index, dispatch) )
         .forEach( element => {
             fragment.appendChild( element )
         })
-    cpnt.appendChild(fragment)
-   
+        
+    window.requestAnimationFrame( () => {
+        const cpnt = app.querySelector('[data-component=market-list]')
+        cpnt.innerHTML = ''
+        cpnt.appendChild(fragment)
+    })
 }

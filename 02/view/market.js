@@ -25,12 +25,12 @@ const itemUpdate = (app, index, text) => {
 }
 
 export default () => {
+    const app = document.querySelector('#market')
+    
     const { 
         subscribe,
         dispatch, 
         getState } = eventBus
-
-    const app = document.querySelector('#market')
 
     const vegesRender = (state) => {
         vegesView(app, state, dispatch)
