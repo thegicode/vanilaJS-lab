@@ -1,9 +1,9 @@
 import eventCreators from '../model/eventCreators.js'
 
 const itemUpdate = (app, text) => {
-    app
-        .querySelector('input[type="text"]')
-        .value = text
+    const inputEl = app.querySelector('input[type="text"]')
+    inputEl.value = text
+    inputEl.title = text
 }
 
 const addEvents = (newNode, index, dispatch) => {
@@ -15,6 +15,12 @@ const addEvents = (newNode, index, dispatch) => {
             itemUpdate(newNode, value)
         }
     })
+    newNode
+        .querySelector('[data-button="delete"]')
+        .addEventListener('click', (e) => {
+            const event = eventCreators.deleteItem(index)
+            dispatch(event)
+        })
 }
 
 const getElement = (vege, index, dispatch) => {

@@ -64,6 +64,8 @@ export default (prevState, event) => {
 		return prevState
 	}
 
+    console.log(currentModifier(prevState, event))
+
 	return currentModifier(prevState, event)
-  }
+}
   

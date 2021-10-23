@@ -18,14 +18,6 @@ const addFormEvents = (app, dispatch) => {
         })
 }
 
-const addEvents = (app, dispatch) => {
-    app
-        .querySelector('[data-button=delete]')
-        .addEventListener('click', (e) => {
-            dispatch(eventCreators.deleteItem(1))
-        }) 
-}
-
 const itemUpdate = (app, index, text) => {
     app
         .querySelector(`[data-index="${index}"] [data-text="item"]`)
@@ -49,5 +41,4 @@ export default () => {
 
     addFormEvents(app, dispatch)
 
-    addEvents(app, dispatch)
 }

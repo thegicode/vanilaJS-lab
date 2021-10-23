@@ -13,7 +13,7 @@
         <section id="market" class="marekt">
 
             <style>
-                form {
+                .market-form {
                     margin-bottom: 1rem;
                 }
                 .market-item{
@@ -26,18 +26,17 @@
                 }
             </style>
 
-            <form>
-                <input type="text" name="name" title="야채 추가">
+            <form class="market-form">
+                <input type="text" name="name" title="야채 이름을 입력하세요.">
                 <button type="submit">추가</button>
             </form>
             
             <div data-component="market-list"></div>
 
-            <button type="button" data-button="delete">Delete(index 1)</button>
-
             <template data-template="market-item">
                 <div class="market-item">
-                    <input type="text" name="vegeName" title="야채 이름">
+                    <input type="text" name="vegeName">
+                    <button type="button" data-button="delete">삭제</button>
                 </div>
             </template>
 
