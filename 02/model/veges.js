@@ -25,11 +25,11 @@ const updateItem = (state, event) => {
       return state
     }
   
-    return state.map((item, i) => {
+    return state.map((vege, i) => {
       if (i === index) {
-        item = text
+        vege = text
       }
-      return item
+      return vege
     })
 }
 

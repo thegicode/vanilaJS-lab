@@ -5,7 +5,7 @@ const cloneDeep = x => {
 const freeze = state => Object.freeze(cloneDeep(state))
   
 
-export default(model) => {
+export default (model) => {
     let listeners = []
 
     let state = model()
