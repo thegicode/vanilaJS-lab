@@ -9,9 +9,9 @@ const eventBus = eventBusFactory(modifiers)
 
 const addFormEvents = (app, dispatch) => {
     app.querySelector('form')
-        .addEventListener('submit', (e) => {
+        .addEventListener('submit', function(e) {
             e.preventDefault()
-            const inputEl = e.target.querySelector('input')
+            const inputEl = this.elements.name
             const event = eventCreators.addItem(inputEl.value)
             dispatch(event)
             inputEl.value = ''
@@ -19,18 +19,6 @@ const addFormEvents = (app, dispatch) => {
 }
 
 const addEvents = (app, dispatch) => {
-    app
-        .querySelector('[data-button=add]')
-        .addEventListener('click', (e) => {
-            const event = eventCreators.addItem('배추')
-            dispatch(event)
-        })  
-    app
-        .querySelector('[data-button=edit]')
-        .addEventListener('click', (e) => {
-            dispatch(eventCreators.updateItem(2, '무'))
-            itemUpdate(app, 2, '무')
-        }) 
     app
         .querySelector('[data-button=delete]')
         .addEventListener('click', (e) => {

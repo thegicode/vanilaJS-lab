@@ -10,21 +10,34 @@
 
     <div id="root">
 
-        <section id="market">
+        <section id="market" class="marekt">
+
+            <style>
+                form {
+                    margin-bottom: 1rem;
+                }
+                .market-item{
+                    margin-bottom: 1rem;
+                }
+                .market-item input {
+                    margin: 3px;
+                    border: none;
+                    font-size: 1rem;
+                }
+            </style>
 
             <form>
-                <input type="text" name="vegeName" title="야채 추가">
+                <input type="text" name="name" title="야채 추가">
                 <button type="submit">추가</button>
             </form>
             
             <div data-component="market-list"></div>
-            <button type="button" data-button="add">Add</button>
-            <button type="button" data-button="edit">Edit(index 2 -> 무)</button>
+
             <button type="button" data-button="delete">Delete(index 1)</button>
 
             <template data-template="market-item">
-                <div class="item">
-                    <span class="__text" data-text="item"></span>
+                <div class="market-item">
+                    <input type="text" name="vegeName" title="야채 이름">
                 </div>
             </template>
 
