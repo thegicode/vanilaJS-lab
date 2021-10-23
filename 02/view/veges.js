@@ -1,18 +1,19 @@
 import eventCreators from '../model/eventCreators.js'
 
-const nodeUpdate = (node, text) => {
-    const inputEl = node.querySelector('input[type="text"]')
-    inputEl.value = text
-    inputEl.title = text
-}
+// const nodeUpdate = (app, index, text) => {
+//     const inputEl = app.querySelector(`[data-index="${index}"] input[type="text"]`)
+//     inputEl.value = text
+//     inputEl.title = text
+//     inputEl.blur()
+// }
 
-const addEvents = (newNode, index, dispatch) => {
+const addEvents = (newNode, app, index, dispatch) => {
     newNode.addEventListener('keydown', (e) => {
         if (e.keyCode === 13) {
             const value = e.target.value
             const event = eventCreators.updateItem(index, value)
             dispatch(event)
-            nodeUpdate(newNode, value)
+            // nodeUpdate(app, index, value)
         }
     })
     newNode
@@ -25,14 +26,16 @@ const addEvents = (newNode, index, dispatch) => {
 
 const getElement = (app, vege, index, dispatch) => {
     const newNode = 
-        app.querySelector('[data-template=market-item]')
+        document.querySelector('[data-template=market-item]')
         .content
         .firstElementChild
         .cloneNode(true)
     newNode.dataset.index = index
-    nodeUpdate(newNode, vege)
+    const inputEl = newNode.querySelector('input[type="text"]')
+    inputEl.value = vege
+    inputEl.title = vege
 
-    addEvents(newNode, index, dispatch)
+    addEvents(newNode, app, index, dispatch)
 
     return newNode
 }
@@ -40,16 +43,26 @@ const getElement = (app, vege, index, dispatch) => {
 
 export default (app, state, dispatch) => {
     const { veges } = state
-    const fragment = new DocumentFragment()
+    const newApp = app.cloneNode(true)
+    newApp.innerHTML = ''
     veges
         .map( (vege, index) => getElement(app, vege, index, dispatch) )
         .forEach( element => {
-            fragment.appendChild( element )
+            newApp.appendChild( element )
         })
-        
-    window.requestAnimationFrame( () => {
-        const cpnt = app.querySelector('[data-component=market-list]')
-        cpnt.innerHTML = ''
-        cpnt.appendChild(fragment)
-    })
+    return newApp
 }
+
+// const { veges } = state
+    // const fragment = new DocumentFragment()
+    // veges
+    //     .map( (vege, index) => getElement(app, vege, index, dispatch) )
+    //     .forEach( element => {
+    //         fragment.appendChild( element )
+    //     })
+        
+    // window.requestAnimationFrame( () => {
+    //     const cpnt = app.querySelector('[data-component=market-list]')
+    //     cpnt.innerHTML = ''
+    //     cpnt.appendChild(fragment)
+    // })

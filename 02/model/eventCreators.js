@@ -14,11 +14,11 @@ export default {
         payload: {
             text,
             index
-        },
-        isSubscribe: false
+        }
+        // isSubscribe: false
     }),
     deleteItem: index => ({
         type: 'ITEM_DELETED',
-        payload: index,
+        payload: index
     })
   }

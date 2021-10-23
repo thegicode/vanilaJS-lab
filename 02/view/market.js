@@ -4,6 +4,8 @@ import modelFactory from '../model/model.js'
 
 import vegesView from './veges.js'
 
+import applyDiff from '../applyDiff.js'
+
 const modifiers = modelFactory()
 const eventBus = eventBusFactory(modifiers)
 
@@ -26,15 +28,22 @@ const itemUpdate = (app, index, text) => {
 
 export default () => {
     const app = document.querySelector('#market')
-    
+
     const { 
         subscribe,
         dispatch, 
         getState } = eventBus
 
     const vegesRender = (state) => {
-        vegesView(app, state, dispatch)
+        window.requestAnimationFrame( () => {
+            console.time('diff')
+            const vegesApp = app.querySelector('[data-component=market-list]')
+            const newApp = vegesView(vegesApp, state, dispatch)
+            applyDiff(app, vegesApp, newApp)
+            console.timeEnd('diff')
+        })
     }
+
     subscribe(vegesRender)
     
     vegesRender(getState())
