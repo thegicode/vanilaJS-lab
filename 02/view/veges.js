@@ -1,7 +1,7 @@
 import eventCreators from '../model/eventCreators.js'
 
-const itemUpdate = (app, text) => {
-    const inputEl = app.querySelector('input[type="text"]')
+const nodeUpdate = (node, text) => {
+    const inputEl = node.querySelector('input[type="text"]')
     inputEl.value = text
     inputEl.title = text
 }
@@ -12,7 +12,7 @@ const addEvents = (newNode, index, dispatch) => {
             const value = e.target.value
             const event = eventCreators.updateItem(index, value)
             dispatch(event)
-            itemUpdate(newNode, value)
+            nodeUpdate(newNode, value)
         }
     })
     newNode
@@ -30,7 +30,7 @@ const getElement = (vege, index, dispatch) => {
         .firstElementChild
         .cloneNode(true)
     newNode.dataset.index = index
-    itemUpdate(newNode, vege)
+    nodeUpdate(newNode, vege)
 
     addEvents(newNode, index, dispatch)
 
