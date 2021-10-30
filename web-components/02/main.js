@@ -29,7 +29,6 @@ customElements.define('closed-shadow',
 document
     .querySelector('html')
     .addEventListener('click', e => {
-        console.log(e)
         console.log(e.composed);
         console.log(e.composedPath());
     });
