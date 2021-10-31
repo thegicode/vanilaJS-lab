@@ -2,7 +2,6 @@
 class ExandingList extends HTMLUListElement {
     constructor() {
         // 왜 this를 사용하지 않고 self를 썼을까?
-        // self 변수로 선언하지 않았다. 예약어?
 
         self = super();
 
