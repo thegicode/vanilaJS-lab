@@ -16,3 +16,8 @@
 * [simple-template](10). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/10)
     - assignedSlot, slot
 * [slotchange-event](11). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/11)
+* [slotted-pseudo-element](12). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/12)
+    - ::slotted(*) {}
+
+# memo
+* 마크업과 style 은 스크립트가 아닌 template과 slot을 이용하는 것이 깔끔하다.
