@@ -1,8 +1,6 @@
 
 # Web Components Examples
 
-
-
 * [hello world](01). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/01)
 * [composed and composedPath](02). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/02)
 * [defined-pseudo-class](03). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/03)
@@ -15,3 +13,7 @@
 * [lifecycle-callbacks](08). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/08)
 * [popup-info](09). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/09)
     - style.isConnected
+
+* [simple-template](10). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/10)
+    - assignedSlot, slot
+    
