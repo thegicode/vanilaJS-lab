@@ -22,3 +22,7 @@
 # memo
 
 - 마크업과 style 은 스크립트가 아닌 template과 slot을 이용하는 것이 깔끔하다.
+
+
+# Todo
+- https://html.spec.whatwg.org/multipage/custom-elements.html#custom-elements
