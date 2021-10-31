@@ -9,5 +9,7 @@
 * [editable-list](04). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/04)
 * [edit-word](05). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/05)
 * [element-details](06). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/06)
-    - details, summary
+    - details, summary, slot
+* [expanding-list](07). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/07)
+    - is="expanding-list", HTMLUListElement,  {extends: 'ul'})
 
