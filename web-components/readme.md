@@ -13,5 +13,5 @@
 * [expanding-list](07). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/07)
     - is="expanding-list", HTMLUListElement,  {extends: 'ul'})
 * [lifecycle-callbacks](08). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/08)
-
-
+* [popup-info](09). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/09)
+    - style.isConnected
