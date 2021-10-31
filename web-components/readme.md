@@ -13,7 +13,6 @@
 * [lifecycle-callbacks](08). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/08)
 * [popup-info](09). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/09)
     - style.isConnected
-
 * [simple-template](10). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/10)
     - assignedSlot, slot
-    
+* [slotchange-event](11). [See live](https://thegicode.github.io/vanilaJS-lab/web-components/11)
