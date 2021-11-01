@@ -3,6 +3,29 @@
 <head>
     <meta charset="utf-8">
     <title>4.13.1.5 Drawbacks of autonomous custom elements</title>
+    <style>
+        body { 
+            margin: 1.5rem;
+        }
+
+        /*  button 처럼 보이는 css를 추가해야 한다. */
+        taco-button {
+            padding: 5px 10px;
+            border-radius: 5px;;
+            border: 1px solid rgba(122, 122, 255, 0.3);
+            background-color: rgba(122, 122, 255, 0.2);
+            cursor: pointer;
+        }
+        taco-button:hover {
+            border: 1px solid rgba(122, 122, 255, 0.4);
+            background-color: rgba(122, 122, 255, 0.3);
+        }
+        taco-button:active {
+            border: 1px solid rgba(122, 122, 255, 0.5);
+            background-color: rgba(122, 122, 255, 0.4);
+        }
+        
+    </style>
 </head>
 <body>
     
@@ -14,6 +37,27 @@
 
     <button id="testButton">change disabled</button>
     <button id="testButton2">change text content</button>
+
+    <br><br>
+
+    <hr>
+
+    <ul>
+        <li>Add tabindex</li>
+        <li>Add ARIA role and various ARIA states and properties </li>
+        <li>Add evnent handler</li>
+        <li>Add disabled</li>
+    </ul>
+
+    <hr>
+
+    <p> 
+        "customized built-in element" -> <br>
+        automatically inherit the semantics and behavior of the button element
+    </p>
+    <p>Custom element를 생성하기 보다  customize built-in element 를 추천</p>
+    <hr>
+
 
     <script src="main.js"></script>
 

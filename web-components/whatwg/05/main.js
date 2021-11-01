@@ -1,3 +1,5 @@
+
+
 class TacoButton extends HTMLElement {
     static observedAttributes = ['disabled']
 
@@ -16,6 +18,7 @@ class TacoButton extends HTMLElement {
         })
 
         this.addEventListener('click', e => {
+            console.log('event')
             if (this.disabled) {
                 e.preventDefault()
                 e.stopImmediatePropagation()
@@ -76,5 +79,8 @@ document.querySelector('#testButton')
 let count = 0
 document.querySelector('#testButton2')
     .addEventListener('click', () => {
-        tacoButton.textContent = `${tacoButton.textContent}/${count++}`
+        tacoButton.textContent = `${tacoButton.textContent} ${count++}`
     })
+
+
+
