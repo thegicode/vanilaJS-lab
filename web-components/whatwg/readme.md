@@ -12,6 +12,9 @@
 [04 Creating a customized built-in element](04).
 [See live](https://thegicode.github.io/vanilaJS-lab/web-components/whatwg/04)
 
+[05 Drawbacks of autonomous custom elements](05).
+[See live](https://thegicode.github.io/vanilaJS-lab/web-components/whatwg/05)
+
 # rel
 
 [whatwg] (https://html.spec.whatwg.org/multipage/custom-elements.html)
