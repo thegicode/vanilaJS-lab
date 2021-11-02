@@ -18,6 +18,9 @@
 [06 Upgrading elements after their creation](06).
 [See live](https://thegicode.github.io/vanilaJS-lab/web-components/whatwg/06)
 
+[07 Requirements for custom element constructors and reactions](07).
+[See live](https://thegicode.github.io/vanilaJS-lab/web-components/whatwg/07)
+
 # rel
 
 [whatwg] (https://html.spec.whatwg.org/multipage/custom-elements.html)
