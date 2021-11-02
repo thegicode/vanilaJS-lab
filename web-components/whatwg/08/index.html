@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4.13.3 Core concepts</title>
+    <style>
+        body {
+            margin: 2rem;
+        }
+        dl{
+            line-height: 1.5;
+        }
+
+        code {
+            font-size: 1rem;
+            color: rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <h3>Core concepts</h3>
+
+    <h4> A custom element definition describes a custom element and consists of:</h4>
+   
+    <dl>
+        <dt>A name</dt>
+        <dd>Avalid custom element name</dd>
+
+        <dt>A local name</dt>
+        <dd>A local name</dd>
+
+        <dt>A constructor</dt>
+        <dd>A Web IDL <code>CustomElementConstructor</code> callback function type value wrapping
+        the custom element constructor</dd>
+
+        <dt>A list of observed
+        attributes</dt>
+        <dd>A <code>sequence&lt;DOMString&gt;</code></dd>
+
+        <dt>A collection of <dfn>lifecycle callbacks</dfn></dt>
+        <dd>A map, whose keys are the strings "<code>connectedCallback</code>",
+        "<code>disconnectedCallback</code>", "<code>adoptedCallback</code>",
+        "<code>attributeChangedCallback</code>",
+        "<code>formAssociatedCallback</code>",
+        "<code>formDisabledCallback</code>",
+        "<code>formResetCallback</code>", and "<code>formStateRestoreCallback</code>".
+        The corresponding values are either a Web IDL <code>Function</code>
+        callback function type value, or null. By default the value of each entry is null.</dd>
+
+        <dt>A <dfn>construction
+        stack</dfn></dt>
+        <dd>A list, initially empty, that is manipulated by the upgrade an element algorithm and the HTML element constructors. Each entry in the list will be
+        either an element or an <dfn><i>already
+        constructed</i> marker</dfn>.</dd>
+
+        <dt>A <dfn>form-associated</dfn>
+        boolean</dt>
+        <dd>If this is true, user agent treats elements associated to this
+       custom element definition as form-associated custom elements.</dd>
+
+        <dt>A <dfn>disable
+        internals</dfn> boolean</dt>
+        <dd>Controls <code>attachInternals()</code>.
+     
+        </dd>
+
+        <dt>A <dfn>disable shadow</dfn> boolean</dt>
+        <dd>Controls <code>attachShadow()</code>.
+       </dd>
+    </dl>
+</body>
+</html>

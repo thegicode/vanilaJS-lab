@@ -21,6 +21,9 @@
 [07 Requirements for custom element constructors and reactions](07).
 [See live](https://thegicode.github.io/vanilaJS-lab/web-components/whatwg/07)
 
+[08 Core concepts](08).
+[See live](https://thegicode.github.io/vanilaJS-lab/web-components/whatwg/08)
+
 # rel
 
-[whatwg] (https://html.spec.whatwg.org/multipage/custom-elements.html)
+[whatwg / custom-elements](https://html.spec.whatwg.org/multipage/custom-elements.html)
