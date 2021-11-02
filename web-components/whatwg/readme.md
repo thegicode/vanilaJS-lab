@@ -15,6 +15,9 @@
 [05 Drawbacks of autonomous custom elements](05).
 [See live](https://thegicode.github.io/vanilaJS-lab/web-components/whatwg/05)
 
+[06 Upgrading elements after their creation](06).
+[See live](https://thegicode.github.io/vanilaJS-lab/web-components/whatwg/06)
+
 # rel
 
 [whatwg] (https://html.spec.whatwg.org/multipage/custom-elements.html)
