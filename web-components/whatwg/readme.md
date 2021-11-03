@@ -24,6 +24,9 @@
 [08 Core concepts](08).
 [See live](https://thegicode.github.io/vanilaJS-lab/web-components/whatwg/08)
 
+[09 The CustomElementRegistry interface](09).
+[See live](https://thegicode.github.io/vanilaJS-lab/web-components/whatwg/09)
+
 # rel
 
 [whatwg / custom-elements](https://html.spec.whatwg.org/multipage/custom-elements.html)
