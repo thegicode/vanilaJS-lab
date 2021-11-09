@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>그래프</title>
+    <link rel="stylesheet" type="text/css" href="src/css/main.css">
+</head>
+<body>
+    <div class="root">
+
+        <section class="orderAmount">
+            <header class="orderAmount-header">
+                <h3 class="__title">그래프</h3>
+                <nav class="orderAmount-nav">
+                    <button class="__button" data-index="0" aria-pressed="true">TAB1</button>
+                    <button class="__button" data-index="1" aria-pressed="false">TAB2</button>
+                </nav>
+            </header>
+
+            <div data-panel="0" class="orderAmount-amount" aria-hidden="false">
+                <div class="chart">
+                    <div class="chart-graphs">
+                        <div class="lines" role="presentation">
+                            <span class="__line"></span>
+                            <span class="__line"></span>
+                            <span class="__line"></span>
+                            <span class="__line"></span>
+                        </div>
+                        <div class="graphs" role="presentation"></div>
+                    </div>
+                    <div class="chart-dates">
+                        <p class="__date" style="left: 115px">9.7</p>
+                        <p class="__date" data-date="today">오늘</p>
+                    </div>
+                    <div class="chart-info" aria-hidden="true" data-direction="">
+                        <p class="__fullDay">2021.9.26</p>
+                        <dl>
+                            <dt>주문</dt>
+                            <dd>19,500원</dd>
+                        </dl>
+                        <dl>
+                            <dt>수량</dt>
+                            <dd>10</dd>
+                        </dl>
+                        <span class="__arrow"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div data-panel="1" class="orderAmount-unit" aria-hidden="true">
+                <div class="chart">
+                    <div class="chart-graphs">
+                        <div class="lines" role="presentation">
+                            <span class="__line"></span>
+                            <span class="__line"></span>
+                            <span class="__line"></span>
+                            <span class="__line"></span>
+                        </div>
+                        <div class="graphs" role="presentation">
+                            <svg mlns="http://www.w3.org/2000/svg">
+                                <g>
+                                    <polyline
+                                        fill="none" 
+                                        points="" 
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                    </polyline>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="circles" role="presentation"></div>
+                    </div>
+                    <div class="chart-dates">
+                        <p class="__date" style="left: 115px">9.7</p>
+                        <p class="__date" data-date="today">오늘</p>
+                    </div>
+                    <div class="chart-info" aria-hidden="true" data-direction="">
+                        <p class="__fullDay">2021.9.26</p>
+                        <dl>
+                            <dt>단가</dt>
+                            <dd>17,660원</dd>
+                        </dl>
+                        <span class="__arrow"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <template data-template="amount-cell">
+        <div class="cell">
+            <span class="__bar"></span>
+        </div>
+    </template>
+
+    <template data-template="circle">
+        <span class="__icon"></span>
+    </template>
+
+    <script type="module" src="src/index.js"></script>
+</body>
+</html>
