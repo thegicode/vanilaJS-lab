@@ -143,6 +143,11 @@ body {
                 }
             }
 
+            .infos {
+                visibility: hidden;
+                position: absolute;
+            }
+
             &[data-prev=true] {
                 .__bar {
                     background-color: #bec8cf;

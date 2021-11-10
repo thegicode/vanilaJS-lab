@@ -1,4 +1,38 @@
 
+const _getData = () => {
+    const data = []
+    for (let index = 0 ; index < 30 ; index++) {
+        let date = new Date() 
+        date.setDate(
+            date.getDate() 
+            - 29 // 29일전
+            + index // index 일 후
+        ) 
+
+        let isPrevMoth = false
+        if (date.getMonth() === new Date().getMonth() - 1 ) {
+            isPrevMoth = true
+        }
+        
+        date = date.toLocaleDateString().slice(0, -1) // last . 삭제
+
+        let price = Math.round(Math.random() * 50000)
+        const percent = (price/50000 * 100).toFixed(1)
+        price = new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(price)
+
+        const quantity = Math.round(Math.random() * 100)
+
+        data.push({
+            date,
+            isPrevMoth,
+            price,
+            percent : Number(percent),
+            quantity
+        })
+    }
+    return data
+}
+
 const amount = () => {
 
     const template = document.querySelector('[data-template="amount-cell"')
@@ -15,15 +49,16 @@ const amount = () => {
         const barEl = e.target,
             cellEl = barEl.parentElement
     
-        const cellElLeftPercent = Math.round(cellEl.offsetLeft / chartEl.offsetWidth * 100)
-    
+        infoEl.querySelector('.infos')
+            .replaceWith(cellEl.querySelector('.infos').cloneNode(true))
+        
         infoEl.ariaHidden = false
-    
+        const cellElLeftRate = cellEl.offsetLeft / chartEl.offsetWidth
         let direction = 'center'
-        if (cellElLeftPercent < 25) {
+        if (cellElLeftRate < 0.25) {
             direction = 'left'
         }
-        if (cellElLeftPercent > 75) {
+        if (cellElLeftRate > 0.75) {
             direction = 'right'
         }
         infoEl.dataset.direction = direction
@@ -46,21 +81,33 @@ const amount = () => {
     }
 
     const setGraphs = () => {
-        for (let index = 0 ; index < 30 ; index++) {
+        const DATAS = _getData()
+        DATAS.forEach( data => {
+            const { date, isPrevMoth, price, percent, quantity } = data
             const el = template
                 .content
                 .firstElementChild
                 .cloneNode(true)
             const barEl = el.querySelector('.__bar')
-            const percent = Math.round(Math.random() * 100)
-            if ( index < 5 ) {
+            barEl.style.height = `${percent}%`
+
+            if ( isPrevMoth ) {
                 el.dataset.prev = true
             }
-            barEl.style.height = `${percent}%`
+
+            const dateEl = el.querySelector('[data-info="date"]')
+            const priceEl = el.querySelector('[data-info="price"]')
+            const quantityEl = el.querySelector('[data-info="quantity"]')
+
+            dateEl.textContent = date
+            priceEl.textContent = `${price}원`
+            quantityEl.textContent = quantity
+
             barEl.addEventListener('mouseover', onMouseOver)
             barEl.addEventListener('mouseout', onMouseOut)
+
             graphsEl.appendChild(el)
-        }
+        })
     }
     setGraphs()
 }

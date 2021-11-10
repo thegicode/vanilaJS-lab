@@ -125,6 +125,10 @@ body {
 .chart-graphs .cell .__bar:hover {
   background-color: #2460c7;
 }
+.chart-graphs .cell .infos {
+  visibility: hidden;
+  position: absolute;
+}
 .chart-graphs .cell[data-prev=true] .__bar {
   background-color: #bec8cf;
 }

@@ -28,22 +28,14 @@
                             <span class="__line"></span>
                             <span class="__line"></span>
                         </div>
-                        <div class="graphs" role="presentation"></div>
+                        <div class="graphs"></div>
                     </div>
                     <div class="chart-dates">
                         <p class="__date" style="left: 115px">9.7</p>
                         <p class="__date" data-date="today">오늘</p>
                     </div>
-                    <div class="chart-info" aria-hidden="true" data-direction="">
-                        <p class="__fullDay">2021.9.26</p>
-                        <dl>
-                            <dt>주문</dt>
-                            <dd>19,500원</dd>
-                        </dl>
-                        <dl>
-                            <dt>수량</dt>
-                            <dd>10</dd>
-                        </dl>
+                    <div class="chart-info" role="presentation" aria-hidden="true" data-direction="">
+                        <div class="infos"></div>
                         <span class="__arrow"></span>
                     </div>
                 </div>
@@ -92,6 +84,17 @@
     <template data-template="amount-cell">
         <div class="cell">
             <span class="__bar"></span>
+            <div class="infos">
+                <p class="__fullDay" data-info="date" aria-label="날짜"></p>
+                <dl>
+                    <dt>주문</dt>
+                    <dd data-info="price"></dd>
+                </dl>
+                <dl>
+                    <dt>수량</dt>
+                    <dd data-info="quantity"></dd>
+                </dl>
+            </div>
         </div>
     </template>
 
