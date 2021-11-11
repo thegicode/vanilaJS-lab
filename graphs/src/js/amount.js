@@ -18,7 +18,7 @@ const _getData = () => {
 
         let price = Math.round(Math.random() * 50000)
         const percent = (price/50000 * 100).toFixed(1)
-        price = new Intl.NumberFormat('en-IN', { maximumSignificantDigits: 3 }).format(price)
+        price = price.toLocaleString()
 
         const quantity = Math.round(Math.random() * 100)
 
