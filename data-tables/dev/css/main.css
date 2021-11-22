@@ -43,9 +43,6 @@ body {
   color: rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
-.tables td:nth-child(2) {
-  padding: 0;
-}
 .tables td:last-child {
   text-align: right;
 }
@@ -56,6 +53,9 @@ body {
   padding: 10px;
   border: none;
   background-color: transparent;
+}
+.tables tbody td:nth-child(2) {
+  padding: 0;
 }
 
 /*# sourceMappingURL=main.css.map */

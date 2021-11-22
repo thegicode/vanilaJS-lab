@@ -53,10 +53,7 @@ body {
             // }
         }
     }
-    
-    td:nth-child(2) {
-        padding: 0;
-    }
+   
     td:last-child {
         text-align: right;
     }
@@ -68,9 +65,10 @@ body {
         border: none;
         background-color: transparent;
     }
-    // .amount {
 
-    // }
-    // .price {
-    // }
+    tbody {
+        td:nth-child(2) {
+            padding: 0;
+        }
+    }
 }
