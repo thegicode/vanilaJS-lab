@@ -8,7 +8,54 @@ body {
 }
 
 .root {
+  margin: 1rem;
+}
+
+.tables {
+  width: 100%;
+  table-layout: fixed;
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+.tables thead tr {
+  background-color: rgba(10, 100, 200, 0.05);
+}
+.tables tbody tr:hover,
+.tables tfoot tr:hover {
+  background-color: rgba(10, 200, 100, 0.02);
+}
+.tables th, .tables td {
+  box-sizing: border-box;
+  height: 40px;
+  padding: 10px;
+  border: solid 1px rgba(0, 0, 0, 0.1);
+  color: rgba(0, 0, 0, 0.7);
+}
+.tables td:first-child {
+  padding: 0;
+}
+.tables td:first-child button {
+  width: 100%;
   height: 100%;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
+  font-size: 1.5rem;
+  color: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.tables td:nth-child(2) {
+  padding: 0;
+}
+.tables td:last-child {
+  text-align: right;
+}
+.tables input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  border: none;
+  background-color: transparent;
 }
 
 /*# sourceMappingURL=main.css.map */

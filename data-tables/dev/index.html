@@ -7,6 +7,66 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
 </head>
 <body>
+
+    <div class="root">
+
+        <h1>Data Tables</h1>
+
+        <table class="tables" id="tables">
+            <colgroup>
+                <col width="10%">
+                <col>
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Amount</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- <tr>
+                    <td>
+                        <button type="button">=</button>
+                    </td>
+                    <td>
+                        <input type="number" name="amount" min="0" max="10000">
+                    </td>
+                    <td>5,000</td>
+                </tr>
+                <tr>
+                    <td>
+                        <button type="button">=</button>
+                    </td>
+                    <td>
+                        <input type="number" name="amount" min="0" max="10000">
+                    </td>
+                    <td>10,000</td>
+                </tr> -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>합계</th>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+    <template>
+        <tr>
+            <td>
+                <button type="button">=</button>
+            </td>
+            <td>
+                <input type="number" name="amount" min="0" max="10000">
+            </td>
+            <td class="price"></td>
+        </tr>
+    </template>
+
     <script type="module" src="js/index.js"></script>
 </body>
 </html>
