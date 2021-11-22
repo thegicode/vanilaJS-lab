@@ -1,0 +1,17 @@
+{
+  "name": "data-tables",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server",
+    "css": "sass --watch src/scss:src/css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "express": "^4.17.1",
+    "sass": "^1.43.4"
+  }
+}
