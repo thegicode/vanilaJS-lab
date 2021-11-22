@@ -1,6 +1,7 @@
-import { update } from './model.js'
+import { DATA, update } from './model.js'
 
-const List = DATA => {
+const List = () => {
+
 
     const cpnt = document.querySelector('#tables')
     const template = document.querySelector('template')
@@ -15,16 +16,17 @@ const List = DATA => {
             sum._amount += data.amount
             sum._price += data.price
         })
-        el.querySelector('.amount').textContent = sum._amount
-        el.querySelector('.price').textContent = sum._price
-
+        el.querySelector('.amount').textContent = sum._amount.toLocaleString()
+        el.querySelector('.price').textContent = sum._price.toLocaleString()
     }
 
     const addEvents = (inputEl, priceEl, index) => {
         inputEl.addEventListener('change', e => {
-            update(index, e.target.value)
-            priceEl.textContent = DATA[index].price
-            addUp()
+            if ( e.target.checkValidity() === true ) {
+                update(index, e.target.value)
+                priceEl.textContent = DATA[index].price.toLocaleString()
+                addUp()
+            } 
         })
     }
 
@@ -36,8 +38,8 @@ const List = DATA => {
             const inputEl = node.querySelector('input')
             const priceEl = node.querySelector('.price')
 
-            inputEl.value = amount
-            priceEl.textContent = price
+            inputEl.value = amount.toLocaleString()
+            priceEl.textContent = price.toLocaleString()
 
             addEvents(inputEl, priceEl, index)
 

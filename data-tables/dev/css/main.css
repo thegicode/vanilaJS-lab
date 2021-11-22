@@ -31,10 +31,13 @@ body {
   border: solid 1px rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.7);
 }
-.tables td:first-child {
+.tables tbody td:nth-child(2) {
   padding: 0;
 }
-.tables td:first-child button {
+.tables .dragger {
+  padding: 0;
+}
+.tables .dragger button {
   width: 100%;
   height: 100%;
   border: none;
@@ -43,10 +46,10 @@ body {
   color: rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
-.tables td:last-child {
-  text-align: right;
+.tables .amount {
+  position: relative;
 }
-.tables input {
+.tables .amount input {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
@@ -54,8 +57,12 @@ body {
   border: none;
   background-color: transparent;
 }
-.tables tbody td:nth-child(2) {
-  padding: 0;
+.tables .amount input:invalid {
+  outline-color: rgba(255, 0, 0, 0.5);
+  background-color: rgba(255, 0, 0, 0.1);
+}
+.tables .price {
+  text-align: right;
 }
 
 /*# sourceMappingURL=main.css.map */
