@@ -8,7 +8,7 @@ const Sum = (DATA, app) => {
     }
     DATA.forEach( data => {
         sum._amount += data.amount
-        sum._price += data.price
+        sum._price += data.amount * data.price
     })
     el.querySelector('.amount').textContent = sum._amount.toLocaleString()
     el.querySelector('.price').textContent = sum._price.toLocaleString()

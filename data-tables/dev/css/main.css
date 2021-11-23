@@ -7,6 +7,10 @@ body {
   margin: 0;
 }
 
+*[aria-hidden=true] {
+  display: none;
+}
+
 .root {
   margin: 1rem;
 }
@@ -31,8 +35,23 @@ body {
   border: solid 1px rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.7);
 }
-.table tbody td:nth-child(2) {
+.table tbody .amount,
+.table tbody .price {
   padding: 0;
+}
+.table input[type=number] {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 10px 10px 10px 1rem;
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+.table input[type=number]:invalid {
+  outline-color: rgba(255, 0, 0, 0.5);
+  background-color: rgba(255, 0, 0, 0.1);
 }
 .table .dragger {
   padding: 0;
@@ -45,26 +64,6 @@ body {
   font-size: 1.5rem;
   color: rgba(0, 0, 0, 0.3);
   cursor: pointer;
-}
-.table .amount {
-  position: relative;
-}
-.table .amount input {
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  padding: 10px 10px 10px 1rem;
-  border: none;
-  background-color: transparent;
-  font-size: 1rem;
-  color: rgba(0, 0, 0, 0.7);
-}
-.table .amount input:invalid {
-  outline-color: rgba(255, 0, 0, 0.5);
-  background-color: rgba(255, 0, 0, 0.1);
-}
-.table .price {
-  text-align: right;
 }
 .table .actions {
   text-align: center;

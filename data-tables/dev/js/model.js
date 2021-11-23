@@ -14,25 +14,21 @@ const DATA = [
     }
 ]
 
-const addItem = (value) => {
-    const v = Number(value)
+const addItem = (amount, price) => {
     DATA.push({
-        amount: v,
-        price: v * 1000
+        amount: Number(amount),
+        price: Number(price)
     })
 }
 
-const updateItem = (index, value) => {
-    const v = Number(value)
-    DATA[index] = {
-        amount: v,
-        price: v * 1000
-    }
+const updateItem = (index, key, value) => {
+    DATA[index][key] = Number(value)
 }
 
 const deleteItem = (index) => {
     DATA.splice(index, 1)
 }
+
 
 export {
     DATA,
