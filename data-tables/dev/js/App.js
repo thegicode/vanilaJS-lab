@@ -4,7 +4,7 @@ const _clonedNode = (node) => {
     return node.content.firstElementChild.cloneNode(true)
 }
 
-const List = () => {
+const App = () => {
 
     const app = document.querySelector('#table')
     const tbodyEl = app.querySelector('tbody')
@@ -68,28 +68,31 @@ const List = () => {
         renderSum()
     }
 
-    document.querySelector('button[name="add"]')
-        .addEventListener('click', () => {
+    const addEvents = () => {
+        document.querySelector('button[name="add"]')
+            .addEventListener('click', () => {
 
-            const node = _clonedNode(templateEl)
-            const inputEl = node.querySelector('input')
-            const priceEl = node.querySelector('.price')
+                const node = _clonedNode(templateEl)
+                const inputEl = node.querySelector('input')
+                const priceEl = node.querySelector('.price')
 
-            inputEl.addEventListener('change', e => {
-                if ( e.target.checkValidity() === true ) {
-                    addItem(e.target.value)
-                    const index = DATA.length - 1
-                    priceEl.textContent = DATA[index].price.toLocaleString()
-                    addItemEvents(node, index)
-                } 
+                inputEl.addEventListener('change', e => {
+                    if ( e.target.checkValidity() === true ) {
+                        addItem(e.target.value)
+                        const index = DATA.length - 1
+                        priceEl.textContent = DATA[index].price.toLocaleString()
+                        addItemEvents(node, index)
+                    } 
+                })
+
+                tbodyEl.appendChild(node)
+                inputEl.focus()
             })
-
-            tbodyEl.appendChild(node)
-            inputEl.focus()
-        })
+    }
 
     renderTable()
+    addEvents()
 
 }
 
-export default List
+export default App

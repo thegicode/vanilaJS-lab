@@ -1,6 +1,4 @@
-// import { DATA } from './model.js'
-import List from './List.js'
 
+import App from './App.js'
 
-List()
-// addEvents()
+App()
