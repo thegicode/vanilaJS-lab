@@ -11,7 +11,7 @@ const App = () => {
     const tbodyEl = app.querySelector('tbody')
     const templateEl = document.querySelector('template')
 
-    let activeNode, oldNode;
+    let activeTrNode;
 
     const renderSum = () => {
         Sum(DATA, app)
@@ -35,11 +35,11 @@ const App = () => {
 
         inputEls.forEach( inputEl => {
             inputEl.addEventListener('focus', () => {
-                if (activeNode && activeNode !== node ) {
-                    activeNode.dataset.focus = false
+                if (activeTrNode && activeTrNode !== node ) {
+                    activeTrNode.dataset.focus = false
                 }
                 node.dataset.focus = true
-                activeNode = node
+                activeTrNode = node
             })
         })
 
@@ -117,21 +117,30 @@ const App = () => {
 
     const addEvents = () => {
 
-        // app.querySelector('form')
-        //     .addEventListener('submit', e => {
-        //         e.preventDefault()
-        //     })
+        const addButton = app.querySelector('button[name="add"]')
 
-        app.querySelector('button[name="add"]')
-            .addEventListener('click', (e) => {
+        addButton.addEventListener('click', (e) => {
+            const node = _clonedNode(templateEl)
+            tbodyEl.appendChild(node)
 
-                const node = _clonedNode(templateEl)
-                tbodyEl.appendChild(node)
+            addItemEvents(node, null)
+            node.querySelector('input').focus()
+        
+        })
+        
+        addButton.addEventListener('focus', () => {
+            if (activeTrNode) {
+                activeTrNode.dataset.focus = false
+                activeTrNode = null
+            }
+        })
 
-                addItemEvents(node, null)
-                node.querySelector('input').focus()
-            
-            })
+        app.addEventListener('click', () => {
+            if (activeTrNode && document.activeElement.tagName !== 'INPUT') {
+                activeTrNode.dataset.focus = false
+                activeTrNode = null
+            }
+        })
     }
 
     renderTable()
