@@ -53,6 +53,20 @@ body {
   outline-color: rgba(255, 0, 0, 0.5);
   background-color: rgba(255, 0, 0, 0.1);
 }
+.table tr button[name=delete] {
+  display: inline-block;
+}
+.table tr button[name=confirm],
+.table tr button[name=cancel] {
+  display: none;
+}
+.table tr[data-focus=true] button[name=delete] {
+  display: none;
+}
+.table tr[data-focus=true] button[name=confirm],
+.table tr[data-focus=true] button[name=cancel] {
+  display: inline-block;
+}
 .table .dragger {
   padding: 0;
 }

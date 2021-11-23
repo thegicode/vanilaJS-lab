@@ -11,6 +11,8 @@ const App = () => {
     const tbodyEl = app.querySelector('tbody')
     const templateEl = document.querySelector('template')
 
+    let activeNode, oldNode;
+
     const renderSum = () => {
         Sum(DATA, app)
     }
@@ -33,9 +35,11 @@ const App = () => {
 
         inputEls.forEach( inputEl => {
             inputEl.addEventListener('focus', () => {
-                deleteButton.ariaHidden = true
-                confirmButton.ariaHidden = false
-                cancelButton.ariaHidden = false
+                if (activeNode && activeNode !== node ) {
+                    activeNode.dataset.focus = false
+                }
+                node.dataset.focus = true
+                activeNode = node
             })
         })
 
@@ -64,9 +68,7 @@ const App = () => {
                     break
             }
             renderSum()
-            deleteButton.ariaHidden = false
-            confirmButton.ariaHidden = true
-            cancelButton.ariaHidden = true
+            node.dataset.focus = false
         })
 
         cancelButton.addEventListener('click', () => {
@@ -81,9 +83,7 @@ const App = () => {
                 default :
                     break
             }
-            deleteButton.ariaHidden = false
-            confirmButton.ariaHidden = true
-            cancelButton.ariaHidden = true
+            node.dataset.focus = false
         })
 
         deleteButton.addEventListener('click', () => {

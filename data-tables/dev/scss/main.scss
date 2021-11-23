@@ -61,6 +61,28 @@ body {
         }
     }
 
+    tr {
+        button[name="delete"] {
+            display: inline-block;
+        }
+        button[name="confirm"],
+        button[name="cancel"] {
+            display: none;
+        }
+
+        &[data-focus="true"] {
+            button[name="delete"] {
+                display: none;
+            }
+            button[name="confirm"],
+            button[name="cancel"] {
+                display: inline-block;
+            }
+        }
+    }
+
+    
+
     .dragger {
         padding: 0;
         button {
