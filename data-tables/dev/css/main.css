@@ -53,6 +53,9 @@ body {
   outline-color: rgba(255, 0, 0, 0.5);
   background-color: rgba(255, 0, 0, 0.1);
 }
+.table input[type=number]::-webkit-inner-spin-button {
+  display: none;
+}
 .table tr button[name=delete] {
   display: inline-block;
 }
