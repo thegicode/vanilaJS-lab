@@ -10,7 +10,7 @@ body {
     margin: 1rem;
 }
 
-.tables {
+.table {
     width: 100%;
     table-layout: fixed;
     border-spacing: 0;
@@ -30,7 +30,7 @@ body {
     th, td {
         box-sizing: border-box;
         height: 40px;
-        padding: 10px;
+        padding: 10px 1rem;
         border: solid 1px rgba(0, 0, 0, 0.1);
         color: rgba(0, 0, 0, 0.7);
     }
@@ -69,9 +69,11 @@ body {
             box-sizing: border-box;
             width: 100%;
             height: 100%;
-            padding: 10px;
+            padding: 10px 10px 10px 1rem;
             border: none;
             background-color: transparent;
+            font-size: 1rem;
+            color: rgba(0, 0, 0, 0.7);
             &:invalid {
                 outline-color:rgba(255, 0, 0, 0.5);
                 background-color: rgba(255, 0, 0, 0.1);
@@ -82,6 +84,43 @@ body {
     .price {
         text-align: right;
     }
-    
 
+    .actions {
+        text-align: center;
+    }
+
+    button {
+        padding: 5px 10px;
+        border: solid 1px transparent;
+        color: rgba(0, 0, 0, 0.5);
+        border-radius: 3px;
+        background-color: transparent;
+        &:hover {
+            border-color: rgba(0, 0, 0, 0.1);
+        }
+    }
+
+}
+
+.app-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+    button {
+        padding: 5px 10px;
+        border: solid 1px rgba(50, 100, 200, 0.1);
+        color: rgba(0, 0, 0, 0.7);
+        border-radius: 3px;
+        background-color: rgba(50, 100, 200, 0.1);
+        font-size: 14px;
+        &:hover,
+        &:focus { 
+            border-color: rgba(50, 100, 200, 0.2);
+            background-color: rgba(50, 100, 200, 0.2);
+        }
+        &:active {
+            border-color: rgba(50, 100, 200, 0.3);
+            background-color: rgba(50, 100, 200, 0.3);
+        }
+    }
 }

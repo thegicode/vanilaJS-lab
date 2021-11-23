@@ -1,13 +1,12 @@
-import { DATA, update } from './model.js'
+import { DATA, updateItem, deleteItem } from './model.js'
 
 const List = () => {
 
-
-    const cpnt = document.querySelector('#tables')
+    const app = document.querySelector('#table')
     const template = document.querySelector('template')
 
-    const addUp = () => {
-        const el = cpnt.querySelector('tfoot')
+    const renderSum = () => {
+        const el = app.querySelector('tfoot')
         const sum = {
             _amount: 0,
             _price: 0
@@ -20,17 +19,27 @@ const List = () => {
         el.querySelector('.price').textContent = sum._price.toLocaleString()
     }
 
-    const addEvents = (inputEl, priceEl, index) => {
+    const addEvents = (node, index) => {
+        const inputEl = node.querySelector('input')
+        const priceEl = node.querySelector('.price')
+        const deleteButton = node.querySelector('button[name="delete"]')
         inputEl.addEventListener('change', e => {
             if ( e.target.checkValidity() === true ) {
-                update(index, e.target.value)
+                updateItem(index, e.target.value)
                 priceEl.textContent = DATA[index].price.toLocaleString()
-                addUp()
+                renderSum()
             } 
         })
+        deleteButton.addEventListener('click', () => {
+            deleteItem(index)
+            renderList()
+        })
+        
     }
 
-    const lists = () => {
+    const renderList = () => {
+        const el= app.querySelector('tbody')
+        el.innerHTML = ''
         DATA.forEach( (data, index) => {
             const { amount, price } = data
 
@@ -41,15 +50,15 @@ const List = () => {
             inputEl.value = amount.toLocaleString()
             priceEl.textContent = price.toLocaleString()
 
-            addEvents(inputEl, priceEl, index)
+            addEvents(node, index)
 
-            cpnt.querySelector('tbody')
-                .appendChild(node)
+            el.appendChild(node)
         })
+
+        renderSum()
     }
 
-    lists() // tbody 
-    addUp() // tfoot
+    renderList() // tbody 
 
 }
 

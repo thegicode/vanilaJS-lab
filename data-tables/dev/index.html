@@ -12,7 +12,7 @@
 
         <h1>Data Tables</h1>
 
-        <table class="tables" id="tables">
+        <table class="table" id="table">
             <colgroup>
                 <col width="10%">
                 <col>
@@ -23,6 +23,7 @@
                     <th></th>
                     <th>Amount</th>
                     <th>Price</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody></tbody>
@@ -31,9 +32,14 @@
                     <th>합계</th>
                     <td class="amount"></td>
                     <td class="price"></td>
+                    <td class="actions"></td>
                 </tr>
             </tfoot>
         </table>
+
+        <div class="app-actions">
+            <button type="button" name="add">Add</button>
+        </div>
     </div>
 
     <template>
@@ -45,6 +51,9 @@
                 <input type="number" name="amount" min="0" max="10000" required>
             </td>
             <td class="price"></td>
+            <td class="actions">
+                <button type="button" class="button" name="delete">Delete</button>
+            </td>
         </tr>
     </template>
 

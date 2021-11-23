@@ -7,15 +7,24 @@ const DATA = [
     {
         amount: 2,
         price: 2000
+    },
+    {
+        amount: 3,
+        price: 3000
     }
 ]
 
-const update = (index, value) => {
+const updateItem = (index, value) => {
     DATA[index].amount = Number(value)
     DATA[index].price = DATA[index].amount * 1000
 }
 
+const deleteItem = (index) => {
+    DATA.splice(index, 1)
+}
+
 export {
     DATA,
-    update
+    updateItem,
+    deleteItem
 } 
