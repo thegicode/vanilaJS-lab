@@ -14,9 +14,20 @@ const DATA = [
     }
 ]
 
+const addItem = (value) => {
+    const v = Number(value)
+    DATA.push({
+        amount: v,
+        price: v * 1000
+    })
+}
+
 const updateItem = (index, value) => {
-    DATA[index].amount = Number(value)
-    DATA[index].price = DATA[index].amount * 1000
+    const v = Number(value)
+    DATA[index] = {
+        amount: v,
+        price: v * 1000
+    }
 }
 
 const deleteItem = (index) => {
@@ -25,6 +36,7 @@ const deleteItem = (index) => {
 
 export {
     DATA,
+    addItem,
     updateItem,
     deleteItem
 } 

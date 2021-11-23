@@ -1,9 +1,14 @@
-import { DATA, updateItem, deleteItem } from './model.js'
+import { DATA, addItem, updateItem, deleteItem } from './model.js'
+
+const _clonedNode = (node) => {
+    return node.content.firstElementChild.cloneNode(true)
+}
 
 const List = () => {
 
     const app = document.querySelector('#table')
-    const template = document.querySelector('template')
+    const tbodyEl = app.querySelector('tbody')
+    const templateEl = document.querySelector('template')
 
     const renderSum = () => {
         const el = app.querySelector('tfoot')
@@ -19,10 +24,12 @@ const List = () => {
         el.querySelector('.price').textContent = sum._price.toLocaleString()
     }
 
-    const addEvents = (node, index) => {
+    const addItemEvents = (node, index) => {
+
         const inputEl = node.querySelector('input')
         const priceEl = node.querySelector('.price')
         const deleteButton = node.querySelector('button[name="delete"]')
+
         inputEl.addEventListener('change', e => {
             if ( e.target.checkValidity() === true ) {
                 updateItem(index, e.target.value)
@@ -30,27 +37,30 @@ const List = () => {
                 renderSum()
             } 
         })
+
         deleteButton.addEventListener('click', () => {
             deleteItem(index)
-            renderList()
+            renderTable()
         })
         
     }
 
-    const renderList = () => {
-        const el= app.querySelector('tbody')
+    const renderTable = () => {
+        const el = tbodyEl
         el.innerHTML = ''
+
+        // Render List
         DATA.forEach( (data, index) => {
             const { amount, price } = data
 
-            const node = template.content.firstElementChild.cloneNode(true)
+            const node = _clonedNode(templateEl)
             const inputEl = node.querySelector('input')
             const priceEl = node.querySelector('.price')
 
             inputEl.value = amount.toLocaleString()
             priceEl.textContent = price.toLocaleString()
 
-            addEvents(node, index)
+            addItemEvents(node, index)
 
             el.appendChild(node)
         })
@@ -58,7 +68,27 @@ const List = () => {
         renderSum()
     }
 
-    renderList() // tbody 
+    document.querySelector('button[name="add"]')
+        .addEventListener('click', () => {
+
+            const node = _clonedNode(templateEl)
+            const inputEl = node.querySelector('input')
+            const priceEl = node.querySelector('.price')
+
+            inputEl.addEventListener('change', e => {
+                if ( e.target.checkValidity() === true ) {
+                    addItem(e.target.value)
+                    const index = DATA.length - 1
+                    priceEl.textContent = DATA[index].price.toLocaleString()
+                    addItemEvents(node, index)
+                } 
+            })
+
+            tbodyEl.appendChild(node)
+            inputEl.focus()
+        })
+
+    renderTable()
 
 }
 
