@@ -1,4 +1,5 @@
 import { DATA, addItem, updateItem, deleteItem } from './model.js'
+import Sum from './Sum.js'
 
 const _clonedNode = (node) => {
     return node.content.firstElementChild.cloneNode(true)
@@ -11,17 +12,7 @@ const App = () => {
     const templateEl = document.querySelector('template')
 
     const renderSum = () => {
-        const el = app.querySelector('tfoot')
-        const sum = {
-            _amount: 0,
-            _price: 0
-        }
-        DATA.forEach( data => {
-            sum._amount += data.amount
-            sum._price += data.price
-        })
-        el.querySelector('.amount').textContent = sum._amount.toLocaleString()
-        el.querySelector('.price').textContent = sum._price.toLocaleString()
+        Sum(DATA, app)
     }
 
     const addItemEvents = (node, index) => {
@@ -82,11 +73,15 @@ const App = () => {
                         const index = DATA.length - 1
                         priceEl.textContent = DATA[index].price.toLocaleString()
                         addItemEvents(node, index)
+                        renderSum()
                     } 
                 })
 
                 tbodyEl.appendChild(node)
                 inputEl.focus()
+
+                
+
             })
     }
 
