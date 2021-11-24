@@ -54,68 +54,68 @@
     <script>
 
         const app = document.querySelector('.container')
-        let dragged;
+        let draggedEl;
 
         app.addEventListener("dragstart", function( event ) {
-            dragged = event.target;
-            dragged.dataset.drag = true
+            draggedEl = event.target;
+            draggedEl.dataset.drag = true
         }, false);
 
         app.addEventListener("dragend", function( event ) {
-            delete dragged.dataset.drag
+            delete draggedEl.dataset.drag
         }, false);
 
         app.addEventListener("dragover", function( event ) {
             event.preventDefault();
 
-            const _target = event.target
+            const overEl = event.target
 
             const mouseY = event.clientY
-            const targetHalfVal = _target.offsetTop + _target.offsetHeight/2
+            const elHalfVal = overEl.offsetTop + overEl.offsetHeight/2
 
-            if( mouseY > targetHalfVal) { 
-                // 마우스 위치가 _target의 절반 위치보다 크면
-                _target.dataset.pos = 'bottom'
+            if( mouseY > elHalfVal) { 
+                // 마우스 위치가 overEl의 절반 위치보다 크면
+                overEl.dataset.pos = 'bottom'
             } else { 
-                // 마우스 위치가 _target의 절반 위치보다 작으면
-                _target.dataset.pos = 'top'
+                // 마우스 위치가 overEl의 절반 위치보다 작으면
+                overEl.dataset.pos = 'top'
             }
         }, false);
 
         app.addEventListener("dragenter", function( event ) {
-            if ( event.target.className == "dropzone" ) {
-                event.target.dataset.target = true
+            const enterEl = event.target
+            if ( enterEl.className == "dropzone" ) {
+                enterEl.dataset.target = true
             }
         }, false);
 
         app.addEventListener("dragleave", function( event ) {
-            if ( event.target.className == "dropzone" ) {
-                delete event.target.dataset.target
-                delete event.target.dataset.pos
+            const leaveEl = event.target
+            if ( leaveEl.className == "dropzone" ) {
+                delete leaveEl.dataset.target
+                delete leaveEl.dataset.pos
             }
         }, false);
 
         app.addEventListener("drop", function( event ) {
             event.preventDefault();
-            if ( event.target.className == "dropzone" ) {
-                const _target = event.target
+            const dropEl = event.target
+            if ( dropEl.className == "dropzone" ) {
 
-                delete _target.dataset.target
-                delete _target.dataset.pos
+                delete dropEl.dataset.target
+                delete dropEl.dataset.pos
 
                 const mouseY = event.clientY
-                const targetHalfVal = _target.offsetTop + _target.offsetHeight/2
+                const elHalfVal = dropEl.offsetTop + dropEl.offsetHeight/2
 
-                if( mouseY > targetHalfVal) {
-                    // 마우스 위치가 _target의 절반 위치보다 크면 _target 뒤로 옮긴다.
-                    _target.after(dragged)
+                if( mouseY > elHalfVal) {
+                    // 마우스 위치가 dropEl의 절반 위치보다 크면 dropEl 뒤로 옮긴다.
+                    dropEl.after(draggedEl)
                 } else {
-                    // 마우스 위치가 _target의 절반 위치보다 작으면 _target 앞으로 옮긴다.
-                    _target.before(dragged)
+                    // 마우스 위치가 dropEl의 절반 위치보다 작으면 dropEl 앞으로 옮긴다.
+                    dropEl.before(draggedEl)
                 }
-                
             }
-        
         }, false);
     </script>
     
