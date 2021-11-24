@@ -57,76 +57,70 @@
         const dropzoneEls = app.querySelectorAll('.dropzone') 
         let draggedEl;
 
-        dropzoneEls
-            .forEach( el => {
-                el.addEventListener('mousedown', e => {
-                    el.draggable = true
-                })  
+        const addEvents = el => {
+
+            el.addEventListener('mousedown', e => {
+                el.draggable = true
+            })  
+            el.addEventListener('mouseup', e => {
+                el.removeAttribute('draggable')
             })
 
-        app.addEventListener("dragstart", function( event ) {
-            draggedEl = event.target;
-            draggedEl.dataset.drag = true
-        }, false);
-
-        app.addEventListener("dragend", function( event ) {
-            delete draggedEl.dataset.drag
-        }, false);
-
-        app.addEventListener("dragover", function( event ) {
-            event.preventDefault();
-
-            const overEl = event.target
-
-            const mouseY = event.clientY
-            const elHalfVal = overEl.offsetTop + overEl.offsetHeight/2
-
-            if( mouseY > elHalfVal) { 
-                // 마우스 위치가 overEl의 절반 위치보다 크면
-                overEl.dataset.pos = 'bottom'
-            } else { 
-                // 마우스 위치가 overEl의 절반 위치보다 작으면
-                overEl.dataset.pos = 'top'
-            }
-        }, false);
-
-        app.addEventListener("dragenter", function( event ) {
-            const enterEl = event.target
-            if ( enterEl.className == "dropzone" ) {
-                enterEl.dataset.target = true
-            }
-        }, false);
-
-        app.addEventListener("dragleave", function( event ) {
-            const leaveEl = event.target
-            if ( leaveEl.className == "dropzone" ) {
-                delete leaveEl.dataset.target
-                delete leaveEl.dataset.pos
-            }
-        }, false);
-
-        app.addEventListener("drop", function( event ) {
-            event.preventDefault();
-            const dropEl = event.target
-            if ( dropEl.className == "dropzone" ) {
-
-                delete dropEl.dataset.target
-                delete dropEl.dataset.pos
+            el.addEventListener("dragstart", () => {
+                draggedEl = el
+                el.dataset.drag = true
+            });
+            el.addEventListener("dragend", () => {
+                delete el.dataset.drag
+            });
+            el.addEventListener("dragover", event => {
+                event.preventDefault();
 
                 const mouseY = event.clientY
-                const elHalfVal = dropEl.offsetTop + dropEl.offsetHeight/2
+                const elHalfVal = el.offsetTop + el.offsetHeight/2
+
+                if( mouseY > elHalfVal) { 
+                    // 마우스 위치가 el의 절반 위치보다 크면
+                    el.dataset.pos = 'bottom'
+                } else { 
+                    // 마우스 위치가 el의 절반 위치보다 작으면
+                    el.dataset.pos = 'top'
+                }
+            });
+            el.addEventListener("dragenter", () => {
+                if ( el.className == "dropzone" ) {
+                    el.dataset.target = true
+                }
+            });
+            el.addEventListener("dragleave", () => {
+                if ( el.className == "dropzone" ) {
+                    delete el.dataset.target
+                    delete el.dataset.pos
+                }
+            });
+            el.addEventListener("drop", event => {
+                event.preventDefault()
+
+                delete el.dataset.target
+                delete el.dataset.pos
+
+                const mouseY = event.clientY
+                const elHalfVal = el.offsetTop + el.offsetHeight/2
 
                 if( mouseY > elHalfVal) {
-                    // 마우스 위치가 dropEl의 절반 위치보다 크면 dropEl 뒤로 옮긴다.
-                    dropEl.after(draggedEl)
+                    // 마우스 위치가 el의 절반 위치보다 크면 el 뒤로 옮긴다.
+                    el.after(draggedEl)
                 } else {
-                    // 마우스 위치가 dropEl의 절반 위치보다 작으면 dropEl 앞으로 옮긴다.
-                    dropEl.before(draggedEl)
+                    // 마우스 위치가 el의 절반 위치보다 작으면 el 앞으로 옮긴다.
+                    el.before(draggedEl)
                 }
 
                 draggedEl.removeAttribute('draggable')
-            }
-        }, false);
+            });
+        }
+
+        dropzoneEls.forEach( el => addEvents(el) )
+
     </script>
     
 </body>
