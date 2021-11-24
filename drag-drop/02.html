@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and drop</title>
+    <style>
+
+        body {
+            margin: 2rem;
+        }
+
+        .container{
+            padding: 1rem;
+            border: solid 1px rgba(100, 100, 200, 0.2);
+        }
+
+        .dropzone {
+            --color: rgba(0, 100, 200, 0.1);
+            box-sizing: border-box;
+            height: 50px;
+            border: solid 1px var(--color);
+            background-color: var(--color);
+            line-height: 50px;
+            text-align: center;
+        }
+        .dropzone[data-drag="true"] {
+            --color: rgba(255, 255, 255, 0.5);
+            border-color: var(--color);
+            background-color: var(--color);
+        }
+        .dropzone[data-target="true"] {
+            --color : rgba(100, 0, 200, 0.1);
+            border-color: var(--color);
+            background-color: var(--color);
+        }
+        .dropzone[data-pos="top"] {
+            border-top-color: rgba(100, 0, 200, 0.7);
+        }
+        .dropzone[data-pos="bottom"] {
+            border-bottom-color: rgba(100, 0, 200, 0.7);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="dropzone" draggable="true">1</div>
+        <div class="dropzone" draggable="true">2</div>
+        <div class="dropzone" draggable="true">3</div>
+        <div class="dropzone" draggable="true">4</div>
+    </div>
+
+    <script>
+
+        const app = document.querySelector('.container')
+        let dragged;
+
+        app.addEventListener("dragstart", function( event ) {
+            dragged = event.target;
+            dragged.dataset.drag = true
+        }, false);
+
+        app.addEventListener("dragend", function( event ) {
+            delete dragged.dataset.drag
+        }, false);
+
+        app.addEventListener("dragover", function( event ) {
+            event.preventDefault();
+
+            const _target = event.target
+
+            const mouseY = event.clientY
+            const targetHalfVal = _target.offsetTop + _target.offsetHeight/2
+
+            if( mouseY > targetHalfVal) { 
+                // 마우스 위치가 _target의 절반 위치보다 크면
+                _target.dataset.pos = 'bottom'
+            } else { 
+                // 마우스 위치가 _target의 절반 위치보다 작으면
+                _target.dataset.pos = 'top'
+            }
+        }, false);
+
+        app.addEventListener("dragenter", function( event ) {
+            if ( event.target.className == "dropzone" ) {
+                event.target.dataset.target = true
+            }
+        }, false);
+
+        app.addEventListener("dragleave", function( event ) {
+            if ( event.target.className == "dropzone" ) {
+                delete event.target.dataset.target
+                delete event.target.dataset.pos
+            }
+        }, false);
+
+        app.addEventListener("drop", function( event ) {
+            event.preventDefault();
+            if ( event.target.className == "dropzone" ) {
+                const _target = event.target
+
+                delete _target.dataset.target
+                delete _target.dataset.pos
+
+                const mouseY = event.clientY
+                const targetHalfVal = _target.offsetTop + _target.offsetHeight/2
+
+                if( mouseY > targetHalfVal) {
+                    // 마우스 위치가 _target의 절반 위치보다 크면 _target 뒤로 옮긴다.
+                    _target.after(dragged)
+                } else {
+                    // 마우스 위치가 _target의 절반 위치보다 작으면 _target 앞으로 옮긴다.
+                    _target.before(dragged)
+                }
+                
+            }
+        
+        }, false);
+    </script>
+    
+</body>
+</html>
