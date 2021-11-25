@@ -21,7 +21,7 @@
 
         .dropzone {
             height: var(--height);
-            transition: height 0.5s ease;
+            transition: height 0.3s ease;
 
             display: flex;
             flex-direction: column;
@@ -41,9 +41,9 @@
         .dropzone[data-pos="top"] {
             justify-content: flex-end;
         }
-        .dropzone[draggable] {
+        /* .dropzone[draggable] {
             opacity: 0.3;
-        }
+        } */
 
     </style>
 </head>
@@ -75,6 +75,15 @@
         const dropzoneEls = app.querySelectorAll('.dropzone') 
 
         let originalEl, draggedEl, targetedEl
+
+        // app.addEventListener('dragenter', (event) => {
+        //     event.preventDefault()
+
+        //     if (event.target.className === 'conatiner') {
+        //         return
+        //     }
+
+        // })
 
         const addEvents = el => {
 
