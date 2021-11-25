@@ -21,6 +21,7 @@
 
         .dropzone {
             height: var(--height);
+            transition: all 0.2s ease;
         }
         .dropzone div {
             --color: rgba(0, 100, 200, 0.1);
@@ -31,14 +32,15 @@
             line-height: var(--height);
             text-align: center;
         }
+        .dropzone[data-target="true"] {
+            height: calc(var(--height) * 2);
+        }
+
         /* .dropzone[data-drag="true"] {
             --color: rgba(255, 255, 255, 0.5);
             border-color: var(--color);
             background-color: var(--color);
         } */
-        .dropzone[data-target="true"] {
-            height: calc(var(--height) * 2);
-        }
 
     </style>
 </head>
@@ -69,7 +71,7 @@
         const app = document.querySelector('.container')
         const dropzoneEls = app.querySelectorAll('.dropzone') 
 
-        let draggedEl, targetedEl
+        let originalEl, draggedEl, targetedEl
 
         const addEvents = el => {
 
@@ -81,22 +83,23 @@
             })
 
             el.addEventListener("dragstart", () => {
-                draggedEl = el
-                el.dataset.drag = true
+                draggedEl = el.cloneNode(true)
+                addEvents(draggedEl)
+                originalEl = el
             });
             el.addEventListener("dragend", () => {
-                delete el.dataset.drag
             });
             el.addEventListener("dragover", event => {
                 event.preventDefault();
+                originalEl.remove()
             });
             el.addEventListener("dragenter", () => {
                 if ( targetedEl ) {
                     delete targetedEl.dataset.target
                 }
-                if ( draggedEl === el ) {
-                    return
-                }
+                // if ( draggedEl === el ) {
+                //     return
+                // }
                 el.dataset.target = true
                 targetedEl = el
             });
