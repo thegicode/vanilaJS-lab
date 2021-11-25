@@ -88,15 +88,11 @@
                 }
             });
             el.addEventListener("dragenter", () => {
-                if ( el.className == "dropzone" ) {
-                    el.dataset.target = true
-                }
+                el.dataset.target = true
             });
             el.addEventListener("dragleave", () => {
-                if ( el.className == "dropzone" ) {
-                    delete el.dataset.target
-                    delete el.dataset.pos
-                }
+                delete el.dataset.target
+                delete el.dataset.pos
             });
             el.addEventListener("drop", event => {
                 event.preventDefault()
