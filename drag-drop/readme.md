@@ -13,5 +13,8 @@
 - 03-2 _ 03을 개선
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-2.html)
 
+- 03-3 _ 03 애니메이션 개선
+[See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-3.html)
+
 - 04 _ Table에 적용.
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/04.html)
