@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>04 | Drag and drop</title>
+    <style>
+        body {
+            margin: 2rem;
+        }
+        table {
+            width: 100%;
+            table-layout: fixed;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        td {
+            --color: rgba(0, 100, 200, 0.1);
+            height: 50px;
+            box-sizing: border-box;
+            padding: 1rem;
+            border: solid 1px var(--color);
+            background-color: var(--color);
+        }
+        td:first-child {
+            padding: 0;
+        }
+        td button {
+            width: 100%;
+            height: 100%;
+            font-size: 11px;
+        }
+        tr[data-drag="true"] td {
+            --color: rgba(255, 255, 255, 0.5);
+            border-color: var(--color);
+            background-color: var(--color);
+        }
+        tr[data-target="true"] td {
+            --color : rgba(100, 0, 200, 0.1);
+            border-color: var(--color);
+            background-color: var(--color);
+        }
+    </style>
+</head>
+<body>
+
+    <table>
+        <colgroup>
+            <col width="20%">
+            <col>
+        </colgroup>
+        <tbody>
+            <tr>
+                <td>
+                    <button type="button" tabindex="-1">Dragger</button>
+                </td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" tabindex="-1">Dragger</button>
+                </td>
+                <td>2</td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" tabindex="-1">Dragger</button>
+                </td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" tabindex="-1">Dragger</button>
+                </td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <td>
+                    <button type="button" tabindex="-1">Dragger</button>
+                </td>
+                <td>5</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script>
+
+        const app = document.querySelector('table')
+        const trEls = app.querySelectorAll('tr') 
+        let draggedEl;
+
+        const addEvents = trEl => {
+
+            const el = trEl
+
+            el.querySelector('button').addEventListener('mousedown', e => {
+                el.draggable = true
+            })  
+            el.querySelector('button').addEventListener('mouseup', e => {
+                el.removeAttribute('draggable')
+            })
+
+            el.addEventListener("dragstart", () => {
+                draggedEl = el
+                el.dataset.drag = true
+            });
+            el.addEventListener("dragend", () => {
+                delete el.dataset.drag
+            });
+            el.addEventListener("dragover", event => {
+                event.preventDefault();
+            });
+            el.addEventListener("dragenter", () => {
+                el.dataset.target = true
+            });
+            el.addEventListener("dragleave", () => {
+                delete el.dataset.target
+            });
+            el.addEventListener("drop", event => {
+                event.preventDefault()
+                delete el.dataset.target
+                el.after(draggedEl)
+                draggedEl.removeAttribute('draggable')
+            });
+        }
+
+        trEls.forEach( el => addEvents(el) )
+
+    </script>
+    
+</body>
+</html>
