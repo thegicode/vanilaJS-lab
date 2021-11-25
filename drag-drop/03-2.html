@@ -27,20 +27,17 @@
             --color: rgba(0, 100, 200, 0.1);
             height: var(--height);
             box-sizing: border-box;
-            border: solid 1px var(--color);
-            background-color: var(--color);
+            border: solid 1px #cfe0f5;
+            background-color: #e5eff9;
             line-height: var(--height);
             text-align: center;
         }
         .dropzone[data-target="true"] {
             height: calc(var(--height) * 2);
         }
-
-        /* .dropzone[data-drag="true"] {
-            --color: rgba(255, 255, 255, 0.5);
-            border-color: var(--color);
-            background-color: var(--color);
-        } */
+        .dropzone[draggable] {
+            opacity: 0.3;
+        }
 
     </style>
 </head>
@@ -97,9 +94,6 @@
                 if ( targetedEl ) {
                     delete targetedEl.dataset.target
                 }
-                // if ( draggedEl === el ) {
-                //     return
-                // }
                 el.dataset.target = true
                 targetedEl = el
             });
@@ -119,6 +113,7 @@
 
         dropzoneEls.forEach( el => addEvents(el) )
 
+        
     </script>
     
 </body>
