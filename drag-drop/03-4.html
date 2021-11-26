@@ -78,15 +78,11 @@
 
     </div>
 
-    <div class="blank"></div>
-
     <script>
 
         const app = document.querySelector('.container')
-        const dropzoneEls = app.querySelectorAll('.dropzone') 
-
         let originalEl, draggedEl, targetedEl
-       
+
         const addEvents = el => {
 
             el.addEventListener('mousedown', e => {
@@ -105,7 +101,6 @@
             el.addEventListener("dragend", () => {
             });
             el.addEventListener("dragover", event => {
-
                 event.preventDefault()
 
                 const mouseY = event.clientY
@@ -163,12 +158,9 @@
             }
         })
 
-        dropzoneEls.forEach( el => addEvents(el) )
+        app.querySelectorAll('.dropzone')
+            .forEach( el => addEvents(el) )
 
-
-
-
-        
     </script>
     
 </body>
