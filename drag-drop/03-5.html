@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>03-4 | Drag and drop</title>
+    <title>03-5 | Drag and drop</title>
     <style>
 
         :root {
@@ -28,7 +28,7 @@
 
         .dropzone {
             height: var(--height);
-            transition: height 0.3s ease;
+            transition: all 0.2s ease;
 
             display: flex;
             flex-direction: column;
@@ -43,7 +43,6 @@
             text-align: center;
         }
         .dropzone[data-original="true"] {
-            overflow: hidden;
             height: 0;
         }
         .dropzone[data-pos="top"],
@@ -53,6 +52,9 @@
         .dropzone[data-pos="top"] {
             justify-content: flex-end;
         }
+        .blank {
+            height: calc(var(--height) * 2.2);
+        }
     </style>
 </head>
 <body>
@@ -60,24 +62,26 @@
     <div class="root">
 
         <div class="container">
-            <div class="dropzone" data-index="1">
+            <div class="dropzone">
                 <div class="inner">1</div>
             </div>
-            <div class="dropzone" data-index="2">
+            <div class="dropzone">
                 <div class="inner">2</div>
             </div>
-            <div class="dropzone" data-index="3">
+            <div class="dropzone">
                 <div class="inner">3</div>
             </div>
-            <div class="dropzone" data-index="4">
+            <div class="dropzone">
                 <div class="inner">4</div>
             </div>
-            <div class="dropzone" data-index="5">
+            <div class="dropzone">
                 <div class="inner">5</div>
             </div>
         </div>
 
     </div>
+
+    <div class="blank" role="presentation"></div>
 
     <script>
 
@@ -104,10 +108,6 @@
             el.addEventListener("dragover", event => {
                 event.preventDefault()
 
-                if( el === originalEl ) {
-                    return
-                }
-
                 const mouseY = event.clientY
                 const elHalfVal = el.offsetTop + el.offsetHeight/2
 
@@ -129,7 +129,7 @@
             });
             el.addEventListener("drop", event => {
                 event.preventDefault()
-
+              
                 delete el.dataset.pos
 
                 const mouseY = event.clientY
@@ -150,12 +150,12 @@
             });
         }
 
-        // app 영역 밖에서 drop하면 el가 사라진다.
         document.addEventListener('dragleave', event => {
             const el = event.target
-            const isDragzone = el.classList.contains('container') 
+            const isDragzone = el.classList.contains('conainer') 
                             || app.contains(el)
-            if ( isDragzone === false ) {
+
+            if ( isDragzone === false) {
                 draggedEl.remove()
                 originalEl.removeAttribute('draggable')
                 delete targetedEl.dataset.pos
@@ -164,16 +164,7 @@
             }
         })
 
-        // app 영역 밖에서 안으로 들어오면 originalEl가 보이기 때문에 안보이게 설정
-        document.addEventListener('dragenter', event => {
-            const el = event.target
-            const isDragzone = el.classList.contains('container') 
-                            || app.contains(el)
-            const isHideOrigin = originalEl.dataset.original
-            if(isDragzone && !isHideOrigin) {
-                originalEl.dataset.original = true
-            }
-        })
+       
 
         app.querySelectorAll('.dropzone')
             .forEach( el => addEvents(el) )
