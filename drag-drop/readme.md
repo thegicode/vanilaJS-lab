@@ -21,3 +21,6 @@
 
 - 04 _ Table에 적용.
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/04.html)
+
+- 04-2 _ Table, Animation
+[See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/04-2.html)

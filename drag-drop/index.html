@@ -9,19 +9,26 @@
             margin: 2rem;
         }
         .list{
-            list-style: none;
-            padding: 0;
         }
-        .list li {
+        .list > li {
             padding: 1rem;
             border-bottom: solid 1px #ddd;
         }
         /* .list a {
         } */
-        .list span {
+        .list > li > span {
             display: block;
             margin-top: 10px;
         }
+
+        .list2 {
+        }
+        .list2 li {
+            padding: 1rem;
+
+        }
+
+
     </style>
 </head>
 <body>
@@ -40,7 +47,7 @@
         <li>
             <a href="03.html" target="_blank">03</a>
             <span>02를 기준으로 mouse event 추가</span>
-            <ul>
+            <ul class="list2">
                 <li>
                     <a href="03-2.html" target="_blank">03-2</a>
                     <span>03을 개선</span>
@@ -58,6 +65,12 @@
         <li>
             <a href="04.html" target="_blank">04</a>
             <span>Table에 적용</span>
+            <ul class="list2">
+                <li>
+                    <a href="04-2.html" target="_blank">04-2</a>
+                    <span>Animation</span>
+                </li>
+            </ul>
         </li>
     </ul>
 </body>
