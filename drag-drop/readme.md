@@ -16,10 +16,10 @@
 - 03-3 _ 애니메이션 개선
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-3.html)
 
-- 03-4 _ Drag 영역 벗어났을 때 오류 수정
+- 03-4 _ Drag 영역 벗어났을 때 오류 수정, 코드 중복
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-4.html)
 
-- 03-5 _ 이벤트 위임으로 작업
+- 03-5 _ 이벤트 위임, 03-4보다 코드가 적어짐
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-5.html)
 
 - 04 _ Table에 적용.
