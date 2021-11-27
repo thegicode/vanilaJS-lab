@@ -22,6 +22,12 @@
 - 03-5 _ 이벤트 위임, 03-4보다 코드가 적어짐
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-5.html)
 
+- 03-6 _ 기타 마크업
+[See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-6.html)
+
+- 03-7 _ 기타 마크업
+[See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-7.html)
+
 - 04 _ Table에 적용.
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/04.html)
 

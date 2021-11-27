@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03-7 | Drag and drop</title>
+    <style>
+
+        :root {
+            --height: 50px;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;;
+        }
+
+        .root {
+            height: 100%;
+            box-sizing: border-box;
+            padding: 5rem 3rem 3rem;
+        }
+        
+        .container[data-drag="true"] .dropzone * {
+            pointer-events: none;
+        }
+
+        .dropzone {
+            height: var(--height);
+            box-sizing: border-box;
+            border-bottom: solid 1px #cfe0f5;
+            background-color: #fff;
+            transition: height 0.3s ease;
+
+            display: flex;
+            text-align: center;
+        }
+        .dropzone button {
+            height: var(--height);
+            padding: 0 8px;
+        }
+        .dropzone .text {
+            flex: 1;
+
+            height: 49px;
+            background-color: #e5eff9;
+            line-height: var(--height);
+
+        }
+        .dropzone[data-original="true"] {
+            overflow: hidden;
+            height: 0;
+        }
+        .dropzone[data-pos="top"],
+        .dropzone[data-pos="bottom"] {
+            height: calc(var(--height) * 2.2);
+        }
+        .dropzone[data-pos="top"] {
+            align-items: flex-end;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="root">
+
+        <div class="container" data-drag="false">
+            <div class="dropzone" data-index="1">
+                <button type="button">D</button>
+                <div class="text">1</div>
+            </div>
+            <div class="dropzone" data-index="2">
+                <button type="button">D</button>
+                <div class="text">2</div>
+            </div>
+            <div class="dropzone" data-index="3">
+                <button type="button">D</button>
+                <div class="text">3</div>
+            </div>
+            <div class="dropzone" data-index="4">
+                <button type="button">D</button>
+                <div class="text">4</div>
+            </div>
+            <div class="dropzone" data-index="5">
+                <button type="button">D</button>
+                <div class="text">5</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+
+        const app = document.querySelector('.container')
+        let originalEl, draggedEl, targetedEl
+        
+        const addEvents = el => {
+            const buttonEl = el.querySelector('button')
+
+            buttonEl.addEventListener('mousedown', () => {
+                el.draggable = true
+                app.dataset.drag = true
+            })  
+
+            buttonEl.addEventListener('mouseup', () => {
+                el.removeAttribute('draggable')
+                app.dataset.drag = false
+            })
+
+            el.addEventListener("dragstart", () => {
+                draggedEl = el.cloneNode(true)
+                addEvents(draggedEl)
+                originalEl = el
+                originalEl.dataset.original = true
+            })
+
+            // el.addEventListener("dragend", () => {
+            // });
+
+            // el.addEventListener('dragover', () => {
+            // })
+
+            el.addEventListener("dragenter", () => {
+                // 이전 targetedEl의 data 속성 제거
+                if ( targetedEl && targetedEl !== el ) {
+                    delete targetedEl.dataset.pos
+                }
+                targetedEl = el
+            })
+
+            // el.addEventListener('dragleave', () => {
+            // })
+
+            // el.addEventListener('drop', () => {
+            // })
+
+        }
+
+        document.addEventListener("dragover", event => {
+            event.preventDefault()
+            const el = event.target
+            if ( el.classList.contains('dropzone') === false ) {
+                return
+            }
+            if( el === originalEl ) {
+                return
+            }
+
+            const mouseY = event.clientY
+            const elHalfVal = el.offsetTop + el.offsetHeight/2
+            if( mouseY > elHalfVal) { 
+                // 마우스 위치가 el의 절반 위치보다 크면
+                el.dataset.pos = 'bottom'
+            } else { 
+                // 마우스 위치가 el의 절반 위치보다 작으면
+                el.dataset.pos = 'top'
+            }
+        })
+        
+        document.addEventListener("drop", event => {
+            event.preventDefault()
+
+            const el = event.target
+            const isDragzone = el.classList.contains('container') || app.contains(el)
+
+            if (isDragzone) {
+                // DragZone 이면 엘리먼트 이동
+
+                delete el.dataset.pos
+
+                const mouseY = event.clientY
+                const elHalfVal = el.offsetTop + el.offsetHeight/2
+                if( mouseY > elHalfVal) {
+                    // 마우스 위치가 el의 절반 위치보다 크면 el 뒤로 옮긴다.
+                    el.after(draggedEl)
+                } else {
+                    // 마우스 위치가 el의 절반 위치보다 작으면 el 앞으로 옮긴다.
+                    el.before(draggedEl)
+                }
+
+                draggedEl.removeAttribute('draggable')
+                originalEl.remove()
+            } else {
+                // DragZone 외부이면 원래의 상태로 변경
+                
+                draggedEl.remove()
+                originalEl.removeAttribute('draggable')
+                delete targetedEl.dataset.pos
+                delete originalEl.dataset.original
+            }
+            app.dataset.drag = false
+        })
+
+        app.querySelectorAll('.dropzone')
+            .forEach( el => addEvents(el) )
+
+    </script>
+    
+</body>
+</html>
