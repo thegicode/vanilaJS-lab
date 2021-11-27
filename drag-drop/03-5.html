@@ -87,17 +87,17 @@
         let originalEl, draggedEl, targetedEl
         
         const addEvents = el => {
-            el.addEventListener('mousedown', e => {
+            el.addEventListener('mousedown', () => {
                 el.draggable = true
                 app.dataset.drag = true
             })  
 
-            el.addEventListener('mouseup', e => {
+            el.addEventListener('mouseup', () => {
                 el.removeAttribute('draggable')
                 app.dataset.drag = false
             })
 
-            el.addEventListener("dragstart", event => {
+            el.addEventListener("dragstart", () => {
                 draggedEl = el.cloneNode(true)
                 addEvents(draggedEl)
                 originalEl = el
@@ -107,10 +107,10 @@
             // el.addEventListener("dragend", () => {
             // });
 
-            // el.addEventListener('dragover', event => {
+            // el.addEventListener('dragover', () => {
             // })
 
-            el.addEventListener("dragenter", event => {
+            el.addEventListener("dragenter", () => {
                 // 이전 targetedEl의 data 속성 제거
                 if ( targetedEl && targetedEl !== el ) {
                     delete targetedEl.dataset.pos
@@ -118,10 +118,10 @@
                 targetedEl = el
             })
 
-            // el.addEventListener('dragleave', event => {
+            // el.addEventListener('dragleave', () => {
             // })
 
-            // el.addEventListener('drop', event => {
+            // el.addEventListener('drop', () => {
             // })
 
         }
@@ -154,7 +154,7 @@
             const isDragzone = el.classList.contains('container') || app.contains(el)
 
             if (isDragzone) {
-                // Drag zone 이면 엘리먼트 이동
+                // DragZone 이면 엘리먼트 이동
 
                 delete el.dataset.pos
 
@@ -171,7 +171,7 @@
                 draggedEl.removeAttribute('draggable')
                 originalEl.remove()
             } else {
-                // Drag zone 외부이면 원래의 상태로 변경
+                // DragZone 외부이면 원래의 상태로 변경
                 
                 draggedEl.remove()
                 originalEl.removeAttribute('draggable')
