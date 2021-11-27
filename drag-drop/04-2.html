@@ -9,27 +9,76 @@
         :root {
             --height: 50px;
         }
-        body {
-            margin: 2rem;
+
+        html {
+            height: 100%;
         }
+
+        body {
+            height: 100%;;
+        }
+
+        .root {
+            height: 100%;
+            box-sizing: border-box;
+            padding: 5rem 3rem 3rem;
+        }
+
         table {
             width: 100%;
             table-layout: fixed;
             border-collapse: collapse;
             border-spacing: 0;
         }
-        tr {
-            position: relative;
+        
+        table[data-drag="true"] tr * {
+            pointer-events: none;
         }
-        /* tr:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            display: block;
-            width: 100%;
-            height: 0;
+
+        tr {
+            
+            height: var(--height);
             background-color: #fff;
-        } */
+            transition: height 0.3s ease;
+
+        }
+        td {
+            height: var(--height);
+            box-sizing: border-box;
+            border-top: solid 1px #ddd;
+            border-bottom: solid 1px #ddd;
+            background-color: #e5eff9;
+            transition: height 0.3s ease;
+        }
+        td:first-child {
+            padding: 0;
+        }
+        tr button {
+            width: 100%;
+            height: var(--height);
+            border: none;
+            background-color: #d1e2f3;
+            font-size: 11px;
+        }
+        tr .text {
+            flex: 1;
+
+            height: 50px;
+            background-color: #e5eff9;
+            line-height: var(--height);
+
+            text-align: center;
+
+        }
+        tr[data-original="true"],
+        tr[data-original="true"] * {
+            overflow: hidden;
+            height: 0;
+            padding: 0;
+            border: none;
+            line-height: 0;
+        }
+        
         tr[data-pos="top"] td ,
         tr[data-pos="bottom"] td{
             height: calc(var(--height) * 2.2);
@@ -40,141 +89,156 @@
         tr[data-pos="bottom"]{
             vertical-align: top;
         }
-        tr[data-pos="top"]:after {
-            height: var(--height);
-            top: 0;
-        }
-        tr[data-pos="bottom"]:after {
-            height: var(--height);
-            bottom: 0;
-        }
-        td {
-            height: var(--height);
-            box-sizing: border-box;
-            padding: 1rem;
-            border-top: solid 1px #ddd;
-            border-bottom: solid 1px #ddd;
-            background-color: #e5eff9;
-            transition: height 0.3s ease;
-        }
-        td:first-child {
-            padding: 0;
-        }
-        td button {
-            width: 100%;
-            height: var(--height);
-            font-size: 11px;
-        }
-        
-        /* tr[data-drag="true"] td {
-            --color: rgba(255, 255, 255, 0.5);
-            border-color: var(--color);
-            background-color: var(--color);
-        } */
-        /* tr[data-target="true"] td {
-            --color : rgba(100, 0, 200, 0.1);
-            border-color: var(--color);
-            background-color: var(--color);
-        } */
     </style>
 </head>
 <body>
 
-    <table>
-        <colgroup>
-            <col width="20%">
-            <col>
-        </colgroup>
-        <tbody>
-            <tr>
-                <td>
-                    <button type="button" tabindex="-1">Dragger</button>
-                </td>
-                <td>1</td>
-            </tr>
-            <tr>
-                <td>
-                    <button type="button" tabindex="-1">Dragger</button>
-                </td>
-                <td>2</td>
-            </tr>
-            <tr>
-                <td>
-                    <button type="button" tabindex="-1">Dragger</button>
-                </td>
-                <td>3</td>
-            </tr>
-            <tr>
-                <td>
-                    <button type="button" tabindex="-1">Dragger</button>
-                </td>
-                <td>4</td>
-            </tr>
-            <tr>
-                <td>
-                    <button type="button" tabindex="-1">Dragger</button>
-                </td>
-                <td>5</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="root">
+
+        <table class="container" data-drag="false">
+            <colgroup>
+                <col width="20%">
+                <col>
+            </colgroup>
+            <tbody>
+                <tr class="dropzone" data-index="0">
+                    <td>
+                        <button type="button">D</button>
+                    </td>
+                    <td>
+                        <div class="text">0</div>
+                    </td>
+                </tr>
+                <tr class="dropzone" data-index="1">
+                    <td>
+                        <button type="button">D</button>
+                    </td>
+                    <td>
+                        <div class="text">1</div>
+                    </td>
+                </tr>
+                <tr class="dropzone" data-index="2">
+                    <td>
+                        <button type="button">D</button>
+                    </td>
+                    <td>
+                        <div class="text">2</div>
+                    </td>
+                </tr>
+                <tr class="dropzone" data-index="3">
+                    <td>
+                        <button type="button">D</button>
+                    </td>
+                    <td>
+                        <div class="text">3</div>
+                    </td>
+                </tr>
+                <tr class="dropzone" data-index="4">
+                    <td>
+                        <button type="button">D</button>
+                    </td>
+                    <td>
+                        <div class="text">4</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
 
     <script>
 
         const app = document.querySelector('table')
-        const trEls = app.querySelectorAll('tr') 
         const appTop = app.offsetTop
-        let draggedEl, targetedEl;
+        let originalEl, draggedEl, targetedEl
+        
+        const addEvents = el => {
+            const buttonEl = el.querySelector('button')
 
-        const addEvents = trEl => {
-
-            const el = trEl
-
-            el.querySelector('button').addEventListener('mousedown', e => {
+            buttonEl.addEventListener('mousedown', () => {
                 el.draggable = true
+                // app.dataset.drag = true
             })  
-            el.querySelector('button').addEventListener('mouseup', e => {
+
+            buttonEl.addEventListener('mouseup', () => {
                 el.removeAttribute('draggable')
+                // app.dataset.drag = false
             })
 
             el.addEventListener("dragstart", () => {
-                draggedEl = el
-                // el.dataset.drag = true
-            });
-            el.addEventListener("dragend", () => {
-                // delete el.dataset.drag
-            });
-            el.addEventListener("dragover", event => {
-                event.preventDefault();
+                draggedEl = el.cloneNode(true)
+                addEvents(draggedEl)
+                originalEl = el
+                originalEl.dataset.original = true
+            })
 
-                const mouseY = event.clientY
-                const elHalfVal = el.offsetTop + el.offsetHeight/2
+            // el.addEventListener("dragend", () => {
+            // });
 
-                if( mouseY > elHalfVal) { 
-                    // 마우스 위치가 el의 절반 위치보다 크면
-                    el.dataset.pos = 'bottom'
-                } else { 
-                    // 마우스 위치가 el의 절반 위치보다 작으면
-                    el.dataset.pos = 'top'
-                }
-            });
+            // el.addEventListener('dragover', () => {
+            // })
+
             el.addEventListener("dragenter", () => {
+                // 이전 targetedEl의 data 속성 제거
                 if ( targetedEl && targetedEl !== el ) {
                     delete targetedEl.dataset.pos
                 }
                 targetedEl = el
-                // el.dataset.target = true
-            });
-            el.addEventListener("dragleave", () => {
-                // delete el.dataset.target
-            });
-            el.addEventListener("drop", event => {
-                event.preventDefault()
+            })
+
+            // el.addEventListener('dragleave', () => {
+            // })
+
+            // el.addEventListener('drop', () => {
+            // })
+
+        }
+
+        document.addEventListener("dragover", event => {
+
+            event.preventDefault()
+            let el = event.target
+
+            const isDragzone = el.tabName === 'TABLE' || app.contains(el)
+            if (!isDragzone) return
+
+            if ( el.tagName !== 'TR' ) {
+                el = el.closest('tr')
+            }
+            if( el === originalEl ) {
+                return
+            }
+            
+            // console.log(el)
+            // console.log(el.offsetTop)
+            const mouseY = event.clientY
+            const elHalfVal = appTop + el.offsetTop + el.offsetHeight/2
+            if( mouseY > elHalfVal) { 
+                // 마우스 위치가 el의 절반 위치보다 크면
+                el.dataset.pos = 'bottom'
+            } else { 
+                // 마우스 위치가 el의 절반 위치보다 작으면
+                el.dataset.pos = 'top'
+            }
+        })
+        
+        document.addEventListener("drop", event => {
+            event.preventDefault()
+
+            let el = event.target
+            const isDragzone = el.classList.contains('container') || app.contains(el)
+            
+            if (isDragzone) {
+                // DragZone 이면 엘리먼트 이동
+
+                if ( el.tagName !== 'TR' ) {
+                    el = el.closest('tr')
+                }
+
                 delete el.dataset.pos
 
                 const mouseY = event.clientY
                 const elHalfVal = appTop + el.offsetTop + el.offsetHeight/2
-
                 if( mouseY > elHalfVal) {
                     // 마우스 위치가 el의 절반 위치보다 크면 el 뒤로 옮긴다.
                     el.after(draggedEl)
@@ -184,10 +248,20 @@
                 }
 
                 draggedEl.removeAttribute('draggable')
-            });
-        }
+                originalEl.remove()
+            } else {
+                // DragZone 외부이면 원래의 상태로 변경
+                
+                draggedEl.remove()
+                originalEl.removeAttribute('draggable')
+                delete targetedEl.dataset.pos
+                delete originalEl.dataset.original
+            }
+            app.dataset.drag = false
+        })
 
-        trEls.forEach( el => addEvents(el) )
+        app.querySelectorAll('.dropzone')
+            .forEach( el => addEvents(el) )
 
     </script>
     
