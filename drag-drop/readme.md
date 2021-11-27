@@ -19,6 +19,9 @@
 - 03-4 _ Drag 영역 벗어났을 때 오류 수정
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-4.html)
 
+- 03-5 _ 이벤트 위임으로 작업
+[See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-5.html)
+
 - 04 _ Table에 적용.
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/04.html)
 
