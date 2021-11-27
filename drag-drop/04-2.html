@@ -31,17 +31,17 @@
             border-spacing: 0;
         }
         
-        table[data-drag="true"] tr * {
+        /* table[data-drag="true"] tr * {
             pointer-events: none;
-        }
+        } */
 
         tr {
-            
             height: var(--height);
             background-color: #fff;
             transition: height 0.3s ease;
-
         }
+
+        
         td {
             height: var(--height);
             box-sizing: border-box;
@@ -50,6 +50,8 @@
             background-color: #e5eff9;
             transition: height 0.3s ease;
         }
+
+        
         td:first-child {
             padding: 0;
         }
@@ -63,13 +65,13 @@
         tr .text {
             flex: 1;
 
-            height: 50px;
+            height: var(--height);
             background-color: #e5eff9;
             line-height: var(--height);
 
             text-align: center;
-
         }
+
         tr[data-original="true"],
         tr[data-original="true"] * {
             overflow: hidden;
@@ -78,6 +80,19 @@
             border: none;
             line-height: 0;
         }
+
+        /* tr[data-dragged="true"] {
+            overflow: visible;
+            height: var(--height);
+        } 
+        tr[data-dragged="true"] .text {
+            height: 50px;
+        }
+        tr[data-dragged="true"] .button {
+            line-height: auto;
+        }  */
+
+        
         
         tr[data-pos="top"] td ,
         tr[data-pos="bottom"] td{
@@ -95,13 +110,13 @@
 
     <div class="root">
 
-        <table class="container" data-drag="false">
+        <table>
             <colgroup>
                 <col width="20%">
                 <col>
             </colgroup>
             <tbody>
-                <tr class="dropzone" data-index="0">
+                <tr data-index="0">
                     <td>
                         <button type="button">D</button>
                     </td>
@@ -109,7 +124,7 @@
                         <div class="text">0</div>
                     </td>
                 </tr>
-                <tr class="dropzone" data-index="1">
+                <tr data-index="1">
                     <td>
                         <button type="button">D</button>
                     </td>
@@ -117,7 +132,7 @@
                         <div class="text">1</div>
                     </td>
                 </tr>
-                <tr class="dropzone" data-index="2">
+                <tr data-index="2">
                     <td>
                         <button type="button">D</button>
                     </td>
@@ -125,7 +140,7 @@
                         <div class="text">2</div>
                     </td>
                 </tr>
-                <tr class="dropzone" data-index="3">
+                <tr data-index="3">
                     <td>
                         <button type="button">D</button>
                     </td>
@@ -133,7 +148,7 @@
                         <div class="text">3</div>
                     </td>
                 </tr>
-                <tr class="dropzone" data-index="4">
+                <tr data-index="4">
                     <td>
                         <button type="button">D</button>
                     </td>
@@ -167,9 +182,11 @@
 
             el.addEventListener("dragstart", () => {
                 draggedEl = el.cloneNode(true)
+                draggedEl.dataset.dragged = true
                 addEvents(draggedEl)
                 originalEl = el
                 originalEl.dataset.original = true
+                console.log(originalEl, draggedEl)
             })
 
             // el.addEventListener("dragend", () => {
@@ -199,7 +216,7 @@
             event.preventDefault()
             let el = event.target
 
-            const isDragzone = el.tabName === 'TABLE' || app.contains(el)
+            const isDragzone = el.tagName === 'TABLE' || app.contains(el)
             if (!isDragzone) return
 
             if ( el.tagName !== 'TR' ) {
@@ -209,8 +226,6 @@
                 return
             }
             
-            // console.log(el)
-            // console.log(el.offsetTop)
             const mouseY = event.clientY
             const elHalfVal = appTop + el.offsetTop + el.offsetHeight/2
             if( mouseY > elHalfVal) { 
@@ -226,7 +241,7 @@
             event.preventDefault()
 
             let el = event.target
-            const isDragzone = el.classList.contains('container') || app.contains(el)
+            const isDragzone = el.tagName === 'TR' || app.contains(el)
             
             if (isDragzone) {
                 // DragZone 이면 엘리먼트 이동
@@ -248,6 +263,7 @@
                 }
 
                 draggedEl.removeAttribute('draggable')
+                draggedEl.dataset.dragged = false
                 originalEl.remove()
             } else {
                 // DragZone 외부이면 원래의 상태로 변경
@@ -257,10 +273,11 @@
                 delete targetedEl.dataset.pos
                 delete originalEl.dataset.original
             }
-            app.dataset.drag = false
+
+            // app.dataset.drag = false
         })
 
-        app.querySelectorAll('.dropzone')
+        app.querySelectorAll('tr')
             .forEach( el => addEvents(el) )
 
     </script>

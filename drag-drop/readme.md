@@ -31,5 +31,9 @@
 - 04 _ Table에 적용.
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/04.html)
 
-- 04-2 _ Table, Animation
+- 04-2 _ Table, Animation 적용
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/04-2.html)
+
+
+## 소견
+- Table 마크업은 적용하기가 더 힘들다. css, js 두 가지 면에서 더 수고가 들어간다.
