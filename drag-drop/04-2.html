@@ -76,23 +76,10 @@
         tr[data-original="true"] * {
             overflow: hidden;
             height: 0;
-            padding: 0;
+            padding: 0; 
             border: none;
             line-height: 0;
         }
-
-        /* tr[data-dragged="true"] {
-            overflow: visible;
-            height: var(--height);
-        } 
-        tr[data-dragged="true"] .text {
-            height: 50px;
-        }
-        tr[data-dragged="true"] .button {
-            line-height: auto;
-        }  */
-
-        
         
         tr[data-pos="top"] td ,
         tr[data-pos="bottom"] td{
@@ -180,13 +167,12 @@
                 // app.dataset.drag = false
             })
 
-            el.addEventListener("dragstart", () => {
+            el.addEventListener("dragstart", (event) => {
                 draggedEl = el.cloneNode(true)
-                draggedEl.dataset.dragged = true
+                // draggedEl.dataset.dragged = true
                 addEvents(draggedEl)
                 originalEl = el
                 originalEl.dataset.original = true
-                console.log(originalEl, draggedEl)
             })
 
             // el.addEventListener("dragend", () => {
@@ -263,7 +249,7 @@
                 }
 
                 draggedEl.removeAttribute('draggable')
-                draggedEl.dataset.dragged = false
+                // delete draggedEl.dataset.dragged 
                 originalEl.remove()
             } else {
                 // DragZone 외부이면 원래의 상태로 변경
