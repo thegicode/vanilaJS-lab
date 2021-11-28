@@ -38,7 +38,7 @@
         tr {
             height: var(--height);
             background-color: #fff;
-            transition: height 0.3s ease;
+            transition: all 0.3s ease;
         }
 
         
@@ -48,7 +48,6 @@
             border-top: solid 1px #ddd;
             border-bottom: solid 1px #ddd;
             background-color: #e5eff9;
-            transition: height 0.3s ease;
         }
 
         
@@ -72,17 +71,12 @@
             text-align: center;
         }
 
-        tr[data-original="true"],
-        tr[data-original="true"] * {
-            overflow: hidden;
-            height: 0;
-            padding: 0; 
-            border: none;
-            line-height: 0;
+        tr[data-original="true"] {
+            visibility: collapse;
         }
         
-        tr[data-pos="top"] td ,
-        tr[data-pos="bottom"] td{
+        tr[data-pos="top"],
+        tr[data-pos="bottom"] {
             height: calc(var(--height) * 2.2);
         }
         tr[data-pos="top"]{
@@ -150,7 +144,7 @@
 
     <script>
 
-        const app = document.querySelector('table')
+        const app = document.querySelector('tbody')
         const appTop = app.offsetTop
         let originalEl, draggedEl, targetedEl
         
@@ -172,7 +166,9 @@
                 // draggedEl.dataset.dragged = true
                 addEvents(draggedEl)
                 originalEl = el
-                originalEl.dataset.original = true
+                setTimeout( () => {
+                    originalEl.dataset.original = true
+                }, 1)
             })
 
             // el.addEventListener("dragend", () => {
@@ -202,7 +198,7 @@
             event.preventDefault()
             let el = event.target
 
-            const isDragzone = el.tagName === 'TABLE' || app.contains(el)
+            const isDragzone = el.tagName === 'TBODY' || app.contains(el)
             if (!isDragzone) return
 
             if ( el.tagName !== 'TR' ) {
@@ -227,7 +223,7 @@
             event.preventDefault()
 
             let el = event.target
-            const isDragzone = el.tagName === 'TR' || app.contains(el)
+            const isDragzone = el.tagName === 'TBODY' || app.contains(el)
             
             if (isDragzone) {
                 // DragZone 이면 엘리먼트 이동
@@ -256,7 +252,7 @@
                 
                 draggedEl.remove()
                 originalEl.removeAttribute('draggable')
-                delete targetedEl.dataset.pos
+                targetedEl && delete targetedEl.dataset.pos
                 delete originalEl.dataset.original
             }
 
