@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>05 | Drag and drop</title>
+    <style>
+        :root {
+            --height: 50px;
+        }
+        body {
+            margin: 2rem;
+        }
+        .container {
+            display: table;
+            /* table-layout: fixed; */
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .container[data-drag="true"] [role="row"] [role="cell"] {
+            pointer-events: none;
+        }
+        .colgroup {
+            display: table-column-group;
+        }
+        .col {
+            display: table-column;
+        }
+        .thead {
+            display: table-header-group;
+        }
+        .tbody {
+            display: table-row-group;
+        }
+        [role="rowgroup"] {
+            width: 100%;
+        }
+        [role="row"] {
+            display: table-row;
+            height: var(--height);
+            transition: all 0.3s ease;
+        }
+        [role="columnheader"],
+        [role="cell"] {
+            display: table-cell;
+            height: 100%;
+            box-sizing: border-box;
+            padding: 1rem;
+            border-bottom: solid 1px #d6dfe9;
+            background-color: #e5eff9;
+            color: rgba(0, 0, 0, 0.7);
+        }
+        [role="cell"]:first-child {
+            padding: 0;
+        }
+        [role="cell"] button {
+            width: 100%;
+            height: var(--height);
+            border: none;
+            background-color: #d1e2f3;
+            font-size: 11px;
+        }
+        .row[data-original="true"] {
+            visibility: collapse;
+        }
+        .row[data-pos="top"],
+        .row[data-pos="bottom"] {
+            height: calc(var(--height) * 2.2);
+        }
+        .row[data-pos="top"] [role="cell"] {
+            vertical-align: bottom;
+        }
+        .row[data-pos="bottom"] [role="cell"] {
+            vertical-align: top;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div role="table" class="container">
+        <div role="rowgroup" class="thead">
+            <div role="row">
+                <span role="columnheader"></span>
+                <span role="columnheader">항목1</span>
+                <span role="columnheader">항목2</span>
+            </div>
+        </div>
+        <div role="rowgroup" class="tbody">
+            <div role="row" class="row" data-index="0">
+                <span role="cell">
+                    <button>D</button>
+                </span>
+                <span role="cell">가</span>
+                <span role="cell">000</span>
+            </div>
+            <div role="row" class="row" data-index="1">
+                <span role="cell">
+                    <button>D</button>
+                </span>
+                <span role="cell">나</span>
+                <span role="cell">111egogoeogoegoeggogo</span>
+            </div>
+            <div role="row" class="row" data-index="2">
+                <span role="cell">
+                    <button>D</button>
+                </span>
+                <span role="cell">다</span>
+                <span role="cell">222</span>
+            </div>
+            <div role="row" class="row" data-index="3">
+                <span role="cell">
+                    <button>D</button>
+                </span>
+                <span role="cell">라</span>
+                <span role="cell">333</span>
+            </div>
+            <div role="row" class="row" data-index="4">
+                <span role="cell">
+                    <button>D</button>
+                </span>
+                <span role="cell">마</span>
+                <span role="cell">444</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const app = document.querySelector('.tbody')
+        let originalEl, draggedEl, targetedEl
+
+        const addEvents = el => {
+            const buttonEl = el.querySelector('button')
+
+            buttonEl.addEventListener('mousedown', () => {
+                el.draggable = true
+            })  
+
+            buttonEl.addEventListener('mouseup', () => {
+                el.removeAttribute('draggable')
+            })
+
+            el.addEventListener("dragstart", () => {
+                draggedEl = el.cloneNode(true)
+                addEvents(draggedEl)
+                originalEl = el
+
+                setTimeout( () => {
+                    originalEl.dataset.original = true
+                }, 1)
+            })
+
+            // el.addEventListener("dragend", () => {
+            // });
+
+            // el.addEventListener('dragover', () => {
+            // })
+
+            el.addEventListener("dragenter", () => {
+                // 이전 targetedEl의 data 속성 제거
+                if ( targetedEl && targetedEl !== el ) {
+                    delete targetedEl.dataset.pos
+                }
+                targetedEl = el
+            })
+
+            // el.addEventListener('dragleave', () => {
+            // })
+
+            // el.addEventListener('drop', () => {
+            // })
+
+        }
+
+        document.addEventListener("dragover", event => {
+            event.preventDefault()
+            let el = event.target
+
+            const isDragzone = el.classList.contains('tbody') || app.contains(el)
+            if (!isDragzone) return
+
+            if (el.classList.contains('row') === false) {
+                el = el.closest('.row')
+            }
+            if( el === originalEl ) {
+                return
+            }
+
+            const mouseY = event.clientY
+            const elHalfVal = el.offsetTop + el.offsetHeight/2
+            if( mouseY > elHalfVal) { 
+                // 마우스 위치가 el의 절반 위치보다 크면
+                el.dataset.pos = 'bottom'
+            } else { 
+                // 마우스 위치가 el의 절반 위치보다 작으면
+                el.dataset.pos = 'top'
+            }
+        })
+
+        document.addEventListener("drop", event => {
+            event.preventDefault()
+
+            let el = event.target
+            const isDragzone = el.classList.contains('tbody') || app.contains(el)
+
+            if (isDragzone) {
+                // DragZone 이면 엘리먼트 이동
+
+                if (el.classList.contains('row') === false) {
+                    el = el.closest('.row')
+                }
+
+                delete el.dataset.pos
+
+                const mouseY = event.clientY
+                const elHalfVal = el.offsetTop + el.offsetHeight/2
+                if( mouseY > elHalfVal) {
+                    // 마우스 위치가 el의 절반 위치보다 크면 el 뒤로 옮긴다.
+                    el.after(draggedEl)
+                } else {
+                    // 마우스 위치가 el의 절반 위치보다 작으면 el 앞으로 옮긴다.
+                    el.before(draggedEl)
+                }
+
+                draggedEl.removeAttribute('draggable')
+                originalEl.remove()
+            } else {
+                // DragZone 외부이면 원래의 상태로 변경
+                
+                draggedEl.remove()
+                originalEl.removeAttribute('draggable')
+                targetedEl && delete targetedEl.dataset.pos
+                delete originalEl.dataset.original
+            }
+            app.dataset.drag = false
+        })
+
+        app.querySelectorAll('.row')
+            .forEach( el => addEvents(el) )
+
+    </script>
+    
+</body>
+</html>
