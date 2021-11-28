@@ -5,13 +5,18 @@ const _clonedNode = (node) => {
     return node.content.firstElementChild.cloneNode(true)
 }
 
+
 const App = () => {
 
     const app = document.querySelector('#root')
+    const tableEl = app.querySelector('table')
     const tbodyEl = app.querySelector('tbody')
     const templateEl = document.querySelector('template')
 
-    let activeTrNode;
+    const tableTopVal = tableEl.offsetTop
+
+    let activeTrNode
+    let originalEl, draggedEl, targetedEl
 
     const renderSum = () => {
         Sum(DATA, app)
@@ -25,6 +30,7 @@ const App = () => {
         const confirmButton = node.querySelector('button[name="confirm"]')
         const deleteButton = node.querySelector('button[name="delete"]')
         const cancelButton = node.querySelector('button[name="cancel"]')
+        const draggerButton = node.querySelector('button[name="dragger"]')
 
         let type = 'update'
         let index = idx
@@ -90,6 +96,31 @@ const App = () => {
             deleteItem(index)
             renderTable()
         })
+
+
+        draggerButton.addEventListener('mousedown', () => {
+            node.draggable = true
+        })
+        draggerButton.addEventListener('mouseup', () => {
+            node.removeAttribute('draggable')
+        })
+
+        node.addEventListener("dragstart", (event) => {
+            draggedEl = node.cloneNode(true)
+            addItemEvents(draggedEl)
+            originalEl = node
+            setTimeout( () => {
+                originalEl.dataset.original = true
+            }, 1)
+        })
+
+        node.addEventListener("dragenter", () => {
+            // 이전 targetedEl의 data 속성 제거
+            if ( targetedEl && targetedEl !== node ) {
+                delete targetedEl.dataset.pos
+            }
+            targetedEl = node
+        })
         
     }
 
@@ -114,6 +145,7 @@ const App = () => {
 
         renderSum()
     }
+
 
     const addEvents = () => {
 
@@ -141,6 +173,73 @@ const App = () => {
                 activeTrNode = null
             }
         })
+
+        document.addEventListener("dragover", event => {
+
+            event.preventDefault()
+            let el = event.target
+
+            const isDragzone = el.tagName === 'TBODY' || tbodyEl.contains(el)
+
+            if (!isDragzone) return
+
+            if ( el.tagName !== 'TR' ) {
+                el = el.closest('tr')
+            }
+            if( el === originalEl ) {
+                return
+            }
+            
+            const mouseY = event.clientY
+            const elHalfVal = tableTopVal + el.offsetTop + el.offsetHeight/2
+            if( mouseY > elHalfVal) { 
+                // 마우스 위치가 el의 절반 위치보다 크면
+                el.dataset.pos = 'bottom'
+            } else { 
+                // 마우스 위치가 el의 절반 위치보다 작으면
+                el.dataset.pos = 'top'
+            }
+        })
+
+        document.addEventListener("drop", event => {
+            event.preventDefault()
+
+            let el = event.target
+            const isDragzone = el.tagName === 'TBODY' || tbodyEl.contains(el)
+            
+            if (isDragzone) {
+                // DragZone 이면 엘리먼트 이동
+
+                if ( el.tagName !== 'TR' ) {
+                    el = el.closest('tr')
+                }
+
+                delete el.dataset.pos
+
+                const mouseY = event.clientY
+                const elHalfVal = tableTopVal + el.offsetTop + el.offsetHeight/2
+                if( mouseY > elHalfVal) {
+                    // 마우스 위치가 el의 절반 위치보다 크면 el 뒤로 옮긴다.
+                    el.after(draggedEl)
+                } else {
+                    // 마우스 위치가 el의 절반 위치보다 작으면 el 앞으로 옮긴다.
+                    el.before(draggedEl)
+                }
+
+                draggedEl.removeAttribute('draggable')
+                // delete draggedEl.dataset.dragged 
+                originalEl.remove()
+            } else {
+                // DragZone 외부이면 원래의 상태로 변경
+                draggedEl.remove()
+                originalEl.removeAttribute('draggable')
+                targetedEl && delete targetedEl.dataset.pos
+                delete originalEl.dataset.original
+            }
+
+        })
+        
+
     }
 
     renderTable()

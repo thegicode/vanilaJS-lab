@@ -1,3 +1,7 @@
+:root {
+    --height: 50px;
+}
+
 html {
     height: 100%;
 }
@@ -26,46 +30,15 @@ body {
         }
     }
     
-    tbody tr:hover,
-    tfoot tr:hover {
-        background-color: rgba(10, 200, 100, 0.02);
-    }
-
-    th, td {
-        box-sizing: border-box;
-        height: 50px;
-        padding: 10px 1rem;
-        border: solid 1px rgba(0, 0, 0, 0.1);
-        color: rgba(0, 0, 0, 0.7);
-    }
-
-    tbody {
-        .amount, 
-        .price {
-            padding: 0;
-        }
-    }
-
-    input[type="number"]{
-        box-sizing: border-box;
-        width: 100%;
-        height: 100%;
-        padding-left: 1rem;
-        padding-right: 10px;
-        border: none;
-        background-color: transparent;
-        font-size: 1rem;
-        color: rgba(0, 0, 0, 0.7);
-        &:invalid {
-            outline-color:rgba(255, 0, 0, 0.5);
-            background-color: rgba(255, 0, 0, 0.1);
-        }
-        &::-webkit-inner-spin-button{
-            display: none;
-        }
-    }
-
+    // tbody tr:hover,
+    // tfoot tr:hover {
+    //     background-color: #f2fffc;
+    // }
+    
     tr {
+        height: var(--height);
+        background-color: #fff;
+        
         button[name="delete"] {
             display: inline-block;
         }
@@ -83,15 +56,65 @@ body {
                 display: inline-block;
             }
         }
+        
     }
 
-    
+    tbody tr {
+        // transition: all 0.2s ease;
+        // &[data-original="true"] {
+        //     visibility: collapse;
+        // }
+        // &[data-pos="top"],
+        // &[data-pos="bottom"] {
+        //     height: calc(var(--height) * 2.2);
+        // }
+        &[data-pos="top"] {
+            vertical-align: bottom;
+        }
+        &[data-pos="bottom"] {
+            vertical-align: top;
+        }
+    }
+
+    th, td {
+        box-sizing: border-box;
+        height: var(--height);
+        padding: 10px 1rem;
+        border: solid 1px rgba(0, 0, 0, 0.1);
+        color: rgba(0, 0, 0, 0.7);
+    }
+
+    tbody {
+        .amount, 
+        .price {
+            padding: 0;
+        }
+    }
+
+    input[type="number"]{
+        box-sizing: border-box;
+        width: 100%;
+        height: var(--height);
+        padding-left: 1rem;
+        padding-right: 10px;
+        border: none;
+        background-color: transparent;
+        font-size: 1rem;
+        color: rgba(0, 0, 0, 0.7);
+        &:invalid {
+            outline-color:rgba(255, 0, 0, 0.5);
+            background-color: rgba(255, 0, 0, 0.1);
+        }
+        &::-webkit-inner-spin-button{
+            display: none;
+        }
+    }
 
     .dragger {
         padding: 0;
         button {
             width: 100%;
-            height: 100%;
+            height: var(--height);
             border: none;
             background-color: rgba(0, 0, 0, 0);
             font-size: 1.5rem;
