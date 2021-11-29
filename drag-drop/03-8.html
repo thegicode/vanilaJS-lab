@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03-8 | Drag and drop</title>
+    <style>
+
+        :root {
+            --height: 50px;
+        }
+
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;;
+        }
+
+        .root {
+            height: 100%;
+            box-sizing: border-box;
+            padding: 5rem 3rem 3rem;
+        }
+        
+        .container {
+            border: solid 1px black;
+        }
+        .container[data-drag="true"] .dropzone * {
+            pointer-events: none;
+        }
+
+        .dropzone {
+            position: relative; 
+            top: 0;
+            height: var(--height);
+            box-sizing: border-box;
+            border-bottom: solid 1px #cfe0f5;
+            background-color: #fff;
+
+            display: flex;
+            text-align: center;
+
+            transition: all 0.3s ease;
+        }
+        .dropzone button {
+            height: var(--height);
+            padding: 0 8px;
+        }
+        .dropzone .text {
+            flex: 1;
+
+            height: 49px;
+            background-color: #e5eff9;
+            line-height: var(--height);
+
+        }
+        .dropzone[data-origin="true"] {
+            opacity: 0;
+            /* z-index: 0; */
+        }
+        .dropzone[data-origin="true"] ~ .dropzone {
+            top: -50px;
+        }
+        .dropzone[data-pos="top"],
+        .dropzone[data-pos="bottom"] {
+            /* z-index: 1; */
+        }
+        
+        .dropzone[data-origin="true"] ~ .dropzone[data-pos="top"],
+        .dropzone[data-origin="true"] ~ .dropzone[data-pos="top"] ~ .dropzone,
+        .dropzone[data-origin="true"] ~ .dropzone[data-pos="bottom"] ~ .dropzone {
+            top: 0;
+        }
+
+        .dropzone[data-pos="top"],
+        .dropzone[data-pos="top"] ~ .dropzone {
+            top: 50px;
+        }
+
+        .dropzone[data-pos="top"] ~ .dropzone[data-origin="true"] ~ .dropzone,
+        .dropzone[data-pos="bottom"] ~ .dropzone[data-origin="true"] ~ .dropzone {
+            top: 0;
+        }
+        .dropzone[data-pos="bottom"] ~ .dropzone {
+            top: 50px;
+        }
+        
+        .blank {
+            height: var(--height);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="root">
+
+        <div class="container" data-drag="false">
+            <div class="dropzone" data-index="0">
+                <button type="button">D</button>
+                <div class="text">0</div>
+            </div>
+            <div class="dropzone" data-index="1">
+                <button type="button">D</button>
+                <div class="text">1</div>
+            </div>
+            <div class="dropzone" data-index="2">
+                <button type="button">D</button>
+                <div class="text">2</div>
+            </div>
+            <div class="dropzone" data-index="3">
+                <button type="button">D</button>
+                <div class="text">3</div>
+            </div>
+            <div class="dropzone" data-index="4">
+                <button type="button">D</button>
+                <div class="text">4</div>
+            </div>
+        </div>
+        <div>footer</div>
+
+    </div>
+    
+    <div class="blank"></div>
+    <script>
+
+        const app = document.querySelector('.container')
+        let originEl, draggedEl, targetedEl
+        const blankEl = document.querySelector('.blank')
+
+        const addEvents = el => {
+            const buttonEl = el.querySelector('button')
+
+            buttonEl.addEventListener('mousedown', () => {
+                el.draggable = true
+                app.dataset.drag = true
+            })  
+
+            buttonEl.addEventListener('mouseup', () => {
+                el.removeAttribute('draggable')
+                app.dataset.drag = false
+            })
+
+            el.addEventListener("dragstart", () => {
+                draggedEl = el.cloneNode(true)
+                addEvents(draggedEl)
+                originEl = el
+                setTimeout( () => {
+                    originEl.dataset.origin = true
+                }, 10)
+            })
+
+            // el.addEventListener("dragend", () => {
+            // });
+
+            // el.addEventListener('dragover', () => {
+            // })
+
+            el.addEventListener("dragenter", () => {
+                // 이전 targetedEl의 data 속성 제거
+                if ( targetedEl && targetedEl !== el ) {
+                    delete targetedEl.dataset.pos
+                }
+                targetedEl = el
+            })
+
+            // el.addEventListener('dragleave', () => {
+            // })
+
+            // el.addEventListener('drop', () => {
+            // })
+
+        }
+
+        document.addEventListener("dragover", event => {
+            event.preventDefault()
+
+            const el = targetedEl
+            if( el === originEl ) {
+                return
+            }
+
+            const mouseY = event.clientY
+            const elHalfVal = el.offsetTop + el.offsetHeight/2
+
+            if( mouseY > elHalfVal) { 
+                // 마우스 위치가 el의 절반 위치보다 크면
+                el.dataset.pos = 'bottom'
+            } else { 
+                // 마우스 위치가 el의 절반 위치보다 작으면
+                el.dataset.pos = 'top'
+            }
+
+        })
+        
+        document.addEventListener("drop", event => {
+            event.preventDefault()
+            
+            const el = targetedEl
+
+            const mouseY = event.clientY
+            const elHalfVal = el.offsetTop + el.offsetHeight/2
+            if( mouseY > elHalfVal) {
+                // 마우스 위치가 el의 절반 위치보다 크면 el 뒤로 옮긴다.
+                el.after(draggedEl)
+            } else {
+                // 마우스 위치가 el의 절반 위치보다 작으면 el 앞으로 옮긴다.
+                el.before(draggedEl)
+            }
+
+            draggedEl.removeAttribute('draggable')
+            originEl.remove()
+            delete el.dataset.pos
+            
+            app.dataset.drag = false
+        })
+
+        app.querySelectorAll('.dropzone')
+            .forEach( el => addEvents(el) )
+
+    </script>
+    
+</body>
+</html>

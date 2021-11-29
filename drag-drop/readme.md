@@ -28,6 +28,9 @@
 - 03-7 _ 기타 마크업
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-7.html)
 
+- 03-8 _ 애니메이션 & 코드 개선
+[See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-8.html)
+
 - 04 _ Table에 적용.
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/04.html)
 
