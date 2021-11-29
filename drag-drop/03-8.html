@@ -25,10 +25,7 @@
         }
         
         .container {
-            border: solid 1px black;
-        }
-        .container[data-drag="true"] .dropzone * {
-            pointer-events: none;
+            border: solid 1px rgba(0, 0, 0, 0.1);
         }
 
         .dropzone {
@@ -37,7 +34,7 @@
             height: var(--height);
             box-sizing: border-box;
             border-bottom: solid 1px #cfe0f5;
-            background-color: #fff;
+            background-color: #e5eff9;
 
             display: flex;
             text-align: center;
@@ -45,29 +42,22 @@
             transition: all 0.3s ease;
         }
         .dropzone button {
-            height: var(--height);
-            padding: 0 8px;
+            width: 45px;
         }
         .dropzone .text {
             flex: 1;
 
             height: 49px;
-            background-color: #e5eff9;
+            
             line-height: var(--height);
 
         }
         .dropzone[data-origin="true"] {
             opacity: 0;
-            /* z-index: 0; */
         }
         .dropzone[data-origin="true"] ~ .dropzone {
             top: -50px;
         }
-        .dropzone[data-pos="top"],
-        .dropzone[data-pos="bottom"] {
-            /* z-index: 1; */
-        }
-        
         .dropzone[data-origin="true"] ~ .dropzone[data-pos="top"],
         .dropzone[data-origin="true"] ~ .dropzone[data-pos="top"] ~ .dropzone,
         .dropzone[data-origin="true"] ~ .dropzone[data-pos="bottom"] ~ .dropzone {
@@ -86,17 +76,19 @@
         .dropzone[data-pos="bottom"] ~ .dropzone {
             top: 50px;
         }
-        
-        .blank {
-            height: var(--height);
+
+        .others {
+            margin-top: 1rem;
+            color: #999;
         }
+        
     </style>
 </head>
 <body>
 
     <div class="root">
 
-        <div class="container" data-drag="false">
+        <div class="container">
             <div class="dropzone" data-index="0">
                 <button type="button">D</button>
                 <div class="text">0</div>
@@ -118,11 +110,11 @@
                 <div class="text">4</div>
             </div>
         </div>
-        <div>footer</div>
+
+        <div class="others">others</div>
 
     </div>
     
-    <div class="blank"></div>
     <script>
 
         const app = document.querySelector('.container')
@@ -134,12 +126,10 @@
 
             buttonEl.addEventListener('mousedown', () => {
                 el.draggable = true
-                app.dataset.drag = true
             })  
 
             buttonEl.addEventListener('mouseup', () => {
                 el.removeAttribute('draggable')
-                app.dataset.drag = false
             })
 
             el.addEventListener("dragstart", () => {
@@ -209,11 +199,10 @@
                 el.before(draggedEl)
             }
 
-            draggedEl.removeAttribute('draggable')
-            originEl.remove()
             delete el.dataset.pos
-            
-            app.dataset.drag = false
+            draggedEl.removeAttribute('draggable')
+            app.appendChild(originEl)
+            originEl.remove()
         })
 
         app.querySelectorAll('.dropzone')
