@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>03-8 | Drag and drop</title>
+    <title>03-9 | Drag and drop</title>
     <style>
 
         :root {
@@ -47,34 +47,23 @@
         .dropzone .text {
             flex: 1;
 
-            height: 49px;
+            height: var(--height);
             
             line-height: var(--height);
-
         }
         .dropzone[data-origin="true"] {
             opacity: 0;
         }
-        .dropzone[data-origin="true"] ~ .dropzone {
-            top: -50px;
-        }
-        .dropzone[data-origin="true"] ~ .dropzone[data-pos="top"],
-        .dropzone[data-origin="true"] ~ .dropzone[data-pos="top"] ~ .dropzone,
-        .dropzone[data-origin="true"] ~ .dropzone[data-pos="bottom"] ~ .dropzone {
-            top: 0;
-        }
 
         .dropzone[data-pos="top"],
-        .dropzone[data-pos="top"] ~ .dropzone {
-            top: 50px;
+        .dropzone[data-pos="top"] ~ .dropzone,
+        .dropzone[data-pos="bottom"] ~ .dropzone  {
+            top: var(--height);
         }
 
-        .dropzone[data-pos="top"] ~ .dropzone[data-origin="true"] ~ .dropzone,
-        .dropzone[data-pos="bottom"] ~ .dropzone[data-origin="true"] ~ .dropzone {
-            top: 0;
-        }
-        .dropzone[data-pos="bottom"] ~ .dropzone {
-            top: 50px;
+        /* Drop시 item이 하단으로 꿀렁거리는 현상 제거 */
+        .container[data-drop="true"] .dropzone {
+            transition: none;
         }
 
         .others {
@@ -148,6 +137,10 @@
             // })
 
             el.addEventListener("dragenter", () => {
+
+                // css 간편화를 위해, 중간에 originEl이 있으면 css가 복잡
+                app.appendChild(originEl)
+
                 // 이전 targetedEl의 data 속성 제거
                 if ( targetedEl && targetedEl !== el ) {
                     delete targetedEl.dataset.pos
@@ -189,6 +182,10 @@
             
             const el = targetedEl
 
+            app.dataset.drop = true
+
+            delete el.dataset.pos
+            
             const mouseY = event.clientY
             const elHalfVal = el.offsetTop + el.offsetHeight/2
             if( mouseY > elHalfVal) {
@@ -199,9 +196,13 @@
                 el.before(draggedEl)
             }
 
-            delete el.dataset.pos
-            draggedEl.removeAttribute('draggable')
             originEl.remove()
+            draggedEl.removeAttribute('draggable')
+
+            setTimeout( () => {
+                delete app.dataset.drop
+            }, 100)
+
         })
 
         app.querySelectorAll('.dropzone')
