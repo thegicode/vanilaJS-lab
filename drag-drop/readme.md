@@ -40,6 +40,9 @@
 - 04-2 _ Table, Animation 적용
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/04-2.html)
 
+- 04-3 _ 애니메이션 & 코드 개선
+[See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/04-3.html)
+
 - 05 _ Like Table에 적용.
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/05.html)
 
