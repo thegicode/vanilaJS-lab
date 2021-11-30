@@ -34,6 +34,10 @@
 - 03-9 _ 03-8의 상단 꿀렁거림 수정, css 코드 간편화
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-9.html)
 
+- 03-10 _ 다른 버전으로 해보았으나 3-9가 훨씬 좋다.
+[See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-10.html)
+
+
 - 04 _ Table에 적용.
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/04.html)
 
