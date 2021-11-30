@@ -139,7 +139,7 @@
 
                 // css 간편화를 위해, 중간에 originEl이 있으면 css가 복잡
                 app.appendChild(originEl)
-
+                
                 // 이전 targetedEl의 data 속성 제거
                 if ( targetedEl && targetedEl !== el ) {
                     delete targetedEl.dataset.pos
@@ -157,7 +157,6 @@
 
         document.addEventListener("dragover", event => {
             event.preventDefault()
-
             const el = targetedEl
             if( el === originEl ) {
                 return
@@ -178,22 +177,16 @@
         
         document.addEventListener("drop", event => {
             event.preventDefault()
-            
             const el = targetedEl
 
             app.dataset.drop = true
-            delete el.dataset.pos
-            
-            const mouseY = event.clientY
-            const elHalfVal = el.offsetTop + el.offsetHeight/2
-            if( mouseY > elHalfVal) {
-                // 마우스 위치가 el의 절반 위치보다 크면 el 뒤로 옮긴다.
+            if (el.dataset.pos === 'bottom') {
                 el.after(draggedEl)
             } else {
-                // 마우스 위치가 el의 절반 위치보다 작으면 el 앞으로 옮긴다.
                 el.before(draggedEl)
             }
 
+            delete el.dataset.pos
             originEl.remove()
             draggedEl.removeAttribute('draggable')
 
