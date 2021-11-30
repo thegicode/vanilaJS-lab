@@ -1,9 +1,10 @@
-import { DATA, addItem, updateItem, deleteItem } from './model.js'
+import { DATA, addItem, updateItem, deleteItem, exchangeItem } from './model.js'
 import Sum from './Sum.js'
 
 const _clonedNode = (node) => {
     return node.content.firstElementChild.cloneNode(true)
 }
+
 
 
 const App = () => {
@@ -16,7 +17,7 @@ const App = () => {
     const tableTopVal = tableEl.offsetTop
 
     let activeTrNode
-    let originalEl, draggedEl, targetedEl
+    let originEl, draggedEl, targetedEl
 
     const renderSum = () => {
         Sum(DATA, app)
@@ -63,6 +64,7 @@ const App = () => {
                 case 'add' :
                     const amount = amountEl.value
                     const price = priceEl.value
+                    node.dataset.index = DATA.length
                     addItem(amount, price)
                     break
                 case 'update' :
@@ -108,13 +110,16 @@ const App = () => {
         node.addEventListener("dragstart", (event) => {
             draggedEl = node.cloneNode(true)
             addItemEvents(draggedEl)
-            originalEl = node
+            originEl = node
             setTimeout( () => {
-                originalEl.dataset.original = true
+                originEl.dataset.origin = true
             }, 1)
         })
 
         node.addEventListener("dragenter", () => {
+            // css 간편화를 위해, 중간에 originEl이 있으면 css가 복잡
+            tbodyEl.appendChild(originEl)
+
             // 이전 targetedEl의 data 속성 제거
             if ( targetedEl && targetedEl !== node ) {
                 delete targetedEl.dataset.pos
@@ -135,6 +140,7 @@ const App = () => {
             const amountEl = node.querySelector('input[name="amount"]')
             const priceEl = node.querySelector('input[name="price"]')
 
+            node.dataset.index = index
             amountEl.value = amount
             priceEl.value = price
 
@@ -146,7 +152,13 @@ const App = () => {
         renderSum()
     }
 
-
+    const renderIndex = () => {
+        tbodyEl.querySelectorAll('tr')
+            .forEach( (el, index) => {
+                el.dataset.index = index
+            })
+    }
+    
     const addEvents = () => {
 
         const addButton = app.querySelector('button[name="add"]')
@@ -175,23 +187,14 @@ const App = () => {
         })
 
         document.addEventListener("dragover", event => {
-
             event.preventDefault()
-            let el = event.target
-
-            const isDragzone = el.tagName === 'TBODY' || tbodyEl.contains(el)
-
-            if (!isDragzone) return
-
-            if ( el.tagName !== 'TR' ) {
-                el = el.closest('tr')
-            }
-            if( el === originalEl ) {
+            let el = targetedEl
+            if( el === originEl ) {
                 return
             }
-            
+
             const mouseY = event.clientY
-            const elHalfVal = tableTopVal + el.offsetTop + el.offsetHeight/2
+            const elHalfVal = el.offsetTop + el.offsetHeight/2
             if( mouseY > elHalfVal) { 
                 // 마우스 위치가 el의 절반 위치보다 크면
                 el.dataset.pos = 'bottom'
@@ -203,47 +206,39 @@ const App = () => {
 
         document.addEventListener("drop", event => {
             event.preventDefault()
-
-            let el = event.target
-            const isDragzone = el.tagName === 'TBODY' || tbodyEl.contains(el)
+            let el = targetedEl
             
-            if (isDragzone) {
-                // DragZone 이면 엘리먼트 이동
-
-                if ( el.tagName !== 'TR' ) {
-                    el = el.closest('tr')
-                }
-
-                delete el.dataset.pos
-
-                const mouseY = event.clientY
-                const elHalfVal = tableTopVal + el.offsetTop + el.offsetHeight/2
-                if( mouseY > elHalfVal) {
-                    // 마우스 위치가 el의 절반 위치보다 크면 el 뒤로 옮긴다.
-                    el.after(draggedEl)
-                } else {
-                    // 마우스 위치가 el의 절반 위치보다 작으면 el 앞으로 옮긴다.
-                    el.before(draggedEl)
-                }
-
-                draggedEl.removeAttribute('draggable')
-                // delete draggedEl.dataset.dragged 
-                originalEl.remove()
+            tbodyEl.dataset.drop = true
+            const drggedIndex = draggedEl.dataset.index
+            const pos = el.dataset.pos || 'top'
+            if (pos === 'bottom') {
+                el.after(draggedEl)
             } else {
-                // DragZone 외부이면 원래의 상태로 변경
-                draggedEl.remove()
-                originalEl.removeAttribute('draggable')
-                targetedEl && delete targetedEl.dataset.pos
-                delete originalEl.dataset.original
+                el.before(draggedEl)
             }
+            exchangeItem(pos, drggedIndex, el.dataset.index)
+
+            delete el.dataset.pos
+            originEl.remove()
+            draggedEl.removeAttribute('draggable')
+
+            console.log(Array.from(DATA, item => item.amount))
+            renderIndex()
+
+            setTimeout( () => {
+                delete tbodyEl.dataset.drop
+            }, 100)
 
         })
-        
-
     }
 
     renderTable()
     addEvents()
+
+    // document.querySelector('#test')
+    //     .addEventListener('click', () => {
+    //         exchangeItem('top', 0, 2)
+    //     })
 
 }
 

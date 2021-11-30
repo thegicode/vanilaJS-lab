@@ -25,12 +25,14 @@ body {
   border-spacing: 0;
   border-collapse: collapse;
 }
-.table thead tr {
-  background-color: rgba(10, 100, 200, 0.05);
-}
 .table tr {
+  position: relative;
+  top: 0;
   height: var(--height);
+  box-sizing: border-box;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
   background-color: #fff;
+  transition: all 0.3s ease;
 }
 .table tr button[name=delete] {
   display: inline-block;
@@ -46,18 +48,17 @@ body {
 .table tr[data-focus=true] button[name=cancel] {
   display: inline-block;
 }
-.table tbody tr[data-pos=top] {
-  vertical-align: bottom;
-}
-.table tbody tr[data-pos=bottom] {
-  vertical-align: top;
+.table thead tr {
+  background-color: rgba(10, 100, 200, 0.05);
 }
 .table th, .table td {
   box-sizing: border-box;
   height: var(--height);
   padding: 10px 1rem;
-  border: solid 1px rgba(0, 0, 0, 0.1);
   color: rgba(0, 0, 0, 0.7);
+}
+.table tbody[data-drop=true] tr {
+  transition: none;
 }
 .table tbody .amount,
 .table tbody .price {
@@ -105,6 +106,13 @@ body {
 }
 .table button:hover {
   border-color: rgba(0, 0, 0, 0.1);
+}
+
+tr[data-origin=true] {
+  opacity: 0;
+}
+tr[data-pos=top], tr[data-pos=top] ~ tr, tr[data-pos=bottom] ~ tr {
+  top: var(--height);
 }
 
 .app-actions {
