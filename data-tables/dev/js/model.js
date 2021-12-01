@@ -27,36 +27,54 @@ const addItem = (amount, price) => {
         amount: Number(amount),
         price: Number(price)
     })
+
+    console.log(Array.from(DATA, item => item.amount))
 }
 
 const updateItem = (index, key, value) => {
     DATA[index][key] = Number(value)
+
+    console.log(Array.from(DATA, item => item.amount))
 }
 
 const deleteItem = (index) => {
     return DATA.splice(index, 1)
+
+    console.log(Array.from(DATA, item => item.amount))
 }
 
 
-const exchangeItem = (type, desIndex, targetIdx) => {
-    // console.log(type, desIndex, targetIdx)
+const exchangeItem = (type, targetIndex, draggedIndex) => {
+    console.log(type, targetIndex, draggedIndex)
+    let arr, item
+    
     switch(type) {
         case 'top':
-            if (desIndex < targetIdx) {
-                const arr = DATA.splice(0, targetIdx)
-                const item = arr.splice(desIndex, 1)
-                DATA = [...arr, ...item, ...DATA]
+            if (targetIndex > draggedIndex) {
+                arr = DATA.splice(0, targetIndex)
+                item = arr.splice(draggedIndex, 1)
             } else {
-                const item = DATA.splice(desIndex, 1)
-                const arr = DATA.splice(0, targetIdx)
-                DATA = [...arr, ...item, ...DATA]
+                item = DATA.splice(draggedIndex, 1)
+                arr = DATA.splice(0, targetIndex)
             }
             break
         case 'bottom':
+            if (targetIndex > draggedIndex) {
+                DATA = [1, 2, 3, 0, 4]
+                arr = DATA.splice(0, targetIndex + 1)
+                item = arr.splice(draggedIndex, 1)
+                console.log([...arr, ...item, ...DATA])
+            } else {
+                item = DATA.splice(draggedIndex, 1)
+                arr = DATA.splice(0, targetIndex + 1)
+            }
             break
         default :
             console.log('exchangeItem')
     }
+    DATA = [...arr, ...item, ...DATA]
+
+    console.log(Array.from(DATA, item => item.amount))
 }
 
 

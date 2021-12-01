@@ -120,6 +120,18 @@ const App = () => {
             // css 간편화를 위해, 중간에 originEl이 있으면 css가 복잡
             tbodyEl.appendChild(originEl)
 
+            // originEl은 targetEl의 대상이 아니다.
+            if( node === originEl || node === targetedEl ) {
+                console.log('dragenter')
+                console.log('node', node)
+                console.log('originEl', originEl)
+                console.log('targetedEl', targetedEl)
+                return
+            }
+
+            // console.log('originEl', originEl)
+            // console.log('targetedEl', targetedEl)
+
             // 이전 targetedEl의 data 속성 제거
             if ( targetedEl && targetedEl !== node ) {
                 delete targetedEl.dataset.pos
@@ -188,10 +200,17 @@ const App = () => {
 
         document.addEventListener("dragover", event => {
             event.preventDefault()
-            let el = targetedEl
-            if( el === originEl ) {
+            
+            if (!targetedEl) {
+                originEl.removeAttribute('draggable')
+                delete originEl.dataset.origin
                 return
             }
+
+            let el = targetedEl
+            // if( el === originEl ) {
+            //     return
+            // }
 
             const mouseY = event.clientY
             const elHalfVal = el.offsetTop + el.offsetHeight/2
@@ -206,23 +225,28 @@ const App = () => {
 
         document.addEventListener("drop", event => {
             event.preventDefault()
+            if (!targetedEl) {
+                console.log(draggedEl)
+                debugger
+                return
+            }
+
             let el = targetedEl
             
             tbodyEl.dataset.drop = true
-            const drggedIndex = draggedEl.dataset.index
+            const draggedIndex = draggedEl.dataset.index
             const pos = el.dataset.pos || 'top'
             if (pos === 'bottom') {
                 el.after(draggedEl)
             } else {
                 el.before(draggedEl)
             }
-            exchangeItem(pos, drggedIndex, el.dataset.index)
+            exchangeItem(pos, el.dataset.index, draggedIndex)
 
             delete el.dataset.pos
             originEl.remove()
             draggedEl.removeAttribute('draggable')
 
-            console.log(Array.from(DATA, item => item.amount))
             renderIndex()
 
             setTimeout( () => {
@@ -235,10 +259,10 @@ const App = () => {
     renderTable()
     addEvents()
 
-    // document.querySelector('#test')
-    //     .addEventListener('click', () => {
-    //         exchangeItem('top', 0, 2)
-    //     })
+    document.querySelector('#test')
+        .addEventListener('click', () => {
+            exchangeItem('bottom', 2, 0)
+        })
 
 }
 
