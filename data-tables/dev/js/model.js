@@ -44,9 +44,12 @@ const deleteItem = (index) => {
 }
 
 
-const exchangeItem = (type, targetIndex, draggedIndex) => {
-    console.log(type, targetIndex, draggedIndex)
+const exchangeItem = (type, targetIdx, draggedIdx) => {
+    console.log(type, targetIdx, draggedIdx)
     let arr, item
+
+    const targetIndex = Number(targetIdx)
+    const draggedIndex = Number(draggedIdx)
     
     switch(type) {
         case 'top':
@@ -71,7 +74,6 @@ const exchangeItem = (type, targetIndex, draggedIndex) => {
             console.log('exchangeItem')
     }
     DATA = [...arr, ...item, ...DATA]
-
     console.log(Array.from(DATA, item => item.amount))
 }
 
