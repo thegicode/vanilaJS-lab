@@ -60,10 +60,8 @@ const exchangeItem = (type, targetIndex, draggedIndex) => {
             break
         case 'bottom':
             if (targetIndex > draggedIndex) {
-                DATA = [1, 2, 3, 0, 4]
                 arr = DATA.splice(0, targetIndex + 1)
                 item = arr.splice(draggedIndex, 1)
-                console.log([...arr, ...item, ...DATA])
             } else {
                 item = DATA.splice(draggedIndex, 1)
                 arr = DATA.splice(0, targetIndex + 1)
