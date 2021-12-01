@@ -1,5 +1,5 @@
 
-const DragAndDrop = (tbodyEl) => {
+const dragAndDrop = (tbodyEl) => {
 
     let originEl, draggedEl, targetedEl
 
@@ -105,4 +105,4 @@ const DragAndDrop = (tbodyEl) => {
     
 }
 
-export default DragAndDrop
+export default dragAndDrop

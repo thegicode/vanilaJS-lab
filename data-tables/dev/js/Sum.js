@@ -1,5 +1,5 @@
 
-const Sum = (storeData, app) => {
+const sum = (storeData, app) => {
 
     const el = app.querySelector('tfoot')
     const sum = {
@@ -15,4 +15,4 @@ const Sum = (storeData, app) => {
 
 }
 
-export default Sum
+export default sum

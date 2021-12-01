@@ -1,6 +1,6 @@
 import modelFactory from './model.js'
-import Sum from './Sum.js'
-import DragAndDropFactory from './DragAndDrop.js'
+import sum from './sum.js'
+import dragAndDropFactory from './dragAndDrop.js'
 
 const __clonedNode = (node) => {
     return node.content.firstElementChild.cloneNode(true)
@@ -15,7 +15,7 @@ const App = () => {
 
     const { store, getState, ...events } = modelFactory()
     const { addItem, updateItem, deleteItem, exchangeItem } = events
-    const dragAndDrop = DragAndDropFactory(tbodyEl)
+    const dragAndDrop = dragAndDropFactory(tbodyEl)
 
     let activeTrNode
 
@@ -27,7 +27,7 @@ const App = () => {
     }
 
     const renderSum = () => {
-        Sum(store.data, app)
+        sum(store.data, app)
     }
 
     const addItemEvents = (node, idx) => {
