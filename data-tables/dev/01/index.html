@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Tables</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+
+    <div class="root" id="root">
+        <h1>Data Tables</h1>
+
+        <!-- <form> -->
+            <table class="table" id="table">
+                <colgroup>
+                    <col width="10%">
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Amount</th>
+                        <th>Price</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="2">수량 합계</th>
+                        <td colspan="2" class="amount"></td>
+                    </tr>
+                    <tr>
+                        <th colspan="2">금액 합계</th>
+                        <td colspan="2" class="price"></td>
+                    </tr>
+                </tfoot>
+            </table>
+
+            <div class="app-actions">
+                <button type="button" name="add">Add</button>
+            </div>
+        <!-- </form> -->
+    </div>
+
+    <template>
+        <tr>
+            <td class="dragger">
+                <button type="button" name="dragger" tabindex="-1">=</button>
+            </td>
+            <td class="amount">
+                <input type="number" 
+                    name="amount" 
+                    min="0" max="10000" 
+                    placeholder="수량을 입력하세요."
+                    required>
+            </td>
+            <td class="price">
+                <input type="number" 
+                    name="price" 
+                    min="0" max="1000000" 
+                    placeholder="단가를 입력하세요."
+                    required>
+            </td>
+            <td class="actions">
+                <button type="button" class="button" name="delete">Delete</button>
+                <button type="button" class="button" name="confirm">완료</button>
+                <button type="button" class="button" name="cancel">취소</button>
+            </td>
+        </tr>
+    </template>
+
+    <button id="test">TEST Button</button>
+    <style>
+        #test {
+            margin-left: 2rem;
+        }
+    </style>
+
+    <script type="module" src="js/index.js"></script>
+</body>
+</html>
