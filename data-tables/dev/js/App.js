@@ -122,15 +122,8 @@ const App = () => {
 
             // originEl은 targetEl의 대상이 아니다.
             if( node === originEl || node === targetedEl ) {
-                console.log('dragenter')
-                console.log('node', node)
-                console.log('originEl', originEl)
-                console.log('targetedEl', targetedEl)
                 return
             }
-
-            // console.log('originEl', originEl)
-            // console.log('targetedEl', targetedEl)
 
             // 이전 targetedEl의 data 속성 제거
             if ( targetedEl && targetedEl !== node ) {
@@ -226,8 +219,6 @@ const App = () => {
         document.addEventListener("drop", event => {
             event.preventDefault()
             if (!targetedEl) {
-                console.log(draggedEl)
-                debugger
                 return
             }
 
