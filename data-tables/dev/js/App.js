@@ -9,7 +9,6 @@ const __clonedNode = (node) => {
 const App = () => {
 
     const app = document.querySelector('#root')
-    const tableEl = app.querySelector('table')
     const tbodyEl = app.querySelector('tbody')
     const templateEl = document.querySelector('template')
 
@@ -75,6 +74,7 @@ const App = () => {
                     break
                 case 'update' :
                     inputEls.forEach( inputEl => {
+                        console.log('update', index)
                         updateItem(index, inputEl.name, inputEl.value)
                     })
                     break
