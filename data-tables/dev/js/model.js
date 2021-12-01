@@ -1,5 +1,11 @@
 
-let DATA = [
+const __cloneDeep = x => {
+    return JSON.parse(JSON.stringify(x))
+}
+  
+const __freeze = x => Object.freeze(__cloneDeep(x))
+
+const INITIAL_DATA = [
     {
         amount: 0,
         price: 1000
@@ -22,71 +28,82 @@ let DATA = [
     }
 ]
 
-const addItem = (amount, price) => {
-    DATA.push({
-        amount: Number(amount),
-        price: Number(price)
-    })
+export default () => {
 
-    console.log(Array.from(DATA, item => item.amount))
-}
+    let state = __cloneDeep(INITIAL_DATA)
 
-const updateItem = (index, key, value) => {
-    DATA[index][key] = Number(value)
-
-    console.log(Array.from(DATA, item => item.amount))
-}
-
-const deleteItem = (index) => {
-    return DATA.splice(index, 1)
-
-    console.log(Array.from(DATA, item => item.amount))
-}
-
-
-const exchangeItem = (type, targetIdx, draggedIdx) => {
-    console.log(type, targetIdx, draggedIdx)
-    let arr, item
-
-    const targetIndex = Number(targetIdx)
-    const draggedIndex = Number(draggedIdx)
-
-    const _splice1 = index => {
-        arr = DATA.splice(0, index)
-        item = arr.splice(draggedIndex, 1)
-    }
-    const _splice2 = index => {
-        item = DATA.splice(draggedIndex, 1)
-        arr = DATA.splice(0, index)
+    const store = {
+        get data() {
+            return __freeze(state)
+        }
     }
 
-    switch(type) {
-        case 'top':
-            if (targetIndex > draggedIndex) {
-                _splice1(targetIndex)
-            } else {
-                _splice2(targetIndex)
-            }
-            break
-        case 'bottom':
-            if (targetIndex > draggedIndex) {
-                _splice1(targetIndex + 1)
-            } else {
-                _splice2(targetIndex + 1)
-            }
-            break
-        default :
-            console.log('exchangeItem')
+    const addItem = (amount, price) => {
+        state.push({
+            amount: Number(amount),
+            price: Number(price)
+        })
+    
+        console.log(Array.from(state, item => item.amount))
     }
-    DATA = [...arr, ...item, ...DATA]
-    console.log(Array.from(DATA, item => item.amount))
+    
+    const updateItem = (index, key, value) => {
+        state[index][key] = Number(value)
+    
+        console.log(Array.from(state, item => item.amount))
+    }
+    
+    const deleteItem = (index) => {
+        const deleted = state.splice(index, 1)
+        console.log(Array.from(state, item => item.amount))
+        return deleted
+    }
+    
+    const exchangeItem = (type, targetIdx, draggedIdx) => {
+        console.log(type, targetIdx, draggedIdx)
+        let arr, item
+    
+        const targetIndex = Number(targetIdx)
+        const draggedIndex = Number(draggedIdx)
+
+        const _splice1 = index => {
+            arr = state.splice(0, index)
+            item = arr.splice(draggedIndex, 1)
+        }
+        const _splice2 = index => {
+            item = state.splice(draggedIndex, 1)
+            arr = state.splice(0, index)
+        }
+    
+        switch(type) {
+            case 'top':
+                if (targetIndex > draggedIndex) {
+                    _splice1(targetIndex)
+                } else {
+                    _splice2(targetIndex)
+                }
+                break
+            case 'bottom':
+                if (targetIndex > draggedIndex) {
+                    _splice1(targetIndex + 1)
+                } else {
+                    _splice2(targetIndex + 1)
+                }
+                break
+            default :
+                console.log('exchangeItem')
+        }
+        state = [...arr, ...item, ...state]
+        console.log(Array.from(state, item => item.amount))
+    }
+
+    return {
+        store,
+        addItem,
+        updateItem,
+        deleteItem,
+        exchangeItem
+    }
 }
 
 
-export {
-    DATA,
-    addItem,
-    updateItem,
-    deleteItem,
-    exchangeItem
-} 

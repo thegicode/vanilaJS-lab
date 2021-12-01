@@ -1,9 +1,13 @@
-import { DATA, addItem, updateItem, deleteItem, exchangeItem } from './model.js'
+import modelFactory from './model.js'
 import Sum from './Sum.js'
+
+const { store, getState, ...events } = modelFactory()
+const { addItem, updateItem, deleteItem, exchangeItem } = events
 
 const _clonedNode = (node) => {
     return node.content.firstElementChild.cloneNode(true)
 }
+
 
 const App = () => {
 
@@ -18,7 +22,7 @@ const App = () => {
     let originEl, draggedEl, targetedEl
 
     const renderSum = () => {
-        Sum(DATA, app)
+        Sum(store.data, app)
     }
 
     const addItemEvents = (node, idx) => {
@@ -35,7 +39,7 @@ const App = () => {
         let index = idx
         if (index === null) {
             type = 'add'
-            index = DATA.length
+            index = store.data.length
         }
 
         inputEls.forEach( inputEl => {
@@ -136,7 +140,7 @@ const App = () => {
         const el = tbodyEl
         el.innerHTML = ''
 
-        DATA.forEach( (data, index) => {
+        store.data.forEach( (data, index) => {
             const { amount, price } = data
 
             const node = _clonedNode(templateEl)
