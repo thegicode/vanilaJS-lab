@@ -50,24 +50,29 @@ const exchangeItem = (type, targetIdx, draggedIdx) => {
 
     const targetIndex = Number(targetIdx)
     const draggedIndex = Number(draggedIdx)
-    
+
+    const _splice1 = index => {
+        arr = DATA.splice(0, index)
+        item = arr.splice(draggedIndex, 1)
+    }
+    const _splice2 = index => {
+        item = DATA.splice(draggedIndex, 1)
+        arr = DATA.splice(0, index)
+    }
+
     switch(type) {
         case 'top':
             if (targetIndex > draggedIndex) {
-                arr = DATA.splice(0, targetIndex)
-                item = arr.splice(draggedIndex, 1)
+                _splice1(targetIndex)
             } else {
-                item = DATA.splice(draggedIndex, 1)
-                arr = DATA.splice(0, targetIndex)
+                _splice2(targetIndex)
             }
             break
         case 'bottom':
             if (targetIndex > draggedIndex) {
-                arr = DATA.splice(0, targetIndex + 1)
-                item = arr.splice(draggedIndex, 1)
+                _splice1(targetIndex + 1)
             } else {
-                item = DATA.splice(draggedIndex, 1)
-                arr = DATA.splice(0, targetIndex + 1)
+                _splice2(targetIndex + 1)
             }
             break
         default :
