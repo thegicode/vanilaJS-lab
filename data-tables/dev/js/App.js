@@ -4,7 +4,7 @@ import Sum from './Sum.js'
 const { store, getState, ...events } = modelFactory()
 const { addItem, updateItem, deleteItem, exchangeItem } = events
 
-const _clonedNode = (node) => {
+const __clonedNode = (node) => {
     return node.content.firstElementChild.cloneNode(true)
 }
 
@@ -66,7 +66,7 @@ const App = () => {
                 case 'add' :
                     const amount = amountEl.value
                     const price = priceEl.value
-                    node.dataset.index = DATA.length
+                    node.dataset.index = store.data.length
                     addItem(amount, price)
                     break
                 case 'update' :
@@ -82,13 +82,14 @@ const App = () => {
         })
 
         cancelButton.addEventListener('click', () => {
+            const storeData = store.data
             switch(type) {
                 case 'add' :
                     node.remove()
                     break
                 case 'update' :
-                    amountEl.value = DATA[index].amount
-                    priceEl.value = DATA[index].price
+                    amountEl.value = storeData[index].amount
+                    priceEl.value = storeData[index].price
                     break
                 default :
                     break
@@ -143,7 +144,7 @@ const App = () => {
         store.data.forEach( (data, index) => {
             const { amount, price } = data
 
-            const node = _clonedNode(templateEl)
+            const node = __clonedNode(templateEl)
             const amountEl = node.querySelector('input[name="amount"]')
             const priceEl = node.querySelector('input[name="price"]')
 
@@ -171,7 +172,7 @@ const App = () => {
         const addButton = app.querySelector('button[name="add"]')
 
         addButton.addEventListener('click', (e) => {
-            const node = _clonedNode(templateEl)
+            const node = __clonedNode(templateEl)
             tbodyEl.appendChild(node)
 
             addItemEvents(node, null)

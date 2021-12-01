@@ -1,12 +1,12 @@
 
-const Sum = (DATA, app) => {
+const Sum = (storeData, app) => {
 
     const el = app.querySelector('tfoot')
     const sum = {
         _amount: 0,
         _price: 0
     }
-    DATA.forEach( data => {
+    storeData.forEach( data => {
         sum._amount += data.amount
         sum._price += data.amount * data.price
     })
