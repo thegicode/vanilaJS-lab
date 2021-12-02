@@ -50,7 +50,7 @@ const item = () => {
                     break
                 case 'update' :
                     inputEls.forEach( inputEl => {
-                        updateItem(node.dataset.index, inputEl.name, inputEl.value)
+                        updateItem(index, inputEl.name, inputEl.value)
                     })
                     break
                 default :
@@ -67,9 +67,8 @@ const item = () => {
                     node.remove()
                     break
                 case 'update' :
-                    const idx = node.dataset.index
-                    amountEl.value = storeData[idx].amount
-                    priceEl.value = storeData[idx].price
+                    amountEl.value = storeData[index].amount
+                    priceEl.value = storeData[index].price
                     break
                 default :
                     break
@@ -81,6 +80,7 @@ const item = () => {
             deleteItem(index)
             renderTable()
         })
+
     }
 
     const getNode = (data, index, templateEl) => {
@@ -96,6 +96,7 @@ const item = () => {
         
         return node
     }
+
     
     return {
         getNode,

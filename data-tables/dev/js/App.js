@@ -59,6 +59,7 @@ const App = () => {
     const addEvents = () => {
 
         addButton.addEventListener('click', (e) => {
+
             const node = clonedNode(templateEl)
             tbodyEl.appendChild(node)
 
