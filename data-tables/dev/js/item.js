@@ -1,6 +1,8 @@
 import { clonedNode } from './helpers.js'
 
-const item = () => {
+const item = (app) => {
+
+    const templateEl = app.querySelector('template')
 
     const addEvents = (node, index, store, events, state, renderSum, renderTable) => {
         const { addItem, updateItem, deleteItem, exchangeItem } = events
@@ -31,7 +33,6 @@ const item = () => {
         })
 
         confirmButton.addEventListener('click', e => {
-
             if (amountEl.checkValidity() === false ) {
                 amountEl.focus()
                 return
@@ -45,8 +46,8 @@ const item = () => {
                 case 'add' :
                     const amount = amountEl.value
                     const price = priceEl.value
-                    node.dataset.index = index
                     addItem(amount, price)
+                    type = 'update'
                     break
                 case 'update' :
                     inputEls.forEach( inputEl => {
@@ -83,7 +84,7 @@ const item = () => {
 
     }
 
-    const getNode = (data, index, templateEl) => {
+    const getNode = (data, index) => {
         const { amount, price } = data
 
         const node = clonedNode(templateEl)
@@ -97,9 +98,17 @@ const item = () => {
         return node
     }
 
+    const getEmptyNode = (index) => {
+        const node = clonedNode(templateEl)
+        node.dataset.index = index
+        
+        return node
+    }
+
     
     return {
         getNode,
+        getEmptyNode,
         addEvents
     }
 

@@ -9,12 +9,11 @@ const App = () => {
     const app = document.querySelector('#root')
     const tbodyEl = app.querySelector('tbody')
     const addButton = app.querySelector('button[name="add"]')
-    const templateEl = app.querySelector('template')
 
     const { store, ...events } = modelFactory()
     const { exchangeItem } = events
 
-    const item = itemFactory()
+    const item = itemFactory(app)
     const dragAndDrop = dragAndDropFactory(tbodyEl)
 
     let state = {
@@ -48,7 +47,7 @@ const App = () => {
         el.innerHTML = ''
 
         store.data.forEach( (data, index) => {
-            const node = item.getNode(data, index, templateEl)
+            const node = item.getNode(data, index)
             addItemEvents(node, index)
             el.appendChild(node)
         })
@@ -59,13 +58,10 @@ const App = () => {
     const addEvents = () => {
 
         addButton.addEventListener('click', (e) => {
-
-            const node = clonedNode(templateEl)
-            tbodyEl.appendChild(node)
-
+            const node = item.getEmptyNode(store.data.length)
             addItemEvents(node, null)
+            tbodyEl.appendChild(node)
             node.querySelector('input').focus()
-        
         })
         
         addButton.addEventListener('focus', () => {
