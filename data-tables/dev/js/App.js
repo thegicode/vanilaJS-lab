@@ -1,4 +1,3 @@
-import { clonedNode } from './helpers.js'
 import modelFactory from './model.js'
 import sum from './sum.js'
 import itemFactory from './item.js'
@@ -6,9 +5,9 @@ import dragAndDropFactory from './dragAndDrop.js'
 
 const app = () => {
 
-    const app = document.querySelector('#root')
-    const tbodyEl = app.querySelector('tbody')
-    const addButton = app.querySelector('button[name="add"]')
+    const rootEl = document.querySelector('#root')
+    const tbodyEl = rootEl.querySelector('tbody')
+    const addButton = rootEl.querySelector('button[name="add"]')
 
     const { store, ...events } = modelFactory()
     const { exchangeItem } = events
@@ -24,7 +23,7 @@ const app = () => {
         }
     }
 
-    const item = itemFactory(app, store, events, state, renderSum, renderTable, dragAndDrop)
+    const item = itemFactory(rootEl, store, events, state, renderSum, renderTable, dragAndDrop)
 
     function renderIndex() {
         tbodyEl.querySelectorAll('tr')
@@ -34,7 +33,7 @@ const app = () => {
     }
 
     function renderSum() {
-        sum(store.data, app)
+        sum(store.data, rootEl)
     }
 
     function renderTable() {
@@ -65,7 +64,7 @@ const app = () => {
             }
         })
 
-        app.addEventListener('click', () => {
+        rootEl.addEventListener('click', () => {
             const activeNode = state.activeNode
             if (activeNode && document.activeElement.tagName !== 'INPUT') {
                 activeNode.dataset.focus = false
