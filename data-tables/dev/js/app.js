@@ -1,7 +1,7 @@
 import modelFactory from './model.js'
-import sum from './sum.js'
 import itemFactory from './item.js'
 import dragAndDropFactory from './dragAndDrop.js'
+import sum from './sum.js'
 
 const app = () => {
 

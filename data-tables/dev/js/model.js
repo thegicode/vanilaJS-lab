@@ -48,9 +48,11 @@ export default () => {
     }
     
     const updateItem = (index, key, value) => {
-        state[index][key] = Number(value)
-    
-        console.log(Array.from(state, item => item.amount))
+        const __val = Number(value)
+        if (state[index][key] !== __val ) {
+            state[index][key] = __val
+            console.log(Array.from(state, item => item.amount))
+        }
     }
     
     const deleteItem = (index) => {

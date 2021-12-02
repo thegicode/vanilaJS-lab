@@ -16,18 +16,7 @@ const item = (app, store, events, state, renderSum, renderTable, dragAndDrop) =>
 
         type = type || 'update' 
 
-        inputEls.forEach( inputEl => {
-            inputEl.addEventListener('focus', () => {
-                const activeNode = state.activeNode
-                if (activeNode && activeNode !== node ) {
-                    delete activeNode.dataset.focus
-                }
-                node.dataset.focus = true
-                state.activeNode = node
-            })
-        })
-
-        confirmButton.addEventListener('click', e => {
+        const handleUpdateItem = () => {
             if (amountEl.checkValidity() === false ) {
                 amountEl.focus()
                 return
@@ -36,7 +25,7 @@ const item = (app, store, events, state, renderSum, renderTable, dragAndDrop) =>
                 priceEl.focus()
                 return
             }
-
+    
             switch(type) {
                 case 'add' :
                     const amount = amountEl.value
@@ -55,7 +44,32 @@ const item = (app, store, events, state, renderSum, renderTable, dragAndDrop) =>
             }
             renderSum()
             node.dataset.focus = false
+        }
+
+        inputEls.forEach( inputEl => {
+            inputEl.addEventListener('focus', () => {
+                const activeNode = state.activeNode
+                if (activeNode && activeNode !== node ) {
+                    delete activeNode.dataset.focus
+                }
+                node.dataset.focus = true
+                state.activeNode = node
+            })
+
+            inputEl.addEventListener('keydown', (event) => {
+                if (event.key === 'Enter') {
+                    handleUpdateItem()
+                    inputEl.blur()
+                    node.dataset.focus = false
+                    state.activeNode = null
+                }
+            })
+
+            inputEl.addEventListener('blur', handleUpdateItem)
+
         })
+
+        confirmButton.addEventListener('click', handleUpdateItem)
 
         cancelButton.addEventListener('click', () => {
             const storeData = store.data
