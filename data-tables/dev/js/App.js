@@ -4,7 +4,7 @@ import sum from './sum.js'
 import itemFactory from './item.js'
 import dragAndDropFactory from './dragAndDrop.js'
 
-const App = () => {
+const app = () => {
 
     const app = document.querySelector('#root')
     const tbodyEl = app.querySelector('tbody')
@@ -24,18 +24,18 @@ const App = () => {
         }
     }
 
-    const renderIndex = () => {
+    const item = itemFactory(app, store, events, state, renderSum, renderTable, dragAndDrop)
+
+    function renderIndex() {
         tbodyEl.querySelectorAll('tr')
             .forEach( (el, index) => {
                 el.dataset.index = index
             })
     }
 
-    const renderSum = () => {
+    function renderSum() {
         sum(store.data, app)
     }
-
-    const item = itemFactory(app, store, events, state, renderSum, renderTable, dragAndDrop)
 
     function renderTable() {
         const el = tbodyEl
@@ -80,11 +80,6 @@ const App = () => {
     renderTable()
     addEvents()
 
-    // document.querySelector('#test')
-    //     .addEventListener('click', () => {
-    //         exchangeItem('bottom', 2, 0)
-    //     })
-
 }
 
-export default App
+export default app
