@@ -26,16 +26,16 @@ const dragAndDrop = (tbodyEl) => {
             // css 간편화를 위해, 중간에 originEl이 있으면 css가 복잡
             tbodyEl.appendChild(originEl)
     
-            // originEl은 targetEl의 대상이 아니다.
             if( node === originEl || node === targetedEl ) {
                 return
             }
     
             // 이전 targetedEl의 data 속성 제거
-            if ( targetedEl && targetedEl !== node ) {
+            if ( targetedEl ) {
                 delete targetedEl.dataset.pos
             }
             targetedEl = node
+            console.log('dragenter targetedEl: ', targetedEl)
         })
     }
 
@@ -69,6 +69,7 @@ const dragAndDrop = (tbodyEl) => {
         document.addEventListener("drop", event => {
             event.preventDefault()
             if (!targetedEl) {
+                console.log('!targetedEl')
                 return
             }
 

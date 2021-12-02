@@ -12,7 +12,13 @@ const item = () => {
         const confirmButton = node.querySelector('button[name="confirm"]')
         const cancelButton = node.querySelector('button[name="cancel"]')
         const deleteButton = node.querySelector('button[name="delete"]')
-        
+
+        let type = 'update'
+        if (index === null) {
+            type = 'add'
+            index = store.data.length
+        }
+
         inputEls.forEach( inputEl => {
             inputEl.addEventListener('focus', () => {
                 const activeNode = state.activeNode
@@ -25,12 +31,7 @@ const item = () => {
         })
 
         confirmButton.addEventListener('click', e => {
-            let type = 'update'
-            if (!index) {
-                type = 'add'
-                index = store.data.length
-            }
-            
+
             if (amountEl.checkValidity() === false ) {
                 amountEl.focus()
                 return
@@ -49,7 +50,7 @@ const item = () => {
                     break
                 case 'update' :
                     inputEls.forEach( inputEl => {
-                        updateItem(index, inputEl.name, inputEl.value)
+                        updateItem(node.dataset.index, inputEl.name, inputEl.value)
                     })
                     break
                 default :
@@ -66,8 +67,9 @@ const item = () => {
                     node.remove()
                     break
                 case 'update' :
-                    amountEl.value = storeData[index].amount
-                    priceEl.value = storeData[index].price
+                    const idx = node.dataset.index
+                    amountEl.value = storeData[idx].amount
+                    priceEl.value = storeData[idx].price
                     break
                 default :
                     break
