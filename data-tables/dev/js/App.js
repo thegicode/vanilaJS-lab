@@ -1,22 +1,31 @@
+import { clonedNode } from './helpers.js'
 import modelFactory from './model.js'
 import sum from './sum.js'
+import itemFactory from './item.js'
 import dragAndDropFactory from './dragAndDrop.js'
-
-const __clonedNode = (node) => {
-    return node.content.firstElementChild.cloneNode(true)
-}
 
 const App = () => {
 
     const app = document.querySelector('#root')
     const tbodyEl = app.querySelector('tbody')
-    const templateEl = document.querySelector('template')
+    const addButton = app.querySelector('button[name="add"]')
+    const templateEl = app.querySelector('template')
 
-    const { store, getState, ...events } = modelFactory()
-    const { addItem, updateItem, deleteItem, exchangeItem } = events
+    const { store, ...events } = modelFactory()
+    const { exchangeItem } = events
+
+    const item = itemFactory()
     const dragAndDrop = dragAndDropFactory(tbodyEl)
 
-    let activeTrNode
+    let state = {
+        el : null,
+        get activeNode() {
+            return this.el
+        },
+        set activeNode(v) {
+            this.el = v
+        }
+    }
 
     const renderIndex = () => {
         tbodyEl.querySelectorAll('tr')
@@ -29,85 +38,9 @@ const App = () => {
         sum(store.data, app)
     }
 
-    const addItemEvents = (node, idx) => {
-
-        const inputEls = node.querySelectorAll('input[type="number"]')
-        const amountEl = node.querySelector('input[name="amount"]')
-        const priceEl = node.querySelector('input[name="price"]')
-        const confirmButton = node.querySelector('button[name="confirm"]')
-        const deleteButton = node.querySelector('button[name="delete"]')
-        const cancelButton = node.querySelector('button[name="cancel"]')
-
-        let type = 'update'
-        let index = idx
-        if (index === null) {
-            type = 'add'
-            index = store.data.length
-        }
-
-        inputEls.forEach( inputEl => {
-            inputEl.addEventListener('focus', () => {
-                if (activeTrNode && activeTrNode !== node ) {
-                    activeTrNode.dataset.focus = false
-                }
-                node.dataset.focus = true
-                activeTrNode = node
-            })
-        })
-
-        confirmButton.addEventListener('click', e => {
-            if (amountEl.checkValidity() === false ) {
-                amountEl.focus()
-                return
-            }
-            if (priceEl.checkValidity() === false ) {
-                priceEl.focus()
-                return
-            }
-
-            switch(type) {
-                case 'add' :
-                    const amount = amountEl.value
-                    const price = priceEl.value
-                    node.dataset.index = store.data.length
-                    addItem(amount, price)
-                    break
-                case 'update' :
-                    inputEls.forEach( inputEl => {
-                        console.log('update', index)
-                        updateItem(index, inputEl.name, inputEl.value)
-                    })
-                    break
-                default :
-                    break
-            }
-            renderSum()
-            node.dataset.focus = false
-        })
-
-        cancelButton.addEventListener('click', () => {
-            const storeData = store.data
-            switch(type) {
-                case 'add' :
-                    node.remove()
-                    break
-                case 'update' :
-                    amountEl.value = storeData[index].amount
-                    priceEl.value = storeData[index].price
-                    break
-                default :
-                    break
-            }
-            node.dataset.focus = false
-        })
-
-        deleteButton.addEventListener('click', () => {
-            deleteItem(index)
-            renderTable()
-        })
-
-        dragAndDrop.nodeEvents(node, addItemEvents)
-        
+    const addItemEvents = (node, index) => {
+        item.addEvents(node, index, store, events, state, renderSum, renderTable)
+        dragAndDrop.addEvents(node, addItemEvents)
     }
 
     const renderTable = () => {
@@ -115,31 +48,18 @@ const App = () => {
         el.innerHTML = ''
 
         store.data.forEach( (data, index) => {
-            const { amount, price } = data
-
-            const node = __clonedNode(templateEl)
-            const amountEl = node.querySelector('input[name="amount"]')
-            const priceEl = node.querySelector('input[name="price"]')
-
-            node.dataset.index = index
-            amountEl.value = amount
-            priceEl.value = price
-
+            const node = item.getNode(data, index, templateEl)
             addItemEvents(node, index)
-
             el.appendChild(node)
         })
 
         renderSum()
     }
-
     
     const addEvents = () => {
 
-        const addButton = app.querySelector('button[name="add"]')
-
         addButton.addEventListener('click', (e) => {
-            const node = __clonedNode(templateEl)
+            const node = clonedNode(templateEl)
             tbodyEl.appendChild(node)
 
             addItemEvents(node, null)
@@ -148,30 +68,32 @@ const App = () => {
         })
         
         addButton.addEventListener('focus', () => {
-            if (activeTrNode) {
-                activeTrNode.dataset.focus = false
-                activeTrNode = null
+            const activeNode = state.activeNode
+            if (activeNode) {
+                activeNode.dataset.focus = false
+                state.activeNode = null
             }
         })
 
         app.addEventListener('click', () => {
-            if (activeTrNode && document.activeElement.tagName !== 'INPUT') {
-                activeTrNode.dataset.focus = false
-                activeTrNode = null
+            const activeNode = state.activeNode
+            if (activeNode && document.activeElement.tagName !== 'INPUT') {
+                activeNode.dataset.focus = false
+                state.activeNode = null
             }
         })
 
-        dragAndDrop.domEvents(renderIndex, exchangeItem)
+        dragAndDrop.addDomEvents(renderIndex, exchangeItem)
         
     }
 
     renderTable()
     addEvents()
 
-    document.querySelector('#test')
-        .addEventListener('click', () => {
-            exchangeItem('bottom', 2, 0)
-        })
+    // document.querySelector('#test')
+    //     .addEventListener('click', () => {
+    //         exchangeItem('bottom', 2, 0)
+    //     })
 
 }
 

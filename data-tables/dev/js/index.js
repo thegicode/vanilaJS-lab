@@ -1,4 +1,4 @@
 
-import App from './App.js'
+import app from './app.js'
 
-App()
+app()

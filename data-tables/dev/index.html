@@ -43,34 +43,36 @@
                 <button type="button" name="add">Add</button>
             </div>
         <!-- </form> -->
+
+        <template>
+            <tr>
+                <td class="dragger">
+                    <button type="button" name="dragger" tabindex="-1">=</button>
+                </td>
+                <td class="amount">
+                    <input type="number" 
+                        name="amount" 
+                        min="0" max="10000" 
+                        placeholder="수량을 입력하세요."
+                        required>
+                </td>
+                <td class="price">
+                    <input type="number" 
+                        name="price" 
+                        min="0" max="1000000" 
+                        placeholder="단가를 입력하세요."
+                        required>
+                </td>
+                <td class="actions">
+                    <button type="button" class="button" name="delete">Delete</button>
+                    <button type="button" class="button" name="confirm">완료</button>
+                    <button type="button" class="button" name="cancel">취소</button>
+                </td>
+            </tr>
+        </template>
     </div>
 
-    <template>
-        <tr>
-            <td class="dragger">
-                <button type="button" name="dragger" tabindex="-1">=</button>
-            </td>
-            <td class="amount">
-                <input type="number" 
-                    name="amount" 
-                    min="0" max="10000" 
-                    placeholder="수량을 입력하세요."
-                    required>
-            </td>
-            <td class="price">
-                <input type="number" 
-                    name="price" 
-                    min="0" max="1000000" 
-                    placeholder="단가를 입력하세요."
-                    required>
-            </td>
-            <td class="actions">
-                <button type="button" class="button" name="delete">Delete</button>
-                <button type="button" class="button" name="confirm">완료</button>
-                <button type="button" class="button" name="cancel">취소</button>
-            </td>
-        </tr>
-    </template>
+    
 
     <button id="test">TEST Button</button>
     <style>

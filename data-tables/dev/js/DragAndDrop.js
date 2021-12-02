@@ -3,7 +3,7 @@ const dragAndDrop = (tbodyEl) => {
 
     let originEl, draggedEl, targetedEl
 
-    const nodeEvents = (node, addItemEvents) => {
+    const addEvents = (node, addItemEvents) => {
         const draggerButton = node.querySelector('button[name="dragger"]')
         
         draggerButton.addEventListener('mousedown', () => {
@@ -39,7 +39,7 @@ const dragAndDrop = (tbodyEl) => {
         })
     }
 
-    const domEvents = (renderIndex, exchangeItem) => {
+    const addDomEvents = (renderIndex, exchangeItem) => {
 
         document.addEventListener("dragover", event => {
             event.preventDefault()
@@ -99,8 +99,8 @@ const dragAndDrop = (tbodyEl) => {
     }
 
     return {
-        nodeEvents,
-        domEvents
+        addEvents,
+        addDomEvents
     }
     
 }
