@@ -12,8 +12,6 @@ const App = () => {
 
     const { store, ...events } = modelFactory()
     const { exchangeItem } = events
-
-    const item = itemFactory(app)
     const dragAndDrop = dragAndDropFactory(tbodyEl)
 
     let state = {
@@ -37,18 +35,14 @@ const App = () => {
         sum(store.data, app)
     }
 
-    const addItemEvents = (node, index) => {
-        item.addEvents(node, index, store, events, state, renderSum, renderTable)
-        dragAndDrop.addEvents(node, addItemEvents)
-    }
+    const item = itemFactory(app, store, events, state, renderSum, renderTable, dragAndDrop)
 
-    const renderTable = () => {
+    function renderTable() {
         const el = tbodyEl
         el.innerHTML = ''
 
         store.data.forEach( (data, index) => {
             const node = item.getNode(data, index)
-            addItemEvents(node, index)
             el.appendChild(node)
         })
 
@@ -58,8 +52,7 @@ const App = () => {
     const addEvents = () => {
 
         addButton.addEventListener('click', (e) => {
-            const node = item.getEmptyNode(store.data.length)
-            addItemEvents(node, null)
+            const node = item.getEmptyNode()
             tbodyEl.appendChild(node)
             node.querySelector('input').focus()
         })

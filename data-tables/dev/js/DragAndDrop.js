@@ -15,7 +15,7 @@ const dragAndDrop = (tbodyEl) => {
     
         node.addEventListener("dragstart", (event) => {
             draggedEl = node.cloneNode(true)
-            addItemEvents(draggedEl, node.dataset.index)
+            addItemEvents(draggedEl)
             originEl = node
             setTimeout( () => {
                 originEl.dataset.origin = true

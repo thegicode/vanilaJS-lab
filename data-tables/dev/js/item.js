@@ -1,25 +1,20 @@
 import { clonedNode } from './helpers.js'
 
-const item = (app) => {
+const item = (app, store, events, state, renderSum, renderTable, dragAndDrop) => {
 
     const templateEl = app.querySelector('template')
 
-    const addEvents = (node, index, store, events, state, renderSum, renderTable) => {
+    const addNodeEvents = (node, type) => {
         const { addItem, updateItem, deleteItem, exchangeItem } = events
 
+        const inputEls = node.querySelectorAll('input[type="number"]')
         const amountEl = node.querySelector('input[name="amount"]')
         const priceEl = node.querySelector('input[name="price"]')
-
-        const inputEls = node.querySelectorAll('input[type="number"]')
         const confirmButton = node.querySelector('button[name="confirm"]')
         const cancelButton = node.querySelector('button[name="cancel"]')
         const deleteButton = node.querySelector('button[name="delete"]')
 
-        let type = 'update'
-        if (index === null) {
-            type = 'add'
-            index = store.data.length
-        }
+        type = type || 'update' 
 
         inputEls.forEach( inputEl => {
             inputEl.addEventListener('focus', () => {
@@ -50,8 +45,9 @@ const item = (app) => {
                     type = 'update'
                     break
                 case 'update' :
+                    const __idx = node.dataset.index
                     inputEls.forEach( inputEl => {
-                        updateItem(index, inputEl.name, inputEl.value)
+                        updateItem(__idx, inputEl.name, inputEl.value)
                     })
                     break
                 default :
@@ -68,8 +64,9 @@ const item = (app) => {
                     node.remove()
                     break
                 case 'update' :
-                    amountEl.value = storeData[index].amount
-                    priceEl.value = storeData[index].price
+                    const __idx = node.dataset.index
+                    amountEl.value = storeData[__idx].amount
+                    priceEl.value = storeData[__idx].price
                     break
                 default :
                     break
@@ -78,10 +75,15 @@ const item = (app) => {
         })
 
         deleteButton.addEventListener('click', () => {
-            deleteItem(index)
+            deleteItem(node.dataset.index)
             renderTable()
         })
 
+    }
+
+    const addEvents = (node, type) => {
+        addNodeEvents(node, type)
+        dragAndDrop.addEvents(node, addEvents)
     }
 
     const getNode = (data, index) => {
@@ -94,17 +96,22 @@ const item = (app) => {
         node.dataset.index = index
         amountEl.value = amount
         priceEl.value = price
-        
+
+        addEvents(node)
+
         return node
     }
 
-    const getEmptyNode = (index) => {
+    const getEmptyNode = () => {
+        const index = store.data.length
         const node = clonedNode(templateEl)
-        node.dataset.index = index
         
+        node.dataset.index = index
+
+        addEvents(node, 'add')
+
         return node
     }
-
     
     return {
         getNode,
