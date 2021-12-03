@@ -15,8 +15,8 @@ const INITIAL_DATA = [
     {
         amount: 1,
         price: 2000,
-        check: false,
-        discount: null
+        check: true,
+        discount: 20
     },
     {
         amount: 2,

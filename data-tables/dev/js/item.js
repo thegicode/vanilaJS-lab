@@ -116,11 +116,8 @@ const item = (app, store, state, events, renderSum, renderTable, dragAndDrop) =>
         priceEl.value = price
         if (check === true) {
             checkEl.checked = check
-        }
-        if (discount !== undefined ) {
             discountEl.textContent = discount
         }
-        // checkEl.textContent = discount > 0 ? discount : ''
 
         addEvents(node)
 
