@@ -71,7 +71,7 @@ const app = () => {
         //     }
         // })
 
-        dragAndDrop.addDomEvents(renderIndex)
+        dragAndDrop.addDomEvents()
         
     }
 

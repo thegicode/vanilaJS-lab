@@ -43,15 +43,23 @@ export default () => {
             amount: Number(amount),
             price: Number(price)
         })
-    
-        console.log(Array.from(state, item => item.amount))
+        
+        if (amount) {
+            console.log(Array.from(state, item => item.amount))
+        } else {
+            console.log(Array.from(state, item => item.price))
+        }
     }
     
     const updateItem = (index, key, value) => {
         const __val = Number(value)
         if (state[index][key] !== __val ) {
             state[index][key] = __val
-            console.log(Array.from(state, item => item.amount))
+            if (key === 'amount') {
+                console.log(Array.from(state, item => item.amount))
+            } else {
+                console.log(Array.from(state, item => item.price))
+            }
         }
     }
     

@@ -10,34 +10,23 @@ const item = (app, store, state, events, renderSum, renderTable, dragAndDrop) =>
         const inputEls = node.querySelectorAll('input[type="number"]')
         const amountEl = node.querySelector('input[name="amount"]')
         const priceEl = node.querySelector('input[name="price"]')
-        const confirmButton = node.querySelector('button[name="confirm"]')
-        const cancelButton = node.querySelector('button[name="cancel"]')
         const deleteButton = node.querySelector('button[name="delete"]')
 
         type = type || 'update' 
 
-        const handleUpdateItem = () => {
-            if (amountEl.checkValidity() === false ) {
-                amountEl.focus()
+        const onInputElChange = (event) => {
+            const inputEl = event.target
+            if (inputEl.checkValidity() === false ) {
+                inputEl.focus()
                 return
             }
-            if (priceEl.checkValidity() === false ) {
-                priceEl.focus()
-                return
-            }
-    
             switch(type) {
                 case 'add' :
-                    const amount = amountEl.value
-                    const price = priceEl.value
-                    addItem(amount, price)
+                    addItem(amountEl.value, priceEl.value)
                     type = 'update'
                     break
                 case 'update' :
-                    const __idx = node.dataset.index
-                    inputEls.forEach( inputEl => {
-                        updateItem(__idx, inputEl.name, inputEl.value)
-                    })
+                    updateItem(node.dataset.index, inputEl.name, inputEl.value)
                     break
                 default :
                     break
@@ -75,21 +64,14 @@ const item = (app, store, state, events, renderSum, renderTable, dragAndDrop) =>
                 state.activeNode = node
             })
 
-            inputEl.addEventListener('keydown', (event) => {
-                if (event.key === 'Enter') {
-                    handleUpdateItem()
-                    inputEl.blur()
-                }
-            })
-
-            inputEl.addEventListener('blur', () => {
-            })
+            inputEl.addEventListener('change', onInputElChange)
 
         })
 
-        confirmButton.addEventListener('click', handleUpdateItem)
-
-        cancelButton.addEventListener('click', handleCancelItem)
+        // priceEl.addEventListener('keydown', (event) => {
+        //     if (event.key === 'Enter') {
+        //     }
+        // })
 
         deleteButton.addEventListener('click', () => {
             deleteItem(node.dataset.index)

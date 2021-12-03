@@ -41,21 +41,14 @@ body {
 .table tr button[name=cancel] {
   display: none;
 }
-.table tr[data-focus=true] button[name=delete] {
-  display: none;
-}
-.table tr[data-focus=true] button[name=confirm],
-.table tr[data-focus=true] button[name=cancel] {
-  display: inline-block;
-}
-.table thead tr {
-  background-color: rgba(10, 100, 200, 0.05);
-}
 .table th, .table td {
   box-sizing: border-box;
   height: var(--height);
   padding: 10px 1rem;
   color: rgba(0, 0, 0, 0.7);
+}
+.table thead tr {
+  background-color: rgba(10, 100, 200, 0.05);
 }
 .table tbody[data-drop=true] tr {
   transition: none;
@@ -79,9 +72,6 @@ body {
   outline-color: rgba(255, 0, 0, 0.5);
   background-color: rgba(255, 0, 0, 0.1);
 }
-.table input[type=number]::-webkit-inner-spin-button {
-  display: none;
-}
 .table .dragger {
   padding: 0;
 }
@@ -93,6 +83,9 @@ body {
   font-size: 1.5rem;
   color: rgba(0, 0, 0, 0.3);
   cursor: pointer;
+}
+.table .price input::-webkit-inner-spin-button {
+  display: none;
 }
 .table .actions {
   text-align: center;
