@@ -9,10 +9,6 @@ const app = () => {
     const tbodyEl = rootEl.querySelector('tbody')
     const addButton = rootEl.querySelector('button[name="add"]')
 
-    const { store, ...events } = modelFactory()
-    const { exchangeItem } = events
-    const dragAndDrop = dragAndDropFactory(tbodyEl)
-
     let state = {
         el : null,
         get activeNode() {
@@ -23,7 +19,10 @@ const app = () => {
         }
     }
 
-    const item = itemFactory(rootEl, store, events, state, renderSum, renderTable, dragAndDrop)
+    const { store, ...events } = modelFactory()
+    const dragAndDrop = dragAndDropFactory(tbodyEl, state, events, renderIndex)
+
+    const item = itemFactory(rootEl, store, state, events, renderSum, renderTable, dragAndDrop)
 
     function renderIndex() {
         tbodyEl.querySelectorAll('tr')
@@ -64,15 +63,15 @@ const app = () => {
             }
         })
 
-        rootEl.addEventListener('click', () => {
-            const activeNode = state.activeNode
-            if (activeNode && document.activeElement.tagName !== 'INPUT') {
-                activeNode.dataset.focus = false
-                state.activeNode = null
-            }
-        })
+        // rootEl.addEventListener('click', () => {
+        //     const activeNode = state.activeNode
+        //     if (activeNode && document.activeElement.tagName !== 'INPUT') {
+        //         activeNode.dataset.focus = false
+        //         state.activeNode = null
+        //     }
+        // })
 
-        dragAndDrop.addDomEvents(renderIndex, exchangeItem)
+        dragAndDrop.addDomEvents(renderIndex)
         
     }
 

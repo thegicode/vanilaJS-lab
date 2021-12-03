@@ -44,6 +44,7 @@ body {
         }
 
         &[data-focus="true"] {
+            // background-color: rgba(0, 100, 100, 0.05);
             button[name="delete"] {
                 display: none;
             }

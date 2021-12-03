@@ -1,11 +1,11 @@
 import { clonedNode } from './helpers.js'
 
-const item = (app, store, events, state, renderSum, renderTable, dragAndDrop) => {
+const item = (app, store, state, events, renderSum, renderTable, dragAndDrop) => {
 
     const templateEl = app.querySelector('template')
 
     const addNodeEvents = (node, type) => {
-        const { addItem, updateItem, deleteItem, exchangeItem } = events
+        const { addItem, updateItem, deleteItem } = events
 
         const inputEls = node.querySelectorAll('input[type="number"]')
         const amountEl = node.querySelector('input[name="amount"]')
@@ -44,6 +44,25 @@ const item = (app, store, events, state, renderSum, renderTable, dragAndDrop) =>
             }
             renderSum()
             node.dataset.focus = false
+            state.activeNode = null
+        }
+
+        const handleCancelItem = () => {
+            const storeData = store.data
+            switch(type) {
+                case 'add' :
+                    node.remove()
+                    break
+                case 'update' :
+                    const __idx = node.dataset.index
+                    amountEl.value = storeData[__idx].amount
+                    priceEl.value = storeData[__idx].price
+                    break
+                default :
+                    break
+            }
+            node.dataset.focus = false
+            state.activeNode = null
         }
 
         inputEls.forEach( inputEl => {
@@ -60,33 +79,17 @@ const item = (app, store, events, state, renderSum, renderTable, dragAndDrop) =>
                 if (event.key === 'Enter') {
                     handleUpdateItem()
                     inputEl.blur()
-                    node.dataset.focus = false
-                    state.activeNode = null
                 }
             })
 
-            inputEl.addEventListener('blur', handleUpdateItem)
+            inputEl.addEventListener('blur', () => {
+            })
 
         })
 
         confirmButton.addEventListener('click', handleUpdateItem)
 
-        cancelButton.addEventListener('click', () => {
-            const storeData = store.data
-            switch(type) {
-                case 'add' :
-                    node.remove()
-                    break
-                case 'update' :
-                    const __idx = node.dataset.index
-                    amountEl.value = storeData[__idx].amount
-                    priceEl.value = storeData[__idx].price
-                    break
-                default :
-                    break
-            }
-            node.dataset.focus = false
-        })
+        cancelButton.addEventListener('click', handleCancelItem)
 
         deleteButton.addEventListener('click', () => {
             deleteItem(node.dataset.index)
