@@ -65,11 +65,11 @@ const dragAndDrop = (tbodyEl, state, events, renderIndex) => {
         document.addEventListener("dragover", event => {
             event.preventDefault()
             
-            // if (!targetedEl) {
-            //     originEl.removeAttribute('draggable')
-            //     delete originEl.dataset.origin
-            //     return
-            // }
+            if (!targetedEl) {
+                originEl.removeAttribute('draggable')
+                delete originEl.dataset.origin
+                return
+            }
 
             let el = targetedEl
             const mouseY = event.clientY

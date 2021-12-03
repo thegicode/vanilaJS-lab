@@ -176,8 +176,14 @@
 
         document.addEventListener("dragover", event => {
             event.preventDefault()
-            const el = targetedEl
 
+            if (!targetedEl) {
+                originEl.removeAttribute('draggable')
+                delete originEl.dataset.origin
+                return
+            }
+            
+            const el = targetedEl
             const mouseY = event.clientY
             const elHalfVal = el.offsetTop + el.offsetHeight/2
             if( mouseY > elHalfVal) { 
