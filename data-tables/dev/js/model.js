@@ -16,25 +16,25 @@ const INITIAL_DATA = [
         amount: 1,
         price: 2000,
         check: false,
-        discount: undefined
+        discount: null
     },
     {
         amount: 2,
         price: 3000,
         check: false,
-        discount: undefined
+        discount: null
     },
     {
         amount: 3,
         price: 4000,
         check: false,
-        discount: undefined
+        discount: null
     },
     {
         amount: 4,
         price: 5000,
         check: false,
-        discount: undefined
+        discount: null
     }
 ]
 
@@ -116,13 +116,10 @@ export default () => {
 
     const discount = (index, isCheck) => {
         const data = state[index]
-        let dsPrice
+        let dsPrice = null
         if (isCheck) {
-            dsPrice = data.amount * data.price
-            dsPrice = dsPrice * 0.01
-        } else {
-            dsPrice = undefined
-        }
+            dsPrice = data.amount * data.price * 0.01
+        } 
         data.discount = dsPrice
         console.log('discount: ', Array.from(state, item => item.discount))
         return dsPrice

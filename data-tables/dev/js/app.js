@@ -48,7 +48,6 @@ const app = () => {
     }
     
     const addEvents = () => {
-
         addButton.addEventListener('click', (e) => {
             const node = item.getEmptyNode()
             tbodyEl.appendChild(node)
@@ -63,20 +62,18 @@ const app = () => {
             }
         })
 
-        // rootEl.addEventListener('click', () => {
-        //     const activeNode = state.activeNode
-        //     if (activeNode && document.activeElement.tagName !== 'INPUT') {
-        //         activeNode.dataset.focus = false
-        //         state.activeNode = null
-        //     }
-        // })
-
         dragAndDrop.addDomEvents()
-        
+    }
+
+    const sortTable = () => {
+        // store.data.forEach( (item, index) => {
+            // console.log( item.amount )
+        // })
     }
 
     renderTable()
     addEvents()
+    sortTable()
 
 }
 
