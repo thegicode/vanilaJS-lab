@@ -18,8 +18,6 @@ body {
     margin: 1rem;
 }
 
-
-
 .table {
     width: 100%;
     table-layout: fixed;
@@ -27,7 +25,8 @@ body {
     border-collapse: collapse;
     
     tr {
-        
+        position: relative; 
+        top: 0;
         height: var(--height);
         box-sizing: border-box;
         border-bottom: solid 1px rgba(0, 0, 0, 0.1);
@@ -61,8 +60,7 @@ body {
 
     tbody {
         tr {
-            position: relative; 
-            top: 0;
+            
         }
         &[data-drop="true"] tr{
             transition: none;
@@ -126,17 +124,17 @@ body {
         }
     }
     .check {
+        display: flex;
         text-align: center;
         label {
-            position: relative;
             input[name="check"] {
-                position: absolute;
-                left: -10000rem;
+                opacity: 0;
             }
             span {
+                position: relative;
+                top: -15px;
                 padding: 5px 10px;
                 border-radius: 5px;
-                // border: solid 1px #ddd;
                 font-size: 12px;
             }
             input[name="check"]:focus + span {
