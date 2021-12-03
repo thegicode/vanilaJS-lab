@@ -68,10 +68,13 @@ const item = (app, store, state, events, renderSum, renderTable, dragAndDrop) =>
 
         })
 
-        // priceEl.addEventListener('keydown', (event) => {
-        //     if (event.key === 'Enter') {
-        //     }
-        // })
+        priceEl.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                const trEl = event.shiftKey ? node.previousElementSibling : node.nextElementSibling
+                trEl &&
+                    trEl.querySelector('input[name="price"]').focus()
+            }
+        })
 
         deleteButton.addEventListener('click', () => {
             deleteItem(node.dataset.index)

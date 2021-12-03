@@ -68,6 +68,9 @@ body {
   font-size: 1rem;
   color: rgba(0, 0, 0, 0.7);
 }
+.table input[type=number]:focus {
+  outline-color: -webkit-focus-ring-color;
+}
 .table input[type=number]:invalid {
   outline-color: rgba(255, 0, 0, 0.5);
   background-color: rgba(255, 0, 0, 0.1);
