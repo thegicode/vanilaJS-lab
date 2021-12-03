@@ -127,12 +127,15 @@ body {
         display: flex;
         text-align: center;
         label {
+            display: flex;
+            flex-direction: row-reverse;
+            align-items: center;
             input[name="check"] {
                 opacity: 0;
             }
             span {
-                position: relative;
-                top: -15px;
+                // position: relative;
+                // top: -15px;
                 padding: 5px 10px;
                 border-radius: 5px;
                 font-size: 12px;

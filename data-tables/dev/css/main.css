@@ -94,12 +94,15 @@ body {
   display: flex;
   text-align: center;
 }
+.table .check label {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+}
 .table .check label input[name=check] {
   opacity: 0;
 }
 .table .check label span {
-  position: relative;
-  top: -15px;
   padding: 5px 10px;
   border-radius: 5px;
   font-size: 12px;
