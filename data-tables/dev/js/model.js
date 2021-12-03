@@ -9,27 +9,32 @@ const INITIAL_DATA = [
     {
         amount: 0,
         price: 1000,
-        check: false
+        check: true,
+        discount: 0
     },
     {
         amount: 1,
         price: 2000,
-        check: false
+        check: false,
+        discount: undefined
     },
     {
         amount: 2,
         price: 3000,
-        check: false
+        check: false,
+        discount: undefined
     },
     {
         amount: 3,
         price: 4000,
-        check: false
+        check: false,
+        discount: undefined
     },
     {
         amount: 4,
         price: 5000,
-        check: false
+        check: false,
+        discount: undefined
     }
 ]
 
@@ -44,12 +49,11 @@ export default () => {
     }
 
     const addItem = (amount, price) => {
-        const obj = {
+        state.push({
             amount: Number(amount),
             price: Number(price),
             check: false
-        }
-        state.push(obj)
+        })
         console.log('add: ', Array.from(state, item => (item.amount || item.price)))
     }
     
@@ -110,12 +114,27 @@ export default () => {
         console.log('exchange: ', Array.from(state, item => item.amount))
     }
 
+    const discount = (index, isCheck) => {
+        const data = state[index]
+        let dsPrice
+        if (isCheck) {
+            dsPrice = data.amount * data.price
+            dsPrice = dsPrice * 0.01
+        } else {
+            dsPrice = undefined
+        }
+        data.discount = dsPrice
+        console.log('discount: ', Array.from(state, item => item.discount))
+        return dsPrice
+    }
+
     return {
         store,
         addItem,
         updateItem,
         deleteItem,
-        exchangeItem
+        exchangeItem,
+        discount
     }
 }
 

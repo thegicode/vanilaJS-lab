@@ -67,6 +67,10 @@ body {
         &[data-drop="true"] tr{
             transition: none;
         }
+        .amount,
+        .price {
+            padding: 0;
+        }
         
     }
 
@@ -113,10 +117,8 @@ body {
     }
 
     .amount {
-        padding: 0;
     }
     .price {
-        padding: 0;
         input {
             &::-webkit-inner-spin-button{
                 display: none;
@@ -125,6 +127,26 @@ body {
     }
     .check {
         text-align: center;
+        label {
+            position: relative;
+            input[name="check"] {
+                position: absolute;
+                left: -10000rem;
+            }
+            span {
+                padding: 5px 10px;
+                border-radius: 5px;
+                // border: solid 1px #ddd;
+                font-size: 12px;
+            }
+            input[name="check"]:focus + span {
+                outline: solid 1px -webkit-focus-ring-color;
+            }
+            input[name="check"]:checked + span {
+                background-color: #7895da;
+                color: #fff;
+            }
+        }
     }
 
     .actions {

@@ -55,6 +55,10 @@ body {
 .table tbody[data-drop=true] tr {
   transition: none;
 }
+.table tbody .amount,
+.table tbody .price {
+  padding: 0;
+}
 .table input[type=number] {
   box-sizing: border-box;
   width: 100%;
@@ -85,17 +89,30 @@ body {
   color: rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
-.table .amount {
-  padding: 0;
-}
-.table .price {
-  padding: 0;
-}
 .table .price input::-webkit-inner-spin-button {
   display: none;
 }
 .table .check {
   text-align: center;
+}
+.table .check label {
+  position: relative;
+}
+.table .check label input[name=check] {
+  position: absolute;
+  left: -10000rem;
+}
+.table .check label span {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+.table .check label input[name=check]:focus + span {
+  outline: solid 1px -webkit-focus-ring-color;
+}
+.table .check label input[name=check]:checked + span {
+  background-color: #7895da;
+  color: #fff;
 }
 .table .actions {
   text-align: center;
