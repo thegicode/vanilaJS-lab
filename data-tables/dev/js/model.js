@@ -8,23 +8,28 @@ const __freeze = x => Object.freeze(__cloneDeep(x))
 const INITIAL_DATA = [
     {
         amount: 0,
-        price: 1000
+        price: 1000,
+        check: false
     },
     {
         amount: 1,
-        price: 2000
+        price: 2000,
+        check: false
     },
     {
         amount: 2,
-        price: 3000
+        price: 3000,
+        check: false
     },
     {
         amount: 3,
-        price: 4000
+        price: 4000,
+        check: false
     },
     {
         amount: 4,
-        price: 5000
+        price: 5000,
+        check: false
     }
 ]
 
@@ -39,33 +44,31 @@ export default () => {
     }
 
     const addItem = (amount, price) => {
-        state.push({
+        const obj = {
             amount: Number(amount),
-            price: Number(price)
-        })
-        
-        if (amount) {
-            console.log(Array.from(state, item => item.amount))
-        } else {
-            console.log(Array.from(state, item => item.price))
+            price: Number(price),
+            check: false
         }
+        state.push(obj)
+        console.log('add: ', Array.from(state, item => (item.amount || item.price)))
     }
     
     const updateItem = (index, key, value) => {
-        const __val = Number(value)
-        if (state[index][key] !== __val ) {
-            state[index][key] = __val
-            if (key === 'amount') {
-                console.log(Array.from(state, item => item.amount))
-            } else {
-                console.log(Array.from(state, item => item.price))
-            }
+        if (key === 'amount' || key === 'price') {
+            value = Number(value)
         }
+        if (state[index][key] === value ) {
+            return
+        }
+        
+        state[index][key] = value
+
+        console.log('update: ', Array.from(state, item => item[key]) )
     }
     
     const deleteItem = (index) => {
         const deleted = state.splice(index, 1)
-        console.log(Array.from(state, item => item.amount))
+        console.log('delete: ', Array.from(state, item => item.amount))
         return deleted
     }
     
@@ -104,7 +107,7 @@ export default () => {
                 console.log('exchangeItem')
         }
         state = [...arr, ...item, ...state]
-        console.log(Array.from(state, item => item.amount))
+        console.log('exchange: ', Array.from(state, item => item.amount))
     }
 
     return {

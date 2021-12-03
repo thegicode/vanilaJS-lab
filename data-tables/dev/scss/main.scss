@@ -27,8 +27,7 @@ body {
     border-collapse: collapse;
     
     tr {
-        position: relative; 
-        top: 0;
+        
         height: var(--height);
         box-sizing: border-box;
         border-bottom: solid 1px rgba(0, 0, 0, 0.1);
@@ -61,13 +60,14 @@ body {
     }
 
     tbody {
+        tr {
+            position: relative; 
+            top: 0;
+        }
         &[data-drop="true"] tr{
             transition: none;
         }
-        .amount, 
-        .price {
-            padding: 0;
-        }
+        
     }
 
     input[type="number"]{
@@ -113,14 +113,18 @@ body {
     }
 
     .amount {
+        padding: 0;
     }
-   
     .price {
+        padding: 0;
         input {
             &::-webkit-inner-spin-button{
                 display: none;
             }
         }
+    }
+    .check {
+        text-align: center;
     }
 
     .actions {

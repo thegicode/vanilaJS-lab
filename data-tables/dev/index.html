@@ -16,12 +16,14 @@
                 <col width="10%">
                 <col>
                 <col>
+                <col>
             </colgroup>
             <thead>
                 <tr>
                     <th></th>
                     <th>Amount</th>
                     <th>Price</th>
+                    <th>Check</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -29,11 +31,11 @@
             <tfoot>
                 <tr>
                     <th colspan="2">수량 합계</th>
-                    <td colspan="2" class="amount"></td>
+                    <td colspan="3" class="amount"></td>
                 </tr>
                 <tr>
                     <th colspan="2">금액 합계</th>
-                    <td colspan="2" class="price"></td>
+                    <td colspan="3" class="price"></td>
                 </tr>
             </tfoot>
         </table>
@@ -61,6 +63,7 @@
                         placeholder="단가를 입력하세요."
                         required>
                 </td>
+                <td class="check"></td>
                 <td class="actions">
                     <button type="button" class="button" name="delete">Delete</button>
                 </td>
