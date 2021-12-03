@@ -180,8 +180,24 @@
                 }, 1)
             })
 
-            // el.addEventListener("dragend", () => {
-            // });
+            el.addEventListener("dragend", () => {
+                event.preventDefault()
+
+                app.dataset.drop = true
+                if (targetedEl.dataset.pos === 'bottom') {
+                    targetedEl.after(draggedEl)
+                } else {
+                    targetedEl.before(draggedEl)
+                }
+
+                delete targetedEl.dataset.pos
+                originEl.remove()
+                draggedEl.removeAttribute('draggable')
+
+                setTimeout( () => {
+                    delete app.dataset.drop
+                }, 100)
+            });
 
             // el.addEventListener('dragover', () => {
             // })
