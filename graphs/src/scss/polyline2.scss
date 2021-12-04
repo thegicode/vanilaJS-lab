@@ -1,0 +1,46 @@
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+    margin: 0 2rem;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.root {
+    padding: 1rem 0 2rem; 
+}
+.container {
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.box {
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+}
+
+svg {
+    width: 100%;
+    height: 100%;
+}
+
+polyline {
+    fill: none;
+    stroke: #a56819;
+    stroke-width: 3px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+
+}
+
+.box2 {
+    width: 200px;
+    height: 200px;
+
+    polyline {
+        stroke-width: 2px;
+    }
+}
+

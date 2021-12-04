@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polyline-2</title>
+    <link rel="stylesheet" type="text/css" href="../css/polyline2.css">
+</head>
+<body>
+    <div class="root">
+
+        <h1>Polyline-2</h1>
+        
+        <div class="container">
+            <div class="box">
+                <svg mlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <polyline></polyline>
+                </svg>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="box box2">
+                <svg mlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <polyline></polyline>
+                </svg>
+            </div>
+        </div>
+        
+    </div>
+    
+    <script>
+
+
+        const svgEls = document.querySelectorAll('svg')
+        const svgEl = svgEls[0]
+        const svgVal = svgEl.viewBox.baseVal
+        const { width, height } = svgVal
+        const unit = width / 5
+        const arr = []
+        for(let i = 0 ; i < 5 ; i++) {
+            const x = unit * i + unit/2
+            const y = Math.round(Math.random() * 100)
+            arr.push(`${x} ${y}`)
+        }
+        let points = arr.join(' ')
+        svgEl.querySelector('polyline').setAttribute('points', points)
+
+        svgEls[1].querySelector('polyline').setAttribute('points', points)
+       
+    </script>
+</body>
+</html>
+
