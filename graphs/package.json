@@ -4,11 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "node server",
     "css": "sass --watch src/scss:src/css"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "express": "^4.17.1",
     "sass": "^1.43.4"
   }
 }
