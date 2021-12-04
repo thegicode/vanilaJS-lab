@@ -19,13 +19,13 @@ body {
 
 .box {
   box-sizing: border-box;
-  flex-basis: 150px;
+  flex-basis: 170px;
   padding: 1rem;
 }
 
 .description {
   position: relative;
-  width: 250px;
+  width: 270px;
   margin-bottom: 2rem;
   padding: 1rem 0;
   border: solid 1px rgba(0, 0, 0, 0.3);
