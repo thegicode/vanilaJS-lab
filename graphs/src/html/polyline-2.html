@@ -34,27 +34,50 @@
             </div>
         </div>
 
+        <div class="container">
+            <div class="box box3">
+                <div class="lines">
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <svg mlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                    <polyline></polyline>
+                </svg>
+            </div>
+        </div>
+
     </div>
     
     <script>
+
+        
+
         const svgEls = document.querySelectorAll('svg')
+        svgEls.forEach( svgEl => {
+            console.log('')
+            const svgVal = svgEl.viewBox.baseVal
+            const { width, height } = svgVal
+            const length = 5
+            const unit = width / length
+            const arr = []
+            for (let i=0 ; i<length ; i++) {
+                const x = unit * i + unit/2
+                const y = Math.round(Math.random() * 100)
+                arr.push(`${x} ${y}`)
+            }
+            const points = arr.join(' ')
+            svgEl.querySelector('polyline').setAttribute('points', points)
+        })
 
-        const svgEl = svgEls[0]
-        const svgVal = svgEl.viewBox.baseVal
-        const { width, height } = svgVal
-        const length = 5
-        const unit = width / length
-        const arr = []
-        for (let i=0 ; i<length ; i++) {
-            const x = unit * i + unit/2
-            const y = Math.round(Math.random() * 100)
-            arr.push(`${x} ${y}`)
+        const handleBox3 = () => {
+            const box3El = document.querySelector('.box3')
+            box3El.style.height = `${box3El.offsetWidth}px`
         }
-        const points = arr.join(' ')
-        svgEl.querySelector('polyline').setAttribute('points', points)
+        handleBox3()
 
-        svgEls[1].querySelector('polyline').setAttribute('points', points)
-       
+        window.addEventListener('resize', () => {
+            handleBox3()
+        })
+
     </script>
 </body>
 </html>

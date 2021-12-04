@@ -78,4 +78,12 @@ polyline {
   stroke-width: 2px;
 }
 
+.box3 {
+  width: 100%;
+  max-width: 500px;
+}
+.box3 polyline {
+  stroke-width: 1px;
+}
+
 /*# sourceMappingURL=polyline2.css.map */

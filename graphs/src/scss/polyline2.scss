@@ -71,11 +71,18 @@ polyline {
 }
 
 
-
 .box2 {
     width: 200px;
     height: 200px;
     polyline {
         stroke-width: 2px;
+    }
+}
+
+.box3 {
+    width: 100%;
+    max-width: 500px;
+    polyline {
+        stroke-width: 1px;
     }
 }
