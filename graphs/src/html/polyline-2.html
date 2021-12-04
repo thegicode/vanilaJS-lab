@@ -11,9 +11,12 @@
     <div class="root">
 
         <h1>Polyline-2</h1>
-        
+
         <div class="container">
             <div class="box">
+                <div class="lines">
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
                 <svg mlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
                     <polyline></polyline>
                 </svg>
@@ -22,29 +25,32 @@
 
         <div class="container">
             <div class="box box2">
+                <div class="lines">
+                    <span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
                 <svg mlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
                     <polyline></polyline>
                 </svg>
             </div>
         </div>
-        
+
     </div>
     
     <script>
-
-
         const svgEls = document.querySelectorAll('svg')
+
         const svgEl = svgEls[0]
         const svgVal = svgEl.viewBox.baseVal
         const { width, height } = svgVal
-        const unit = width / 5
+        const length = 5
+        const unit = width / length
         const arr = []
-        for(let i = 0 ; i < 5 ; i++) {
+        for (let i=0 ; i<length ; i++) {
             const x = unit * i + unit/2
             const y = Math.round(Math.random() * 100)
             arr.push(`${x} ${y}`)
         }
-        let points = arr.join(' ')
+        const points = arr.join(' ')
         svgEl.querySelector('polyline').setAttribute('points', points)
 
         svgEls[1].querySelector('polyline').setAttribute('points', points)
