@@ -94,6 +94,99 @@ polyline {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.3);
 }
+.xTexts[data-length="1"] span {
+  width: 100%;
+}
+.xTexts[data-length="2"] span {
+  width: 50%;
+}
+.xTexts[data-length="3"] span {
+  width: 33.3333333333%;
+}
+.xTexts[data-length="4"] span {
+  width: 25%;
+}
+.xTexts[data-length="5"] span {
+  width: 20%;
+}
+.xTexts[data-length="6"] span {
+  width: 16.6666666667%;
+}
+.xTexts[data-length="7"] span {
+  width: 14.2857142857%;
+}
+.xTexts[data-length="8"] span {
+  width: 12.5%;
+}
+.xTexts[data-length="9"] span {
+  width: 11.1111111111%;
+}
+.xTexts[data-length="10"] span {
+  width: 10%;
+}
+.xTexts[data-length="11"] span {
+  width: 9.0909090909%;
+}
+.xTexts[data-length="12"] span {
+  width: 8.3333333333%;
+}
+.xTexts[data-length="13"] span {
+  width: 7.6923076923%;
+}
+.xTexts[data-length="14"] span {
+  width: 7.1428571429%;
+}
+.xTexts[data-length="15"] span {
+  width: 6.6666666667%;
+}
+.xTexts[data-length="16"] span {
+  width: 6.25%;
+}
+.xTexts[data-length="17"] span {
+  width: 5.8823529412%;
+}
+.xTexts[data-length="18"] span {
+  width: 5.5555555556%;
+}
+.xTexts[data-length="19"] span {
+  width: 5.2631578947%;
+}
+.xTexts[data-length="20"] span {
+  width: 5%;
+}
+.xTexts[data-length="21"] span {
+  width: 4.7619047619%;
+}
+.xTexts[data-length="22"] span {
+  width: 4.5454545455%;
+}
+.xTexts[data-length="23"] span {
+  width: 4.347826087%;
+}
+.xTexts[data-length="24"] span {
+  width: 4.1666666667%;
+}
+.xTexts[data-length="25"] span {
+  width: 4%;
+}
+.xTexts[data-length="26"] span {
+  width: 3.8461538462%;
+}
+.xTexts[data-length="27"] span {
+  width: 3.7037037037%;
+}
+.xTexts[data-length="28"] span {
+  width: 3.5714285714%;
+}
+.xTexts[data-length="29"] span {
+  width: 3.4482758621%;
+}
+.xTexts[data-length="30"] span {
+  width: 3.3333333333%;
+}
+.xTexts[data-length="31"] span {
+  width: 3.2258064516%;
+}
 
 li {
   line-height: 1.5;

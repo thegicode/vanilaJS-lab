@@ -95,6 +95,14 @@ polyline {
         font-size: 14px;
         color: rgba(0, 0, 0, 0.3);
     }
+
+    @for $i from 1 through 31 {
+        &[data-length="#{$i}"] {
+            span {
+                width: #{calc(100%/$i)}
+            }
+        }
+    }
 }
 
 

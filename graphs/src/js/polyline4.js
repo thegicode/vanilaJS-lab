@@ -39,10 +39,10 @@ const pointsArr = DATA.map( (point, index) => {
 polylineEl.setAttribute('points', pointsArr.join(' '))
 
 // X좌표 범례
+xTextsEl.dataset.length = xLen
 for (let i = 0 ; i < xLen ; i++) {
     const node = document.createElement('span')
     node.textContent = i
-    node.style.width = `${xUnit.toFixed(1)}px`
     xTextsEl.appendChild(node)
 }
 

@@ -111,17 +111,13 @@ polyline {
         color: rgba(0, 0, 0, 0.3);
     }
 
-    &[data-length="1"] {
-        span {
-            width: 100%;
+    @for $i from 1 through 31 {
+        &[data-length="#{$i}"] {
+            span {
+                width: #{calc(100%/$i)}
+            }
         }
     }
-    &[data-length="2"] {
-        span {
-            width: calc(100%/2);
-        }
-    }
-    // Add...
 }
 
 
