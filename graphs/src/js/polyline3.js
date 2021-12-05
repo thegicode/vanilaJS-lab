@@ -11,8 +11,7 @@ const svgVal = svgEl.viewBox.baseVal
 const { width, height } = svgVal
 const xLen = DATA.length, 
     yLen = 5,
-    xUnit = width / xLen,
-    yUnit = height / yLen
+    xUnit = width / xLen
 
 const pointsArr = DATA.map( (point, index) => {
     const x = Math.round(xUnit * index + xUnit/2),
