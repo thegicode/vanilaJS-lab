@@ -107,6 +107,12 @@ polyline[data-prev=true] {
   font-size: 14px;
   color: rgba(0, 0, 0, 0.3);
 }
+.xTexts[data-length="1"] span {
+  width: 100%;
+}
+.xTexts[data-length="2"] span {
+  width: 50%;
+}
 
 li {
   line-height: 1.5;

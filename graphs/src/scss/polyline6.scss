@@ -110,6 +110,18 @@ polyline {
         font-size: 14px;
         color: rgba(0, 0, 0, 0.3);
     }
+
+    &[data-length="1"] {
+        span {
+            width: 100%;
+        }
+    }
+    &[data-length="2"] {
+        span {
+            width: calc(100%/2);
+        }
+    }
+    // Add...
 }
 
 

@@ -9,8 +9,8 @@ const clonedNode = (node) => {
 
 //  임시 데이터 만들기
 const getData = () => {
-    // 임의 데이터의 갯수 5이상 20이하 
-    const len = getRandomIntInclusive(5, 20)
+    // 임의 데이터의 갯수 1이상 20이하 
+    const len = getRandomIntInclusive(1, 20)
     const arr = []
     for(let i=0 ; i < len ; i++) {
         const point = Math.round(Math.random() * 100)
@@ -22,6 +22,7 @@ const getData = () => {
     }
     return arr
 }
+
 
 const DATA = getData()
 
@@ -78,10 +79,10 @@ polylineEls[0].setAttribute('points', pointsPrev.join(' '))
 polylineEls[1].setAttribute('points', pointsCurrent.join(' '))
 
 // X좌표 범례 : 값과 너비
+xTextsEl.dataset.length = xLen
 for (let i = 0 ; i < xLen ; i++) {
     const node = document.createElement('span')
     node.textContent = i
     node.style.width = `${xUnit.toFixed(1)}px`
     xTextsEl.appendChild(node)
 }
-
