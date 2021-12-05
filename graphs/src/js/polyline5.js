@@ -1,7 +1,13 @@
-// 임시 데이터
+
 const getRandomIntInclusive = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1)) + min 
 }
+const clonedNode = (node) => {
+    return node.content.firstElementChild.cloneNode(true)
+}
+
+
+//  임시 데이터 
 const getData = () => {
     // 임의 데이터의 갯수 5이상 20이하 
     const len = getRandomIntInclusive(5, 20)
@@ -19,7 +25,8 @@ const rootEl = document.querySelector('.root'),
     svgEl = rootEl.querySelector('svg'),
     polylineEl = rootEl.querySelector('polyline'),
     pointsEl = rootEl.querySelector('.points'),
-    xTextsEl = rootEl.querySelector('.xTexts')
+    xTextsEl = rootEl.querySelector('.xTexts'),
+    templateEl = rootEl.querySelector('#tp-info')
 
 const svgVal = svgEl.viewBox.baseVal
 const { width, height } = svgVal
@@ -30,7 +37,9 @@ const xLen = DATA.length,
 const pointsArr = DATA.map( (point, index) => {
     const x = Math.round(xUnit * index + xUnit/2),
         y = height - point/100 * height
-    const node = document.createElement('span')
+    const node = clonedNode(templateEl)
+    node.querySelector('.__date').textContent = index
+    node.querySelector('.__value').textContent = point
     node.style.top = `${y}px`
     node.style.left = `${x}px`
     pointsEl.appendChild(node)

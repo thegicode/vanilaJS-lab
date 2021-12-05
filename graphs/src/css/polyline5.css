@@ -66,10 +66,17 @@ polyline {
 .points {
   display: flex;
 }
-.points span {
+
+.point {
+  position: absolute;
+  top: 0;
+  text-indent: -10000rem;
+}
+.point .dot {
   display: inline-block;
   position: absolute;
   top: 0;
+  left: 0;
   width: 12px;
   height: 12px;
   box-sizing: border-box;
@@ -103,4 +110,4 @@ li {
   margin-bottom: 1rem;
 }
 
-/*# sourceMappingURL=polyline4.css.map */
+/*# sourceMappingURL=polyline5.css.map */
