@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polyline-6</title>
+    <link rel="stylesheet" type="text/css" href="../css/polyline6.css">
+</head>
+<body>
+    <div class="root">
+
+        <h1>Polyline-6</h1>
+        
+        <ul>
+            <li>그래프의 색 두 개 적용</li>
+        </ul>
+        
+        <br>
+
+        <div class="chart">
+            <div class="graphs">
+                <!-- 가로 점선 -->
+                <div class="lines">
+                    <span></span><span></span><span></span><span></span>
+                </div>
+
+                <!-- 선 그래프 -->
+                <svg mlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+                    <polyline data-prev="true"></polyline>
+                    <polyline></polyline>
+                </svg>
+
+                <!-- 동그라미 아이콘 -->
+                <div class="points"></div>
+
+            </div>
+
+            <!-- X좌표 범례 -->
+            <div class="xTexts"></div>
+        </div>
+
+        <template id="tp-info"> 
+            <div class="point">
+                <dl class="info">
+                    <dt>날짜</dt>
+                    <dd class="__date"></dd>
+                    <dt>점수</dt>
+                    <dd class="__value"></dd>
+                </dl>
+                <span class="dot"></span>
+            </div>
+        </template> 
+
+    </div>
+
+
+   <script src="../js/polyline6.js"></script>
+</body>
+</html>
+
