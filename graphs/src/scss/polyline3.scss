@@ -1,0 +1,107 @@
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+    margin: 0 2rem;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.root {
+    padding: 1rem 0 2rem; 
+}
+.chart {
+    width: 400px;
+    // box-sizing: border-box;
+    // padding: 10px;
+}
+
+.graphs {
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background-color: #fff;
+}
+
+.lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    span {
+        display: inline-block;
+        position: absolute;
+        bottom: 20%;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        border-top: dashed 1px rgba(0, 0, 0, 0.1);
+        &:nth-child(2) {
+            bottom: 40%;
+        }
+        &:nth-child(3) {
+            bottom: 60%;
+        }
+        &:nth-child(4) {
+            bottom: 80%;
+        }
+    }
+    
+}
+
+svg {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+polyline {
+    fill: none;
+    stroke: #a56819;
+    stroke-width: 3px;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.points {
+    display: flex;
+    span {
+        display: inline-block;
+        position: absolute;
+        top: 0;
+        width: 12px;
+        height: 12px;
+        box-sizing: border-box;
+        margin-left: -6px;
+        margin-top: -6px;
+        border-radius: 50%;
+        border: solid 3px #a56819;
+        background-color: #fff;
+    }
+}
+
+.xTexts {
+    box-sizing: border-box;
+    border-top: solid 1px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+    background-color: #fff;
+
+    display: flex;
+    span {
+        flex: 1;
+        width: 14.29%;
+        display: inline-block;
+        text-align: center;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.3);
+    }
+}
+
+
+li {
+    line-height: 1.5;
+}
+.log {
+    margin-bottom: 1rem;
+}

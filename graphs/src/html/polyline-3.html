@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polyline-3</title>
+    <link rel="stylesheet" type="text/css" href="../css/polyline3.css">
+</head>
+<body>
+    <div class="root">
+
+        <h1>Polyline-3</h1>
+        
+        <ul>
+            <li>동그라미 아이콘 적용</li>
+            <li>X좌표 범례 표시 - day1 ~ day7</li>
+        </ul>
+        
+        <br>
+
+        <div class="log">Sample Points - <span></span></div>
+
+        <div class="chart">
+            <div class="graphs">
+                <!-- 가로 점선 -->
+                <div class="lines">
+                    <span></span><span></span><span></span><span></span>
+                </div>
+
+                <!-- 선 그래프 -->
+                <svg mlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+                    <polyline></polyline>
+                </svg>
+
+                <!-- 동그라미 아이콘 -->
+                <div class="points">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+
+                <!-- 개별 점수 표시 -->
+                <div class="info"></div>
+
+            </div>
+
+            <!-- X좌표 범례 -->
+            <div class="xTexts">
+                <span>day 1</span>
+                <span>day 2</span>
+                <span>day 3</span>
+                <span>day 4</span>
+                <span>day 5</span>
+                <span>day 6</span>
+                <span>day 7</span>
+            </div>
+        </div>
+
+
+    </div>
+    
+   <script src="../js/polyline3.js"></script>
+</body>
+</html>
+
