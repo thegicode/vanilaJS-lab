@@ -88,7 +88,7 @@ const item = (app, store, state, events, renderSum, renderTable, renderDiscountP
             switch(event.key) {
                 case 'F6':
                     const isCheck = event.shiftKey ? false : true
-                    onCheckChange(event, isCheck)
+                    onCheckChange(isCheck)
                     break
                 default:
                     // console.log('keydown')
