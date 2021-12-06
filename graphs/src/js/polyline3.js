@@ -32,4 +32,4 @@ const pointsArr = DATA.map( (point, index) => {
 polylineEl.setAttribute('points', pointsArr.join(' '))
 
 document.querySelector('.log span')
-    .textContent = DATA.join(' ')
+    .textContent = DATA.join(', ')
