@@ -1,5 +1,5 @@
 
-# Graphs
+# VailaJs Graphs
 
 ## polyline
 - [polyline-1](src/html/polyline-1.html). 
