@@ -4,6 +4,7 @@
 ## graphs
 - [Graphs](src/html/graphs.html). 
     [See live](https://thegicode.github.io/vanilaJS-lab/graphs/src/html/graphs.html)
+    * Bar Chart, Line Chart
 
 ## polyline - line graph
 - [polyline-1](src/html/polyline-1.html). 
