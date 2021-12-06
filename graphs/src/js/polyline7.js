@@ -63,6 +63,7 @@ DATA.forEach( (data, index) => {
         arr = pointsPrev
     }
 
+    // 데이터가 없는 경우
     if (point === null) {
         arr.push('')
         is = isPrev
@@ -94,8 +95,6 @@ DATA.forEach( (data, index) => {
     
     arr.push(`${x} ${y}`)
     is = isPrev
-
-    
 })
 polylineEls[0].setAttribute('points', pointsPrev.join(' '))
 polylineEls[1].setAttribute('points', pointsCurrent.join(' '))

@@ -1,3 +1,8 @@
+:root {
+  --color1: #5cad96;
+  --color2: #0e5e5e ;
+}
+
 html {
   height: 100%;
 }
@@ -9,38 +14,39 @@ body {
 }
 
 .root {
+  overflow: auto;
   height: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
-.orderAmount {
+.app {
   width: 400px;
-  height: 400px;
+  height: 700px;
+  margin: 2rem;
   padding: 1rem;
   background-color: #fff;
   display: flex;
   flex-direction: column;
 }
-.orderAmount-header {
+.app-header {
   flex: none;
   height: 60px;
   display: flex;
   justify-content: space-between;
 }
-.orderAmount-header .__title {
+.app-header .__title {
   margin-top: 1rem;
   font-size: 1.4rem;
   color: rgba(0, 0, 0, 0.8);
 }
-.orderAmount-nav {
+.app-nav {
   align-self: flex-start;
   padding: 5px;
   border-radius: 5px;
   background-color: #eff3f5;
 }
-.orderAmount-nav .__button {
+.app-nav .__button {
   display: inline-block;
   padding: 10px;
   border: none;
@@ -50,27 +56,21 @@ body {
   color: #9ba5ac;
   cursor: pointer;
 }
-.orderAmount-nav .__button[aria-pressed=true] {
-  background-color: #4384f7;
+.app-nav .__button[aria-pressed=true] {
+  background-color: var(--color1);
   color: #fff;
 }
-.orderAmount-amount {
+.app-barGraph {
   flex: 1;
   display: flex;
   flex-direction: column;
   padding-top: 2rem;
 }
-.orderAmount-amount[aria-hidden=true] {
-  display: none;
-}
-.orderAmount-unit {
+.app-lineGraph {
   flex: 1;
   display: flex;
   flex-direction: column;
   padding-top: 2rem;
-}
-.orderAmount-unit[aria-hidden=true] {
-  display: none;
 }
 
 .chart {
@@ -120,10 +120,10 @@ body {
   width: 60%;
   height: 0;
   border-radius: 3px 3px 0 0;
-  background-color: #4384f7;
+  background-color: var(--color1);
 }
 .chart-graphs .cell .__bar:hover {
-  background-color: #2460c7;
+  background-color: var(--color2);
 }
 .chart-graphs .cell .infos {
   visibility: hidden;
@@ -143,8 +143,11 @@ body {
   height: 100%;
 }
 .chart-graphs polyline {
-  stroke: #5cc959;
+  fill: none;
+  stroke: var(--color1);
   stroke-width: 3px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .chart-graphs .circles {
   position: absolute;
@@ -158,27 +161,16 @@ body {
   margin-left: -6px;
   margin-top: -6px;
   border-radius: 50%;
-  border: 3px solid #5cc959;
+  border: 3px solid var(--color1);
   background-color: #fff;
 }
 .chart-graphs .circles .__icon:hover {
-  border-color: #17cf11;
-  background-color: yellow;
+  border-color: var(--color2);
 }
 .chart-dates {
   flex: none;
   height: 30px;
   border-top: 1px solid #c9c9c9;
-  position: relative;
-}
-.chart-dates .__date {
-  position: absolute;
-  top: 5px;
-  margin: 0;
-  color: #959fa6;
-}
-.chart-dates .__date[data-date=today] {
-  right: 0;
 }
 .chart-info {
   position: absolute;

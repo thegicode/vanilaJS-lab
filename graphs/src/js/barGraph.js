@@ -33,19 +33,19 @@ const _getData = () => {
     return data
 }
 
-const amount = () => {
+const barGraph = () => {
 
-    const template = document.querySelector('[data-template="amount-cell"')
+    const template = document.querySelector('[data-template="barGraph-cell"')
 
     const
-        cpnt = document.querySelector('.orderAmount-amount'),
+        cpnt = document.querySelector('.app-barGraph'),
         chartEl = cpnt.querySelector('.chart'),
         graphsEl = cpnt.querySelector('.graphs'),
         datesEl = cpnt.querySelector('.chart-dates'),
         infoEl = cpnt.querySelector('.chart-info'),
         arrowEl = cpnt.querySelector('.__arrow')
 
-    const onMouseOver = e => {
+    const onClick = e => {
         const barEl = e.target,
             cellEl = barEl.parentElement
     
@@ -103,7 +103,7 @@ const amount = () => {
             priceEl.textContent = `${price}원`
             quantityEl.textContent = quantity
 
-            barEl.addEventListener('mouseover', onMouseOver)
+            barEl.addEventListener('click', onClick)
             barEl.addEventListener('mouseout', onMouseOut)
 
             graphsEl.appendChild(el)
@@ -112,4 +112,4 @@ const amount = () => {
     setGraphs()
 }
 
-export default amount
+export default barGraph

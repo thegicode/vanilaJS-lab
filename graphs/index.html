@@ -10,16 +10,12 @@
 <body>
     <div class="root">
 
-        <section class="orderAmount">
-            <header class="orderAmount-header">
+        <section class="app">
+            <header class="app-header">
                 <h3 class="__title">그래프</h3>
-                <nav class="orderAmount-nav">
-                    <button class="__button" data-index="0" aria-pressed="true">TAB1</button>
-                    <button class="__button" data-index="1" aria-pressed="false">TAB2</button>
-                </nav>
             </header>
 
-            <div data-panel="0" class="orderAmount-amount" aria-hidden="false">
+            <div class="app-barGraph">
                 <div class="chart">
                     <div class="chart-graphs">
                         <div class="lines" role="presentation">
@@ -31,8 +27,6 @@
                         <div class="graphs"></div>
                     </div>
                     <div class="chart-dates" role="presentation">
-                        <p class="__date" style="left: 115px">9.7</p>
-                        <p class="__date" data-date="today">오늘</p>
                     </div>
                     <div class="chart-info" role="presentation" aria-hidden="true" data-direction="">
                         <div class="infos"></div>
@@ -41,7 +35,7 @@
                 </div>
             </div>
 
-            <div data-panel="1" class="orderAmount-unit" aria-hidden="true">
+            <div class="app-lineGraph">
                 <div class="chart">
                     <div class="chart-graphs">
                         <div class="lines" role="presentation">
@@ -52,21 +46,12 @@
                         </div>
                         <div class="graphs" role="presentation">
                             <svg mlns="http://www.w3.org/2000/svg">
-                                <g>
-                                    <polyline
-                                        fill="none" 
-                                        points="" 
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round">
-                                    </polyline>
-                                </g>
+                                <polyline />
                             </svg>
                         </div>
                         <div class="circles" role="presentation"></div>
                     </div>
                     <div class="chart-dates">
-                        <p class="__date" style="left: 115px">9.7</p>
-                        <p class="__date" data-date="today">오늘</p>
                     </div>
                     <div class="chart-info" aria-hidden="true" data-direction="">
                         <p class="__fullDay">2021.9.26</p>
@@ -81,7 +66,7 @@
         </section>
     </div>
 
-    <template data-template="amount-cell">
+    <template data-template="barGraph-cell">
         <div class="cell">
             <span class="__bar"></span>
             <div class="infos">

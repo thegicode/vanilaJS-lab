@@ -12,12 +12,12 @@ const _getData = () => {
     return arr
 }
 
-const unit = () => {
+const lineGraph = () => {
     
     const template = document.querySelector('[data-template="circle"]')
 
     const 
-        cpnt = document.querySelector('.orderAmount-unit'),
+        cpnt = document.querySelector('.app-lineGraph'),
         chartEl = cpnt.querySelector('.chart'),
         graphsEl = cpnt.querySelector('.graphs'),
         polylineEl = cpnt.querySelector('polyline'),
@@ -25,7 +25,7 @@ const unit = () => {
         infoEl = cpnt.querySelector('.chart-info'),
         arrowEl = cpnt.querySelector('.__arrow')
 
-    const onMouseOver = e => {
+    const onClick = e => {
         const el = e.target
     
         const elLeftPercent = Math.round(el.offsetLeft / chartEl.offsetWidth * 100)
@@ -79,7 +79,7 @@ const unit = () => {
                 top: ${y}px;
                 left: ${x}px;
             `
-            el.addEventListener('mouseover', onMouseOver)
+            el.addEventListener('click', onClick)
             el.addEventListener('mouseout', onMouseOut)
             circlesEl.appendChild(el)
 
@@ -93,4 +93,4 @@ const unit = () => {
     
 }
 
-export default unit
+export default lineGraph

@@ -26,7 +26,6 @@
     [See live](https://thegicode.github.io/vanilaJS-lab/graphs/src/html/polyline-6.html)
     * 그래프 색 두 개 적용
 
-
 - [polyline-7](src/html/polyline-7.html). 
     [See live](https://thegicode.github.io/vanilaJS-lab/graphs/src/html/polyline-7.html)
-    * 부 데이터가 없는 경우
+    * 일부 데이터가 없는 경우
