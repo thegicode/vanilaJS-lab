@@ -1,92 +1,50 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>그래프</title>
-    <link rel="stylesheet" type="text/css" href="src/css/main.css">
+    <meta charset="utf-8">
+    <title>Graphs | VanilaJS lab </title>
+    <style>
+        body {
+            margin: 1rem;
+        }
+        a {
+            display: block;
+            margin: 10px 0;
+        }
+    </style>
 </head>
 <body>
-    <div class="root">
 
-        <section class="app">
-            <header class="app-header">
-                <h3 class="__title">그래프</h3>
-            </header>
+    <h1>Graphs</h1>
 
-            <div class="app-barGraph">
-                <div class="chart">
-                    <div class="chart-graphs">
-                        <div class="lines" role="presentation">
-                            <span class="__line"></span>
-                            <span class="__line"></span>
-                            <span class="__line"></span>
-                            <span class="__line"></span>
-                        </div>
-                        <div class="graphs"></div>
-                    </div>
-                    <div class="chart-dates" role="presentation">
-                    </div>
-                    <div class="chart-info" role="presentation" aria-hidden="true" data-direction="">
-                        <div class="infos"></div>
-                        <span class="__arrow"></span>
-                    </div>
-                </div>
-            </div>
 
-            <div class="app-lineGraph">
-                <div class="chart">
-                    <div class="chart-graphs">
-                        <div class="lines" role="presentation">
-                            <span class="__line"></span>
-                            <span class="__line"></span>
-                            <span class="__line"></span>
-                            <span class="__line"></span>
-                        </div>
-                        <div class="graphs" role="presentation">
-                            <svg mlns="http://www.w3.org/2000/svg">
-                                <polyline />
-                            </svg>
-                        </div>
-                        <div class="circles" role="presentation"></div>
-                    </div>
-                    <div class="chart-dates">
-                    </div>
-                    <div class="chart-info" aria-hidden="true" data-direction="">
-                        <p class="__fullDay">2021.9.26</p>
-                        <dl>
-                            <dt>단가</dt>
-                            <dd>17,660원</dd>
-                        </dl>
-                        <span class="__arrow"></span>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
+    <h2>Graphs</h2>
+    <a href="src/html/graphs.html" target="_blank">Graphs</a>
 
-    <template data-template="barGraph-cell">
-        <div class="cell">
-            <span class="__bar"></span>
-            <div class="infos">
-                <p class="__fullDay" data-info="date" aria-label="날짜"></p>
-                <dl>
-                    <dt>주문</dt>
-                    <dd data-info="price"></dd>
-                </dl>
-                <dl>
-                    <dt>수량</dt>
-                    <dd data-info="quantity"></dd>
-                </dl>
-            </div>
-        </div>
-    </template>
 
-    <template data-template="circle">
-        <span class="__icon"></span>
-    </template>
-
-    <script type="module" src="src/index.js"></script>
+    <h2>Polyline</h2>
+    <ul>
+        <li>
+            <a href="src/html/polyline-1.html" target="_blank">기본 개념</a>
+        </li>
+        <li>
+            <a href="src/html/polyline-2.html" target="_blank">ViewBox 이해</a>
+        </li>
+        <li>
+            <a href="src/html/polyline-3.html" target="_blank">아이콘 표시, x 범례 표시</a>
+        </li>
+        <li>
+            <a href="src/html/polyline-4.html" target="_blank">데이터 개수 랜덤 적용</a>
+        </li>
+        <li>
+            <a href="src/html/polyline-5.html" target="_blank">웹 접근성 : 데이터 항목 정보 넣기</a>
+        </li>
+        <li>
+            <a href="src/html/polyline-6.html" target="_blank">그래프 색 두 개 적용</a>
+        </li>
+        <li>
+            <a href="src/html/polyline-7.html" target="_blank">일부 데이터가 없는 경우</a>
+        </li>
+    </ul>
 </body>
 </html>

@@ -1,6 +1,10 @@
 
 # VailaJs Graphs
 
+## graphs
+- [Graphs](src/html/graphs.html). 
+    [See live](https://thegicode.github.io/vanilaJS-lab/graphs/src/html/graphs.html)
+
 ## polyline - line graph
 - [polyline-1](src/html/polyline-1.html). 
     [See live](https://thegicode.github.io/vanilaJS-lab/graphs/src/html/polyline-1.html)
