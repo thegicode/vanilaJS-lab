@@ -57,6 +57,9 @@ body {
 .table tbody .price {
   padding: 0;
 }
+.table tbody .discount {
+  text-align: right;
+}
 .table input[type=number] {
   box-sizing: border-box;
   width: 100%;

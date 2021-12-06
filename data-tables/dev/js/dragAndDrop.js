@@ -26,38 +26,43 @@ const dragAndDrop = (tbodyEl, state, events, renderIndex) => {
             tbodyEl.dataset.drop = true
             const draggedIndex = draggedEl.dataset.index
             const pos = targetedEl.dataset.pos || 'top'
-            if (pos === 'bottom') {
-                targetedEl.after(draggedEl)
-            } else {
-                targetedEl.before(draggedEl)
-            }
-            exchangeItem(pos, targetedEl.dataset.index, draggedIndex)
+            window.requestAnimationFrame( () => {
+                if (pos === 'bottom') {
+                    targetedEl.after(draggedEl)
+                } else {
+                    targetedEl.before(draggedEl)
+                }
+                exchangeItem(pos, targetedEl.dataset.index, draggedIndex)
 
-            delete targetedEl.dataset.pos
-            originEl.remove()
-            draggedEl.removeAttribute('draggable')
+                delete targetedEl.dataset.pos
+                originEl.remove()
+                draggedEl.removeAttribute('draggable')
 
-            renderIndex()
+                renderIndex()
 
-            setTimeout( () => {
-                delete tbodyEl.dataset.drop
-            }, 100)
-
+                setTimeout( () => {
+                    delete tbodyEl.dataset.drop
+                }, 100)
+            })
         })
     
         node.addEventListener("dragenter", () => {
-            // css 간편화를 위해, 중간에 originEl이 있으면 css가 복잡
-            tbodyEl.appendChild(originEl)
+            window.requestAnimationFrame( () => {
+                // css 간편화를 위해, 중간에 originEl이 있으면 css가 복잡
+                tbodyEl.appendChild(originEl)
 
-            if( node === originEl || node === targetedEl ) {
-                return
-            }
-    
-            // 이전 targetedEl의 data 속성 제거
-            if ( targetedEl ) {
-                delete targetedEl.dataset.pos
-            }
-            targetedEl = node
+                if( node === originEl || node === targetedEl ) {
+                    return
+                }
+        
+                // 이전 targetedEl의 data 속성 제거
+                if ( targetedEl ) {
+                    delete targetedEl.dataset.pos
+                }
+                targetedEl = node
+
+            })
+            
         })
     }
 
@@ -71,16 +76,19 @@ const dragAndDrop = (tbodyEl, state, events, renderIndex) => {
                 return
             }
 
-            let el = targetedEl
-            const mouseY = event.clientY
-            const elHalfVal = el.offsetTop + el.offsetHeight/2
-            if( mouseY > elHalfVal) { 
-                // 마우스 위치가 el의 절반 위치보다 크면
-                el.dataset.pos = 'bottom'
-            } else { 
-                // 마우스 위치가 el의 절반 위치보다 작으면
-                el.dataset.pos = 'top'
-            }
+            window.requestAnimationFrame( () => {
+                let el = targetedEl
+                const mouseY = event.clientY
+                const elHalfVal = el.offsetTop + el.offsetHeight/2
+                if( mouseY > elHalfVal) { 
+                    // 마우스 위치가 el의 절반 위치보다 크면
+                    el.dataset.pos = 'bottom'
+                } else { 
+                    // 마우스 위치가 el의 절반 위치보다 작으면
+                    el.dataset.pos = 'top'
+                }
+            })
+            
         })
 
     }

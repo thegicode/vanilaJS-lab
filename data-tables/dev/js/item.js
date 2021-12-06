@@ -1,6 +1,8 @@
 import { clonedNode } from './helpers.js'
 
-const item = (app, store, state, events, renderSum, renderTable, dragAndDrop) => {
+
+
+const item = (app, store, state, events, renderSum, renderTable, renderDiscountPrice, dragAndDrop) => {
     const templateEl = app.querySelector('template')
     const { addItem, updateItem, deleteItem, discount } = events
 
@@ -30,13 +32,16 @@ const item = (app, store, state, events, renderSum, renderTable, dragAndDrop) =>
                 inputEl.focus()
                 return
             }
+
+            const index = node.dataset.index
             switch(type) {
                 case 'add':
                     addItem(amountEl.value, priceEl.value)
                     type = 'update'
                     break
                 case 'update' :
-                    updateItem(node.dataset.index, inputEl.name, inputEl.value)
+                    updateItem(index, inputEl.name, inputEl.value)
+                    renderDiscountPrice(node)
                     break
                 default :
                     break
@@ -46,12 +51,12 @@ const item = (app, store, state, events, renderSum, renderTable, dragAndDrop) =>
             state.activeNode = null
         }
 
-        const onCheckChange = (event, isCheck) => {
+        const onCheckChange = (isCheck) => {
             const index = node.dataset.index
-            updateItem(index, 'check', isCheck)
+            updateItem(index, 'isCheck', isCheck)
             checkEl.checked = isCheck
             const discountPrice = discount(index, isCheck)
-            discountEl.textContent = discountPrice >= 0 ? discountPrice : ''
+            renderDiscountPrice(node)
             renderSum()
         }
 
@@ -76,7 +81,7 @@ const item = (app, store, state, events, renderSum, renderTable, dragAndDrop) =>
 
         checkEl.addEventListener('change', (event) => {
             const isCheck = checkEl.checked
-            onCheckChange(event, isCheck)
+            onCheckChange(isCheck)
         })
 
         checkEl.addEventListener('keydown', (event) => {
@@ -103,7 +108,7 @@ const item = (app, store, state, events, renderSum, renderTable, dragAndDrop) =>
     }
 
     const getNode = (data, index) => {
-        const { amount, price, check, discount } = data
+        const { amount, price, isCheck, discountPrice } = data
 
         const node = clonedNode(templateEl)
         const amountEl = node.querySelector('input[name="amount"]')
@@ -114,9 +119,9 @@ const item = (app, store, state, events, renderSum, renderTable, dragAndDrop) =>
         node.dataset.index = index
         amountEl.value = amount
         priceEl.value = price
-        if (check === true) {
-            checkEl.checked = check
-            discountEl.textContent = discount
+        if (isCheck === true) {
+            checkEl.checked = isCheck
+            discountEl.textContent = discountPrice
         }
 
         addEvents(node)

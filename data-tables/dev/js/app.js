@@ -22,13 +22,20 @@ const app = () => {
     const { store, ...events } = modelFactory()
     const dragAndDrop = dragAndDropFactory(tbodyEl, state, events, renderIndex)
 
-    const item = itemFactory(rootEl, store, state, events, renderSum, renderTable, dragAndDrop)
+    const item = itemFactory(rootEl, store, state, events, renderSum, renderTable, renderDiscountPrice, dragAndDrop)
 
     function renderIndex() {
         tbodyEl.querySelectorAll('tr')
             .forEach( (el, index) => {
                 el.dataset.index = index
             })
+    }
+
+    function renderDiscountPrice(el) {
+        const index = el.dataset.index
+        const { isCheck, discountPrice } = store.data[index]
+        el.querySelector('.discount')
+            .textContent = isCheck ? discountPrice : ''
     }
 
     function renderSum() {

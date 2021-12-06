@@ -9,32 +9,32 @@ const INITIAL_DATA = [
     {
         amount: 0,
         price: 1000,
-        check: true,
-        discount: 0
+        isCheck: true,
+        discountPrice: 0
     },
     {
         amount: 1,
         price: 2000,
-        check: true,
-        discount: 20
+        isCheck: true,
+        discountPrice: 200
     },
     {
         amount: 2,
         price: 3000,
-        check: false,
-        discount: null
+        isCheck: false,
+        discountPrice: null
     },
     {
         amount: 3,
         price: 4000,
-        check: false,
-        discount: null
+        isCheck: false,
+        discountPrice: null
     },
     {
         amount: 4,
         price: 5000,
-        check: false,
-        discount: null
+        isCheck: false,
+        discountPrice: null
     }
 ]
 
@@ -52,22 +52,28 @@ export default () => {
         state.push({
             amount: Number(amount),
             price: Number(price),
-            check: false
+            isCheck: false
         })
         console.log('add: ', Array.from(state, item => (item.amount || item.price)))
     }
     
     const updateItem = (index, key, value) => {
+        const data = state[index]
         if (key === 'amount' || key === 'price') {
             value = Number(value)
         }
-        if (state[index][key] === value ) {
+        if (data[key] === value ) {
             return
         }
         
-        state[index][key] = value
+        data[key] = value
 
-        console.log('update: ', Array.from(state, item => item[key]) )
+        if( data.isCheck ) {
+            discount(index)
+        }
+
+        console.log(data)
+        // console.log('update: ', Array.from(state, item => item[key]) )
     }
     
     const deleteItem = (index) => {
@@ -117,11 +123,12 @@ export default () => {
     const discount = (index, isCheck) => {
         const data = state[index]
         let dsPrice = null
-        if (isCheck) {
-            dsPrice = data.amount * data.price * 0.01
+        isCheck = isCheck || data.isCheck
+        if (isCheck === true) {
+            dsPrice = data.amount * data.price * 0.1
         } 
-        data.discount = dsPrice
-        console.log('discount: ', Array.from(state, item => item.discount))
+        data.discountPrice = dsPrice
+        console.log('discount: ', Array.from(state, item => item.discountPrice))
         return dsPrice
     }
 
