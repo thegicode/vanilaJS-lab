@@ -60,13 +60,13 @@ body {
   background-color: var(--color1);
   color: #fff;
 }
-.app-barGraph {
+.app-barChart {
   flex: 1;
   display: flex;
   flex-direction: column;
   padding-top: 2rem;
 }
-.app-lineGraph {
+.app-lineChart {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -217,4 +217,4 @@ body {
   right: 16px;
 }
 
-/*# sourceMappingURL=graphs.css.map */
+/*# sourceMappingURL=charts.css.map */

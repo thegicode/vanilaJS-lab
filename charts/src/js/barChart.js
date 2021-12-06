@@ -33,12 +33,12 @@ const _getData = () => {
     return data
 }
 
-const barGraph = () => {
+const barChart = () => {
 
-    const template = document.querySelector('[data-template="barGraph-cell"')
+    const template = document.querySelector('[data-template="barChart-cell"')
 
     const
-        cpnt = document.querySelector('.app-barGraph'),
+        cpnt = document.querySelector('.app-barChart'),
         chartEl = cpnt.querySelector('.chart'),
         graphsEl = cpnt.querySelector('.graphs'),
         datesEl = cpnt.querySelector('.chart-dates'),
@@ -112,4 +112,4 @@ const barGraph = () => {
     setGraphs()
 }
 
-export default barGraph
+export default barChart

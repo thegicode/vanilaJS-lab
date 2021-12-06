@@ -12,12 +12,12 @@ const _getData = () => {
     return arr
 }
 
-const lineGraph = () => {
+const lineChart = () => {
     
     const template = document.querySelector('[data-template="circle"]')
 
     const 
-        cpnt = document.querySelector('.app-lineGraph'),
+        cpnt = document.querySelector('.app-lineChart'),
         chartEl = cpnt.querySelector('.chart'),
         graphsEl = cpnt.querySelector('.graphs'),
         polylineEl = cpnt.querySelector('polyline'),
@@ -93,4 +93,4 @@ const lineGraph = () => {
     
 }
 
-export default lineGraph
+export default lineChart
