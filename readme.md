@@ -5,4 +5,3 @@
 - [Charts](charts). [See live](https://thegicode.github.io/vanilaJS-lab/charts)
 - [drag-drop](drag-drop). [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop)
 
-
