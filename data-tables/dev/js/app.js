@@ -1,7 +1,8 @@
 import modelFactory from './model.js'
 import itemFactory from './item.js'
 import dragAndDropFactory from './dragAndDrop.js'
-import sum from './sum.js'
+// import sum from './sum.js'
+import rednerFactory from './render.js'
 
 const app = () => {
 
@@ -20,27 +21,9 @@ const app = () => {
     }
 
     const { store, ...events } = modelFactory()
-    const dragAndDrop = dragAndDropFactory(tbodyEl, state, events, renderIndex)
-
-    const item = itemFactory(rootEl, store, state, events, renderSum, renderTable, renderDiscountPrice, dragAndDrop)
-
-    function renderIndex() {
-        tbodyEl.querySelectorAll('tr')
-            .forEach( (el, index) => {
-                el.dataset.index = index
-            })
-    }
-
-    function renderDiscountPrice(el) {
-        const index = el.dataset.index
-        const { isCheck, discountPrice } = store.data[index]
-        el.querySelector('.discount')
-            .textContent = isCheck ? discountPrice : ''
-    }
-
-    function renderSum() {
-        sum(store.data, rootEl)
-    }
+    const render = rednerFactory(store, rootEl)
+    const dragAndDrop = dragAndDropFactory(rootEl, state, events, render)
+    const item = itemFactory(rootEl, store, state, events, renderTable, dragAndDrop, render)
 
     function renderTable() {
         const el = tbodyEl
@@ -51,7 +34,7 @@ const app = () => {
             el.appendChild(node)
         })
 
-        renderSum()
+        render.sum()
     }
     
     const addEvents = () => {
@@ -72,15 +55,8 @@ const app = () => {
         dragAndDrop.addDomEvents()
     }
 
-    const sortTable = () => {
-        // store.data.forEach( (item, index) => {
-            // console.log( item.amount )
-        // })
-    }
-
     renderTable()
     addEvents()
-    sortTable()
 
 }
 

@@ -2,7 +2,7 @@ import { clonedNode } from './helpers.js'
 
 
 
-const item = (app, store, state, events, renderSum, renderTable, renderDiscountPrice, dragAndDrop) => {
+const item = (app, store, state, events, renderTable, dragAndDrop, render) => {
     const templateEl = app.querySelector('template')
     const { addItem, updateItem, deleteItem, discount } = events
 
@@ -41,12 +41,12 @@ const item = (app, store, state, events, renderSum, renderTable, renderDiscountP
                     break
                 case 'update' :
                     updateItem(index, inputEl.name, inputEl.value)
-                    renderDiscountPrice(node)
+                    render.discountPrice(node)
                     break
                 default :
                     break
             }
-            renderSum()
+            render.sum()
             node.dataset.focus = false
             state.activeNode = null
         }
@@ -56,8 +56,8 @@ const item = (app, store, state, events, renderSum, renderTable, renderDiscountP
             updateItem(index, 'isCheck', isCheck)
             checkEl.checked = isCheck
             const discountPrice = discount(index, isCheck)
-            renderDiscountPrice(node)
-            renderSum()
+            render.discountPrice(node)
+            render.sum()
         }
 
         inputEls.forEach( inputEl => {

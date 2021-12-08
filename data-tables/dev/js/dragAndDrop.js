@@ -1,5 +1,6 @@
 
-const dragAndDrop = (tbodyEl, state, events, renderIndex) => {
+const dragAndDrop = (rootEl, state, events, render) => {
+    const tbodyEl = rootEl.querySelector('tbody')
 
     let originEl, draggedEl, targetedEl
 
@@ -38,7 +39,7 @@ const dragAndDrop = (tbodyEl, state, events, renderIndex) => {
                 originEl.remove()
                 draggedEl.removeAttribute('draggable')
 
-                renderIndex()
+                render.index()
 
                 setTimeout( () => {
                     delete tbodyEl.dataset.drop
