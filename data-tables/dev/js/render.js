@@ -37,29 +37,20 @@ const render = (rootEl, store) => {
 
     const table = (getNode) => {
         tbodyEl.innerHTML = ''
+
+        // store.data.forEach( (data, index) => {
+        //     const node = getNode(data, index)
+        //     tbodyEl.appendChild(node)
+        // })
+
         const fragment = new DocumentFragment()
         store.data.forEach( (data, index) => {
             const node = getNode(data, index)
             fragment.appendChild(node)
         })
-        // window.requestAnimationFrame( () => {
-            // console.time('a')
-            tbodyEl.appendChild(fragment)
-            sum()
-            // console.timeEnd('a')
-        // })
+        tbodyEl.appendChild(fragment)
 
-        // requestAnimationFrame
-        // load : 1.31787109375, 0.636962890625, 1.977783203125
-        // delete center : 0.231201171875, 1.129150390625, 1.551025390625
-
-        // normal
-        // load: 0.461181640625, 0.525146484375, 1.32080078125
-        // delete center: 0.32080078125, 2.466064453125, 0.294921875
-
-        // load : normal?
-        // delete : requestAnimationFrame
-
+        sum()
         return true
     }
 

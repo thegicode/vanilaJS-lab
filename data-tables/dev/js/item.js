@@ -1,4 +1,6 @@
-import { clonedNode } from './helpers.js'
+const __clonedNode = (node) => {
+    return node.content.firstElementChild.cloneNode(true)
+}
 
 const item = (rootEl, store, events, dragAndDrop, render) => {
     const templateEl = rootEl.querySelector('template')
@@ -96,7 +98,7 @@ const item = (rootEl, store, events, dragAndDrop, render) => {
     const getNode = (data, index) => {
         const { amount, price, isCheck, discountPrice } = data
 
-        const node = clonedNode(templateEl)
+        const node = __clonedNode(templateEl)
         const amountEl = node.querySelector('input[name="amount"]')
         const priceEl = node.querySelector('input[name="price"]')
         const checkEl = node.querySelector('input[name="check"]')
@@ -117,7 +119,7 @@ const item = (rootEl, store, events, dragAndDrop, render) => {
 
     const getEmptyNode = () => {
         const index = store.data.length
-        const node = clonedNode(templateEl)
+        const node = __clonedNode(templateEl)
         
         node.dataset.index = index
 
