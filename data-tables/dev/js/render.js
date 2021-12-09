@@ -19,11 +19,20 @@ const render = (rootEl, store) => {
             }
         })
         sum._total = sum._price - sum._discountPrice
+        
+        const cloned = tfootEl.cloneNode(true)
+        cloned.querySelector('.amount').textContent = sum._amount.toLocaleString()
+        cloned.querySelector('.price').textContent = sum._price.toLocaleString()
+        cloned.querySelector('.discount').textContent = sum._discountPrice.toLocaleString()
+        cloned.querySelector('.total').textContent = sum._total.toLocaleString()
+        tfootEl.replaceWith(cloned)
 
-        tfootEl.querySelector('.amount').textContent = sum._amount.toLocaleString()
-        tfootEl.querySelector('.price').textContent = sum._price.toLocaleString()
-        tfootEl.querySelector('.discount').textContent = sum._discountPrice.toLocaleString()
-        tfootEl.querySelector('.total').textContent = sum._total.toLocaleString()
+        // tfootEl.querySelector('.amount').textContent = sum._amount.toLocaleString()
+        // tfootEl.querySelector('.price').textContent = sum._price.toLocaleString()
+        // tfootEl.querySelector('.discount').textContent = sum._discountPrice.toLocaleString()
+        // tfootEl.querySelector('.total').textContent = sum._total.toLocaleString()
+
+        // * Chrome performances 확인 결과 [수정의 경우] idle에서 cloneNode 방식의 시간이 더 짧았다.
     }
 
     const table = (getNode) => {
