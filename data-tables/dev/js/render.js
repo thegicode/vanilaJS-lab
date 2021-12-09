@@ -1,5 +1,5 @@
 
-const render = (store, rootEl) => {
+const render = (rootEl, store) => {
     const tbodyEl = rootEl.querySelector('tbody'),
         tfootEl = rootEl.querySelector('tfoot')
 
@@ -25,11 +25,11 @@ const render = (store, rootEl) => {
         tfootEl.querySelector('.total').textContent = sum._total.toLocaleString()
     }
 
-    const table = () => {
+    const table = (getNode) => {
         tbodyEl.innerHTML = ''
 
         store.data.forEach( (data, index) => {
-            const node = item.getNode(data, index)
+            const node = getNode(data, index)
             tbodyEl.appendChild(node)
         })
 

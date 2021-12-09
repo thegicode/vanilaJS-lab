@@ -1,9 +1,7 @@
 import { clonedNode } from './helpers.js'
 
-
-
-const item = (app, store, state, events, renderTable, dragAndDrop, render) => {
-    const templateEl = app.querySelector('template')
+const item = (rootEl, store, events, dragAndDrop, render) => {
+    const templateEl = rootEl.querySelector('template')
     const { addItem, updateItem, deleteItem, discount } = events
 
     const addNodeEvents = (node, type) => {
@@ -16,15 +14,6 @@ const item = (app, store, state, events, renderTable, dragAndDrop, render) => {
         const deleteButton = node.querySelector('button[name="delete"]')
 
         type = type || 'update' 
-
-        const onInputElFocus = () => {
-            const activeNode = state.activeNode
-            if (activeNode && activeNode !== node ) {
-                delete activeNode.dataset.focus
-            }
-            node.dataset.focus = true
-            state.activeNode = node
-        }
 
         const onInputElChange = (event) => {
             const inputEl = event.target
@@ -47,8 +36,6 @@ const item = (app, store, state, events, renderTable, dragAndDrop, render) => {
                     break
             }
             render.sum()
-            node.dataset.focus = false
-            state.activeNode = null
         }
 
         const onCheckChange = (isCheck) => {
@@ -61,7 +48,6 @@ const item = (app, store, state, events, renderTable, dragAndDrop, render) => {
         }
 
         inputEls.forEach( inputEl => {
-            inputEl.addEventListener('focus', onInputElFocus)
             inputEl.addEventListener('change', onInputElChange)
         })
 
@@ -97,7 +83,7 @@ const item = (app, store, state, events, renderTable, dragAndDrop, render) => {
 
         deleteButton.addEventListener('click', () => {
             deleteItem(node.dataset.index)
-            renderTable()
+            render.table(getNode)
         })
 
     }

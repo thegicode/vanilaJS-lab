@@ -1,5 +1,5 @@
 
-const dragAndDrop = (rootEl, state, events, render) => {
+const dragAndDrop = (rootEl, events, render) => {
     const tbodyEl = rootEl.querySelector('tbody')
 
     let originEl, draggedEl, targetedEl

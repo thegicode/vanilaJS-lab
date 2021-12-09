@@ -1,41 +1,17 @@
-import modelFactory from './model.js'
-import itemFactory from './item.js'
-import dragAndDropFactory from './dragAndDrop.js'
-// import sum from './sum.js'
-import rednerFactory from './render.js'
+import models from './model.js'
+import renders from './render.js'
+import dragAndDrops from './dragAndDrop.js'
+import items from './item.js'
 
 const app = () => {
-
     const rootEl = document.querySelector('#root')
     const tbodyEl = rootEl.querySelector('tbody')
     const addButton = rootEl.querySelector('button[name="add"]')
 
-    let state = {
-        el : null,
-        get activeNode() {
-            return this.el
-        },
-        set activeNode(v) {
-            this.el = v
-        }
-    }
-
-    const { store, ...events } = modelFactory()
-    const render = rednerFactory(store, rootEl)
-    const dragAndDrop = dragAndDropFactory(rootEl, state, events, render)
-    const item = itemFactory(rootEl, store, state, events, renderTable, dragAndDrop, render)
-
-    function renderTable() {
-        const el = tbodyEl
-        el.innerHTML = ''
-
-        store.data.forEach( (data, index) => {
-            const node = item.getNode(data, index)
-            el.appendChild(node)
-        })
-
-        render.sum()
-    }
+    const { store, ...events } = models()
+    const render = renders(rootEl, store)
+    const dragAndDrop = dragAndDrops(rootEl, events, render)
+    const item = items(rootEl, store, events, dragAndDrop, render)
     
     const addEvents = () => {
         addButton.addEventListener('click', (e) => {
@@ -43,19 +19,11 @@ const app = () => {
             tbodyEl.appendChild(node)
             node.querySelector('input').focus()
         })
-        
-        addButton.addEventListener('focus', () => {
-            const activeNode = state.activeNode
-            if (activeNode) {
-                activeNode.dataset.focus = false
-                state.activeNode = null
-            }
-        })
 
         dragAndDrop.addDomEvents()
     }
 
-    renderTable()
+    render.table(item.getNode)
     addEvents()
 
 }
