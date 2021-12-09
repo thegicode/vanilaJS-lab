@@ -23,7 +23,9 @@ const app = () => {
         dragAndDrop.addDomEvents()
     }
 
-    render.table(item.getNode)
+    if (render.table(item.getNode)) {
+        document.querySelector('.loading').hidden = true
+    }
     addEvents()
 
 }

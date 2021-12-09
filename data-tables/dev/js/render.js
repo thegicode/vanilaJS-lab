@@ -50,6 +50,8 @@ const render = (rootEl, store) => {
 
         // load : normal?
         // delete : requestAnimationFrame
+
+        return true
     }
 
     const discountPrice = (el) => {
