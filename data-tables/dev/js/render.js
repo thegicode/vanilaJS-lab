@@ -18,22 +18,26 @@ const render = (rootEl, store) => {
                 sum._discountPrice +=  data.discountPrice
             }
         })
-        sum._total = sum._price - sum._discountPrice
-        tfootEl.querySelector('.amount').textContent = sum._amount.toLocaleString()
-        tfootEl.querySelector('.price').textContent = sum._price.toLocaleString()
-        tfootEl.querySelector('.discount').textContent = sum._discountPrice.toLocaleString()
-        tfootEl.querySelector('.total').textContent = sum._total.toLocaleString()
+        window.requestAnimationFrame( () => {
+            sum._total = sum._price - sum._discountPrice
+            tfootEl.querySelector('.amount').textContent = sum._amount.toLocaleString()
+            tfootEl.querySelector('.price').textContent = sum._price.toLocaleString()
+            tfootEl.querySelector('.discount').textContent = sum._discountPrice.toLocaleString()
+            tfootEl.querySelector('.total').textContent = sum._total.toLocaleString()
+        })
     }
 
     const table = (getNode) => {
         tbodyEl.innerHTML = ''
-
+        const fragment = new DocumentFragment()
         store.data.forEach( (data, index) => {
             const node = getNode(data, index)
-            tbodyEl.appendChild(node)
+            fragment.appendChild(node)
         })
-
-        sum()
+        window.requestAnimationFrame( () => {
+            tbodyEl.appendChild(fragment)
+            sum()
+        })
     }
 
     const discountPrice = (el) => {
