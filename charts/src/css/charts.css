@@ -149,10 +149,10 @@ body {
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-.chart-graphs .circles {
+.chart-graphs .spots {
   position: absolute;
 }
-.chart-graphs .circles .__icon {
+.chart-graphs .spots .__spot {
   display: block;
   position: absolute;
   width: 12px;
@@ -164,7 +164,7 @@ body {
   border: 3px solid var(--color1);
   background-color: #fff;
 }
-.chart-graphs .circles .__icon:hover {
+.chart-graphs .spots .__spot:hover {
   border-color: var(--color2);
 }
 .chart-dates {

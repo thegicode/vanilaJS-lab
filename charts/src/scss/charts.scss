@@ -171,24 +171,25 @@ body {
             stroke-linejoin: round;
         }
 
-        .circles {
+        .spots {
            position: absolute;
-           .__icon {
-               display: block;
-               position: absolute;
-               width: 12px; 
-               height: 12px;
-               box-sizing: border-box;
-               margin-left: -6px;
-               margin-top: -6px;
-               border-radius: 50%;
-               border: 3px solid var(--color1);
-               background-color: #fff;
-               &:hover{
-                   border-color: var(--color2);
-               }
-           }
+           .__spot {
+                display: block;
+                position: absolute;
+                width: 12px; 
+                height: 12px;
+                box-sizing: border-box;
+                margin-left: -6px;
+                margin-top: -6px;
+                border-radius: 50%;
+                border: 3px solid var(--color1);
+                background-color: #fff;
+                &:hover{
+                    border-color: var(--color2);
+                }
+            }
         }
+        
     } 
     &-dates {
         flex: none;

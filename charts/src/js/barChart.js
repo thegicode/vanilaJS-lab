@@ -33,7 +33,42 @@ const _getData = () => {
     return data
 }
 
-const barChart = () => {
+
+const onMouseEnter = (event, infoEl, chartEl, datesEl, arrowEl) => {
+    const barEl = event.target,
+        cellEl = barEl.parentElement,
+        clonedEl = cellEl.querySelector('.infos').cloneNode(true)
+
+    infoEl.querySelector('.infos').replaceWith(clonedEl)
+    infoEl.ariaHidden = false
+
+    const cellElLeftRate = cellEl.offsetLeft / chartEl.offsetWidth
+    let direction = 'center'
+    if (cellElLeftRate < 0.25) {
+        direction = 'left'
+    }
+    if (cellElLeftRate > 0.75) {
+        direction = 'right'
+    }
+
+    const bottom = datesEl.offsetHeight  // 범례 height
+        + arrowEl.offsetHeight // infoEl 화살표 height
+        + barEl.offsetHeight // 막대 그래프  height
+        + 5 // 여백
+    const left = cellEl.offsetLeft - arrowEl.offsetLeft + 5
+
+    infoEl.dataset.direction = direction
+    infoEl.style.cssText = `
+        bottom: ${bottom}px;
+        left: ${left}px;
+    `
+}
+
+const onMouseOut = infoEl => {
+    infoEl.ariaHidden = true
+}
+
+export default () => {
 
     const template = document.querySelector('[data-template="barChart-cell"')
 
@@ -45,71 +80,41 @@ const barChart = () => {
         infoEl = cpnt.querySelector('.chart-info'),
         arrowEl = cpnt.querySelector('.__arrow')
 
-    const onClick = e => {
-        const barEl = e.target,
-            cellEl = barEl.parentElement
-    
-        infoEl.querySelector('.infos')
-            .replaceWith(cellEl.querySelector('.infos').cloneNode(true))
-        
-        infoEl.ariaHidden = false
-        const cellElLeftRate = cellEl.offsetLeft / chartEl.offsetWidth
-        let direction = 'center'
-        if (cellElLeftRate < 0.25) {
-            direction = 'left'
-        }
-        if (cellElLeftRate > 0.75) {
-            direction = 'right'
-        }
-        infoEl.dataset.direction = direction
-
-        const bottom = datesEl.offsetHeight  // 범례 height
-            + arrowEl.offsetHeight // infoEl 화살표 height
-            + barEl.offsetHeight // 막대 그래프  height
-            + 5 // 여백
-
-        const left = cellEl.offsetLeft - arrowEl.offsetLeft + 5
-
-        infoEl.style.cssText = `
-            bottom: ${bottom}px;
-            left: ${left}px;
-        `
-    }
-    
-    const onMouseOut = e => {
-        infoEl.ariaHidden = true
-    }
-
-    const setGraphs = () => {
         const DATAS = _getData()
+        const fragment = new DocumentFragment()
+
         DATAS.forEach( data => {
             const { date, isPrevMoth, price, percent, quantity } = data
             const el = template
                 .content
                 .firstElementChild
                 .cloneNode(true)
+
             const barEl = el.querySelector('.__bar')
-            barEl.style.height = `${percent}%`
+            const dateEl = el.querySelector('[data-info="date"]')
+            const priceEl = el.querySelector('[data-info="price"]')
+            const quantityEl = el.querySelector('[data-info="quantity"]')
 
             if ( isPrevMoth ) {
                 el.dataset.prev = true
             }
 
-            const dateEl = el.querySelector('[data-info="date"]')
-            const priceEl = el.querySelector('[data-info="price"]')
-            const quantityEl = el.querySelector('[data-info="quantity"]')
-
+            barEl.style.height = `${percent}%`
             dateEl.textContent = date
             priceEl.textContent = `${price}원`
             quantityEl.textContent = quantity
 
-            barEl.addEventListener('click', onClick)
-            barEl.addEventListener('mouseout', onMouseOut)
+            barEl.addEventListener('mouseenter', (event) => {
+                onMouseEnter(event, infoEl, chartEl, datesEl, arrowEl)
+            })
+            barEl.addEventListener('mouseout', () => {
+                onMouseOut(infoEl)
+            })
 
-            graphsEl.appendChild(el)
+            fragment.appendChild(el)
         })
+        
+        graphsEl.innerHTML = ''
+        graphsEl.appendChild(fragment)
     }
-    setGraphs()
-}
-
-export default barChart
+    

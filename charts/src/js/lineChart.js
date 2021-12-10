@@ -12,64 +12,63 @@ const _getData = () => {
     return arr
 }
 
-const lineChart = () => {
+const onMouseEnter = (event, chartEl, infoEl, arrowEl) => {
+    const el = event.target
+
+    const elLeftPercent = Math.round(el.offsetLeft / chartEl.offsetWidth * 100)
+
+    infoEl.ariaHidden = false
+
+    let direction = 'center'
+    if (elLeftPercent < 25) {
+        direction = 'left'
+    }
+    if (elLeftPercent > 75) {
+        direction = 'right'
+    }
+    infoEl.dataset.direction = direction
+
+    const bottom = chartEl.offsetHeight 
+        - parseFloat(el.style.top)
+        + arrowEl.offsetHeight
+        + 10
+
+    const left = el.offsetLeft - arrowEl.offsetLeft + 5
+
+    infoEl.style.cssText = `
+        left: ${left}px;
+        bottom: ${bottom}px;
+    `
+}
+
+const onMouseOut = (infoEl) => {
+    infoEl.ariaHidden = true
+}
+
+
+export default () => {
     
-    const template = document.querySelector('[data-template="circle"]')
+    const template = document.querySelector('[data-template="lineChart-spot"]')
 
     const 
         cpnt = document.querySelector('.app-lineChart'),
         chartEl = cpnt.querySelector('.chart'),
         graphsEl = cpnt.querySelector('.graphs'),
         polylineEl = cpnt.querySelector('polyline'),
-        circlesEl = cpnt.querySelector('.circles'),
+        spotsEl = cpnt.querySelector('.spots'),
         infoEl = cpnt.querySelector('.chart-info'),
         arrowEl = cpnt.querySelector('.__arrow')
-
-    const onClick = e => {
-        const el = e.target
     
-        const elLeftPercent = Math.round(el.offsetLeft / chartEl.offsetWidth * 100)
-
-        infoEl.ariaHidden = false
-    
-        let direction = 'center'
-        if (elLeftPercent < 25) {
-            direction = 'left'
-        }
-        if (elLeftPercent > 75) {
-            direction = 'right'
-        }
-        infoEl.dataset.direction = direction
-
-        const bottom = chartEl.offsetHeight 
-            - parseFloat(el.style.top)
-            + arrowEl.offsetHeight
-            + 10
-
-        const left = el.offsetLeft - arrowEl.offsetLeft + 5
-
-        infoEl.style.cssText = `
-            left: ${left}px;
-            bottom: ${bottom}px;
-        `
-    }
-
-    const onMouseOut = e => {
-        infoEl.ariaHidden = true
-    }
-    
-    const setGraphs = () => {
         const DATA = _getData()
-        const graphsWidth = graphsEl.offsetWidth,
-            graphsHeight = graphsEl.offsetHeight,
-            cellW = graphsWidth / DATA.length,
-            cellH = graphsHeight / 4
+        const  graphsHeight = graphsEl.offsetHeight,
+            xUnit = graphsEl.offsetWidth / DATA.length,
+            yUnit = graphsHeight / 4
 
-        circlesEl.innerHTML = ''
-        
+        const fragment = new DocumentFragment()
+
         const pointsArr = DATA.map((point, index) => {
-            let x = (cellW * index + cellW / 2).toFixed(1),
-                y = (graphsHeight - cellH * point).toFixed(1)
+            let x = (xUnit * index + xUnit / 2).toFixed(1),
+                y = (graphsHeight - yUnit * point).toFixed(1)
             
             const el = template
                     .content
@@ -79,18 +78,18 @@ const lineChart = () => {
                 top: ${y}px;
                 left: ${x}px;
             `
-            el.addEventListener('click', onClick)
-            el.addEventListener('mouseout', onMouseOut)
-            circlesEl.appendChild(el)
+            el.addEventListener('mouseenter', (event) => {
+                onMouseEnter(event, chartEl, infoEl, arrowEl)
+            })
+            el.addEventListener('mouseout', () => {
+                onMouseOut(infoEl)
+            })
+            fragment.appendChild(el)
 
             return `${x} ${y}`
         });
 
+        spotsEl.innerHTML = ''
+        spotsEl.appendChild(fragment)
         polylineEl.setAttribute('points', pointsArr.join(" "))
-    }
-
-    setGraphs()
-    
 }
-
-export default lineChart
