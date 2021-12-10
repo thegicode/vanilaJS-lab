@@ -59,37 +59,37 @@ export default () => {
         infoEl = cpnt.querySelector('.chart-info'),
         arrowEl = cpnt.querySelector('.__arrow')
     
-        const DATA = _getData()
-        const  graphsHeight = graphsEl.offsetHeight,
-            xUnit = graphsEl.offsetWidth / DATA.length,
-            yUnit = graphsHeight / 4
+    const DATA = _getData()
+    const  graphsHeight = graphsEl.offsetHeight,
+        xUnit = graphsEl.offsetWidth / DATA.length,
+        yUnit = graphsHeight / 4
 
-        const fragment = new DocumentFragment()
+    const fragment = new DocumentFragment()
 
-        const pointsArr = DATA.map((point, index) => {
-            let x = (xUnit * index + xUnit / 2).toFixed(1),
-                y = (graphsHeight - yUnit * point).toFixed(1)
-            
-            const el = template
-                    .content
-                    .firstElementChild
-                    .cloneNode(true)
-            el.style.cssText = `
-                top: ${y}px;
-                left: ${x}px;
-            `
-            el.addEventListener('mouseenter', (event) => {
-                onMouseEnter(event, chartEl, infoEl, arrowEl)
-            })
-            el.addEventListener('mouseout', () => {
-                onMouseOut(infoEl)
-            })
-            fragment.appendChild(el)
+    const pointsArr = DATA.map((point, index) => {
+        let x = (xUnit * index + xUnit / 2).toFixed(1),
+            y = (graphsHeight - yUnit * point).toFixed(1)
+        
+        const el = template
+                .content
+                .firstElementChild
+                .cloneNode(true)
+        el.style.cssText = `
+            top: ${y}px;
+            left: ${x}px;
+        `
+        el.addEventListener('mouseenter', (event) => {
+            onMouseEnter(event, chartEl, infoEl, arrowEl)
+        })
+        el.addEventListener('mouseout', () => {
+            onMouseOut(infoEl)
+        })
+        fragment.appendChild(el)
 
-            return `${x} ${y}`
-        });
+        return `${x} ${y}`
+    });
 
-        spotsEl.innerHTML = ''
-        spotsEl.appendChild(fragment)
-        polylineEl.setAttribute('points', pointsArr.join(" "))
+    spotsEl.innerHTML = ''
+    spotsEl.appendChild(fragment)
+    polylineEl.setAttribute('points', pointsArr.join(" "))
 }

@@ -80,41 +80,40 @@ export default () => {
         infoEl = cpnt.querySelector('.chart-info'),
         arrowEl = cpnt.querySelector('.__arrow')
 
-        const DATAS = _getData()
-        const fragment = new DocumentFragment()
+    const DATAS = _getData()
+    const fragment = new DocumentFragment()
 
-        DATAS.forEach( data => {
-            const { date, isPrevMoth, price, percent, quantity } = data
-            const el = template
-                .content
-                .firstElementChild
-                .cloneNode(true)
+    DATAS.forEach( data => {
+        const { date, isPrevMoth, price, percent, quantity } = data
+        const el = template
+            .content
+            .firstElementChild
+            .cloneNode(true)
 
-            const barEl = el.querySelector('.__bar')
-            const dateEl = el.querySelector('[data-info="date"]')
-            const priceEl = el.querySelector('[data-info="price"]')
-            const quantityEl = el.querySelector('[data-info="quantity"]')
+        const barEl = el.querySelector('.__bar')
+        const dateEl = el.querySelector('[data-info="date"]')
+        const priceEl = el.querySelector('[data-info="price"]')
+        const quantityEl = el.querySelector('[data-info="quantity"]')
 
-            if ( isPrevMoth ) {
-                el.dataset.prev = true
-            }
+        if ( isPrevMoth ) {
+            el.dataset.prev = true
+        }
 
-            barEl.style.height = `${percent}%`
-            dateEl.textContent = date
-            priceEl.textContent = `${price}원`
-            quantityEl.textContent = quantity
+        barEl.style.height = `${percent}%`
+        dateEl.textContent = date
+        priceEl.textContent = `${price}원`
+        quantityEl.textContent = quantity
 
-            barEl.addEventListener('mouseenter', (event) => {
-                onMouseEnter(event, infoEl, chartEl, datesEl, arrowEl)
-            })
-            barEl.addEventListener('mouseout', () => {
-                onMouseOut(infoEl)
-            })
-
-            fragment.appendChild(el)
+        barEl.addEventListener('mouseenter', (event) => {
+            onMouseEnter(event, infoEl, chartEl, datesEl, arrowEl)
         })
+        barEl.addEventListener('mouseout', () => {
+            onMouseOut(infoEl)
+        })
+
+        fragment.appendChild(el)
+    })
         
-        graphsEl.innerHTML = ''
-        graphsEl.appendChild(fragment)
-    }
-    
+    graphsEl.innerHTML = ''
+    graphsEl.appendChild(fragment)
+}
