@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intersection Observer</title>
+    <style> 
+        .card {
+            height: 200px;
+            margin-top: 1rem;
+            border: solid 1px #ddd;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="root">
+
+        <h1>Intersection Observer</h1>
+
+        <div class="card">content 1</div>
+        <div class="card">content 2</div>
+        <div class="card">content 3</div>
+        <div class="card" id="test">content 4</div>
+        <div class="card">content 5</div>
+        <div class="card">content 6</div>
+        <div class="card">content 7</div>
+        
+    </div>
+
+    <script>
+        const target = document.querySelector('#test')
+        var observer = new IntersectionObserver(changes => {
+            for (const change of changes) {
+                console.log(change.time);               // Timestamp when the change occurred
+                console.log('rootBounds', change.rootBounds);         // Unclipped area of root
+                console.log('boundingClientRect', change.boundingClientRect); // target.boundingClientRect()
+                console.log('intersectionRect', change.intersectionRect);   // boundingClientRect, clipped by its containing block ancestors, and intersected with rootBounds
+                console.log(change.intersectionRatio);  // Ratio of intersectionRect area to boundingClientRect area
+                console.log(change.target);             // the Element target
+            }
+        }, {
+            // root: document.querySelector('#root'),
+            // margin: "0px",
+            threshold: 1
+        });
+        // dictionary IntersectionObserverInit {
+        //     (Element or Document)?  root = null;
+        //     DOMString rootMargin = "0px";
+        //     (double or sequence<double>) threshold = 0;
+        // };
+
+        // Watch for intersection events on a specific target Element.
+        observer.observe(target);
+
+        // Stop watching for intersection events on a specific target Element.
+        // observer.unobserve(target);
+
+        // Stop observing threshold events on all target elements.
+        // observer.disconnect();
+    </script>
+
+</body>
+</html>
