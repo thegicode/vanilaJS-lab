@@ -18,7 +18,7 @@
             font-size: 1.5rem;
             color: rgba(0, 0, 0, 0.7);
         }
-        .card:nth-child(5n) {
+        .card:nth-child(6n) {
             border-color: rgba(0, 100, 200, 0.9);
             background-color: rgba(0, 100, 200, 0.2);
         }
@@ -34,7 +34,6 @@
     </div>
 
     <script>
-
         // Make DATA
         let DATA = []
         for (let i=0 ; i< 50 ; i++) {
@@ -44,42 +43,54 @@
         // Selectors
         const cardsEl = document.querySelector('.cards')
         const template = document.querySelector('template')
-        const scrollStepNumber = 5
+        const scrollStepNumber = 6
+
+        const getData = (index) => {
+            let isEnd = false,
+                length = index + scrollStepNumber
+
+            if (length >= DATA.length) {
+                length = DATA.length
+                isEnd = true
+            }
+
+            const data = DATA.slice(index, length)
+
+            return {
+                data,
+                isEnd
+            }
+        }
         
         // Make Elements and append
         const elements = () => {
             const cardEls = cardsEl.querySelectorAll('.card')
 
-            if (cardEls.length === DATA.length) {
-                return false
-            }
-
-            let idx1 = 0
+            let index = 0
             if (cardEls.length > 0) {
-                idx1 = cardEls.length
+                index = cardEls.length
             } 
-            const idx2 = idx1 + scrollStepNumber
 
+            const { data, isEnd } = getData(index)
             const fragement = new DocumentFragment
-            for(let i = idx1 ; i < idx2 ; i++) {
-                const el = template.content.firstElementChild.cloneNode(true)
-                el.dataset.index = i
-                el.textContent = `${DATA[i]}`
-                fragement.appendChild(el)
+            for(let i = 0 ; i < scrollStepNumber ; i++) {
+                if (data[i]) {
+                    const el = template.content.firstElementChild.cloneNode(true)
+                    el.dataset.index = index + i
+                    el.textContent = data[i]
+                    fragement.appendChild(el)
+                }
             }
             cardsEl.appendChild(fragement)
-            return true
+            return isEnd
         }
 
         const observer = new IntersectionObserver( changes => {
             changes.forEach( change => {
                 if (change.isIntersecting) {
-                    const isRendered = elements()
-                    if (isRendered) {
-                        observer.unobserve(change.target)
-                        if (cardsEl.querySelectorAll('.card').length === DATA.length) {
-                            return
-                        }
+                    const isEnd = elements()
+                    observer.unobserve(change.target)
+                    if (!isEnd) {
                         const target = cardsEl.querySelector('.card:last-child')
                         observer.observe(target)
                     }
