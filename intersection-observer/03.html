@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intersection Observer</title>
+    <style> 
+        .card {
+            height: 100px;
+            margin: 10px;
+            border: solid 1px rgba(0, 100, 200, 0.05);
+            background-color: rgba(0, 100, 200, 0.05);
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: rgba(0, 0, 0, 0.7);
+        }
+        .card:nth-child(5n) {
+            border-color: rgba(0, 100, 200, 0.9);
+            background-color: rgba(0, 100, 200, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div id="root" class="root">
+        <h1>Intersection Observer</h1>
+        <div class="cards"></div>
+        <template>
+            <div class="card"></div>
+        </template>
+    </div>
+
+    <script>
+
+        // Make DATA
+        let DATA = []
+        for (let i=0 ; i< 50 ; i++) {
+            DATA.push(i+1)
+        }
+
+        // Selectors
+        const cardsEl = document.querySelector('.cards')
+        const template = document.querySelector('template')
+        const scrollStepNumber = 5
+        
+        // Make Elements and append
+        const elements = () => {
+            const cardEls = cardsEl.querySelectorAll('.card')
+
+            if (cardEls.length === DATA.length) {
+                return false
+            }
+
+            let idx1 = 0
+            if (cardEls.length > 0) {
+                idx1 = cardEls.length
+            } 
+            const idx2 = idx1 + scrollStepNumber
+
+            const fragement = new DocumentFragment
+            for(let i = idx1 ; i < idx2 ; i++) {
+                const el = template.content.firstElementChild.cloneNode(true)
+                el.dataset.index = i
+                el.textContent = `${DATA[i]}`
+                fragement.appendChild(el)
+            }
+            cardsEl.appendChild(fragement)
+            return true
+        }
+
+        const observer = new IntersectionObserver( changes => {
+            changes.forEach( change => {
+                if (change.isIntersecting) {
+                    const isRendered = elements()
+                    if (isRendered) {
+                        observer.unobserve(change.target)
+                        if (cardsEl.querySelectorAll('.card').length === DATA.length) {
+                            return
+                        }
+                        const target = cardsEl.querySelector('.card:last-child')
+                        observer.observe(target)
+                    }
+                }
+            })
+        })
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            elements()
+
+            const target = cardsEl.querySelector('.card:last-child')
+            observer.observe(target)
+        })
+    </script>
+
+</body>
+</html>
