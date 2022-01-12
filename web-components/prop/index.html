@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prop</title>
+    <script type="module" src="index.js" defer></script>
+    <style>
+        body {
+            margin: 2rem;
+            line-height: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Prop</h1>
+
+    <p id="test"></p>
+
+    <confirm-app text="start"></confirm-app>
+    <check-app></check-app>
+
+    <!-- <confirm-app>
+        <check-app></check-app>
+    </confirm-app> -->
+
+    <!-- <check-app></check-app>
+    <confirm-app></confirm-app>  -->
+
+    <ul>
+        <li>dom에서 초기 prop 값 설정하면 attributeChangedCallback 호출 <br>
+            - name: text, oldValue: null, newValue: start
+        </li>
+        <li>constructor에서 값 설정시  <br>
+            - 엘리먼트의 속성값은 바뀐다. <br>
+            - attributeChangedCallback이 호출되지 않는다.
+        </li>
+    </ul>
+
+</body>
+</html>
