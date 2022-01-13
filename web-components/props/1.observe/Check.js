@@ -8,5 +8,3 @@ export default class Check extends HTMLElement {
         this.target.text = '[Check Element] change 1'
     }
 }
-
-// 

@@ -2,18 +2,18 @@ export default class Confirm extends HTMLElement {
 
     static observedAttributes = ["text"]
 
-    constructor() {
-        super()
-
-        this.text = 'constructor'
-        console.log('[constructor] this.prop: ', this.text)
-    }
-
     get text() {
         return this.getAttribute('text')
     }
     set text(value) {
         this.setAttribute('text', value)
+    }
+
+    constructor() {
+        super()
+
+        this.text = 'constructor'
+        console.log('[constructor] this.prop: ', this.text)
     }
 
     connectedCallback() {

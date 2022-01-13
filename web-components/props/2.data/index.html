@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pass Data</title>
+    <script type="module" src="index.js" defer></script>
+    <style>
+        body {
+            margin: 2rem;
+            line-height: 2;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Pass Data</h1>
+
+    <main-app>
+        <h2>main-app</h2>
+        <button>click</button>
+    </main-app>
+    <other-app>
+        <h2>Other-app</h2>
+        <p></p>
+    </other-app>
+
+
+    <!-- <other-app>
+        <h2>Other-app</h2>
+        <p></p>
+    </other-app>
+    <main-app>
+        <h2>main-app</h2>
+        <button>click</button>
+    </main-app> -->
+
+    
+    <!-- <main-app>
+        <h2>main-app</h2>
+        <button>click</button>
+        <other-app>
+            <h2>Other-app</h2>
+            <p></p>
+        </other-app>
+    </main-app> -->
+
+
+    <!-- <other-app>
+        <h2>Other-app</h2>
+        <p></p>
+        <main-app>
+            <h2>main-app</h2>
+            <button>click</button>
+        </main-app>
+    </other-app> -->
+    
+    <hr>
+
+    <ul>
+        <li>custom element define 정의 순서에 따라 click event가 적용되지 않는다.</li>
+        <li>other-app이 main-app보다 먼저 define 되어야 한다.</li>
+    </ul>
+
+</body>
+</html>
