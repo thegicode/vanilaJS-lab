@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie Chart - 2</title>
+    <style type="text/css">
+        .root {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-direction: column;
+        }
+        .chart {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            /*background: conic-gradient(
+                brown  0% 30%,
+                yellow  30% 55%,
+                orange  55% 80%,
+                olive  80% 95%,
+                black 95%
+            );*/
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="root">
+        <div class="chart"></div>
+    </div>
+
+    <script type="text/javascript">
+        const el = document.querySelector('.chart')
+        const arr = [40, 30, 20, 10]
+        const colors = ['brown', 'yellow', 'orange', 'olive']
+        let sum = 0
+        let str = ''
+        arr.forEach( (value, index) => {
+            const prev = sum
+            sum += value
+            str += `${colors[index]} ${prev}% ${sum}%`
+            if (index === arr.length - 1) {
+                return
+            }
+            str += ', '
+        })
+        el.style.background = `conic-gradient(${str})`
+    </script>
+  
+</body>
+</html>
+

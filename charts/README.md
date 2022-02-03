@@ -34,3 +34,13 @@
 - [polyline-7](src/html/polyline-7.html). 
     [See live](https://thegicode.github.io/vanilaJS-lab/charts/src/html/polyline-7.html)
     * 일부 데이터가 없는 경우
+
+
+
+## Pie Chart
+- [piechart-1](src/html/piechart-1.html). 
+    [See live](https://thegicode.github.io/vanilaJS-lab/charts/src/html/piechart-1.html)
+    * SVG Circle
+- [piechart-2](src/html/piechart-2.html). 
+    [See live](https://thegicode.github.io/vanilaJS-lab/charts/src/html/piechart-2.html)
+    * CSS
