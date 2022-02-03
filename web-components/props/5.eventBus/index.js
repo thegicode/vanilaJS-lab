@@ -1,5 +1,6 @@
 
 import modelModules from './model/model.js'
+import eventBusModuels from './model/eventBus.js'
 import actions from './control/actions.js'
 
 import Main from './view/Main.js'
@@ -11,8 +12,9 @@ customElements.define('other-app', Other)
 customElements.define('other2-app', Other2)
 
 const model = modelModules()
+const eventBus = eventBusModuels(model)
 
-actions(model)
+actions(model, eventBus)
 
 
    

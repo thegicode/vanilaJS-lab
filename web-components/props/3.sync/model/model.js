@@ -3,34 +3,30 @@ const cloneDeep = x => {
     return JSON.parse(JSON.stringify(x))
 }
 
+const freeze = state => Object.freeze(cloneDeep(state))
+
+
 const INITIAL_STATE = {
     a: 0,
     b: 0
 }
 
-const methods = {
-    updateItem: (state, data) => {
-        const { a, b } = state
-        const { number } = data
-        return {
-            a: a + number,
-            b: b + number + 1
-        }
+export default (initalState = INITIAL_STATE) => {
+
+    const state = cloneDeep(initalState)
+
+    const getState = () => {
+        return Object.freeze(cloneDeep(state))
     }
-}
 
-export default (initialState = INITIAL_STATE) => {
-    return (state, event) => {
-        if (!state) {
-            return cloneDeep(initialState)
-        }
+    const updateItem = (number) => {
+        const { a, b } = state
+        state.a = a + number
+        state.b = b + number + 1
+    }
 
-        const { type, data } = event
-        const method = methods[type]
-        if (!method) {
-            return pravState
-        }
-
-        return method(state, data)
+    return {
+        getState,
+        updateItem
     }
 }

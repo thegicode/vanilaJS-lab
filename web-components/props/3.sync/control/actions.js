@@ -5,24 +5,23 @@ export default (model, eventBus) => {
     const otehrEl = document.querySelector('other-app')
     const otehr2El = document.querySelector('other2-app')
 
+
+    // init
     sync()
 
+
+    // events
     mainEl
         .querySelector('button')
         .addEventListener('click', () => {
-            const event = {
-                type: 'updateItem',
-                data: {
-                    number: 20
-                } 
-            }
-            eventBus.dispatch(event)
+            model.updateItem(20)
             sync()
         })
     
 
+    // functions
     function sync() {
-        const state = eventBus.getState()
+        const state = model.getState()
         otehrEl.data = state.a
         otehr2El.data = state.b
     }
