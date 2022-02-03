@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Circle-1</title>
+    <title>Pie Chart</title>
     <!-- <link rel="stylesheet" type="text/css" href="../css/polyline1.css"> -->
     <style type="text/css">
         body {
@@ -14,15 +14,9 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
+            padding: 2rem 0;
         }
         svg {
-            /*transform: scale(7.0);
-            transform-origin: center;*/
-            width: 250px;
-            height: 250px;
-            margin-bottom: 1rem;
-        }
-        g {
             width: 250px;
             height: 250px;
         }
@@ -43,7 +37,7 @@
 <body>
     <div class="root">
 
-        <h1>Circle</h1>
+        <h1>Pie Chart</h1>
 
         
         <div class="exes">
@@ -52,18 +46,20 @@
                  <g stroke-width="10"
                     transform="rotate(-90) translate(-20)" 
                     fill="transparent" >
-                <circle r="5" cx="10" cy="10" 
-                      stroke="tomato"
-                      stroke-dasharray="calc(35 * 31.4 / 100) 31.4"
-                       />
-                <circle r="5" cx="10" cy="10" 
-                      stroke="green"
-                      stroke-dasharray="calc(20 * 31.4 / 100) 31.4"
-                       />
+                    <circle r="5" cx="10" cy="10" 
+                          stroke="tomato"
+                          stroke-dasharray="calc(35 * 31.4 / 100) 31.4" />
+                    <circle r="5" cx="10" cy="10" 
+                          stroke="green"
+                          stroke-dasharray="calc(20 * 31.4 / 100) 31.4" />
                 </g>
             </svg>
 
-            <svg height="20" width="20" viewBox="0 0 20 20" id="test">
+        </div>
+
+
+        <div class="exes" id="test">
+            <svg height="20" width="20" viewBox="0 0 20 20">
                 <circle r="10" cx="10" cy="10" fill="gray" />
                  <g stroke-width="10"
                     transform="rotate(-90) translate(-20)" 
@@ -74,35 +70,89 @@
                     <circle r="5" cx="10" cy="10" />
                 </g>
             </svg>
+            <script type="text/javascript">
+
+                const testEl = document.querySelector('#test')
+                const data = [40, 30, 20, 10]
+
+                let sum = 0
+                let percentages = data.map( percentage => {
+                    sum += percentage
+                    return sum
+                })
+                percentages = percentages.reverse()
+
+                testEl.querySelectorAll('g circle')
+                    .forEach( (el, index) => {
+                    const percentage = percentages[index]
+                    const circumference = 31.4
+                    const strokeDash = (percentage * circumference) / 100;
+                    const strokeDashArray = `${strokeDash} ${circumference}`;
+                    el.setAttribute('stroke-dasharray', strokeDashArray)
+                })
+            </script>
         </div>
 
-        <template>
-            <circle r="5" cx="10" cy="10" />
-        </template>
 
-        <script type="text/javascript">
-            const data = [40, 30, 20, 10]
-            
-            const circles = document.querySelectorAll('#test g circle')
-            const tp = document.querySelector('template')
-            const fragement = new DocumentFragment()
-            const length = circles.length
+        <div class="exes" id="test2">
+            <svg height="20" width="20" viewBox="0 0 20 20" >
+                <circle r="10" cx="10" cy="10" fill="gray" />
+                 <g stroke-width="10"
+                    transform="rotate(-90) translate(-20)" 
+                    fill="transparent" >
+                </g>
+            </svg>
+            <script type="text/javascript">
+                const test2El = document.querySelector('#test2')
+                const circleEl = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                circleEl.setAttribute('r', 5)
+                circleEl.setAttribute('cx', 10)
+                circleEl.setAttribute('cy', 10)
+                circleEl.setAttribute('stroke-dasharray', '10 20')
+                test2El.querySelector('g').appendChild(circleEl)
+            </script>
+        </div>
 
-            let sum = 0
-            let percentages = data.map( percentage => {
-                sum += percentage
-                return sum
-            })
-            percentages = percentages.reverse()
 
-            circles.forEach( (el, index) => {
-                const percentage = percentages[index]
-                const circumference = 31.4
-                const strokeDash = (percentage * circumference) / 100;
-                const strokeDashArray = `${strokeDash} ${circumference}`;
-                el.setAttribute('stroke-dasharray', strokeDashArray)
-            })
-        </script>
+        <div class="exes" id="test3">
+            <svg height="20" width="20" viewBox="0 0 20 20">
+                <circle r="10" cx="10" cy="10" fill="gray" />
+                 <g stroke-width="10"
+                    transform="rotate(-90) translate(-20)" 
+                    fill="transparent" >
+                </g>
+            </svg>
+            <script type="text/javascript">
+
+                const test3 = () => {
+                    const test3El = document.querySelector('#test3')
+                    const data = [40, 30, 20, 10]
+
+                    let sum = 0
+                    let percentages = data.map( percentage => {
+                        sum += percentage
+                        return sum
+                    })
+                    percentages = percentages.reverse()
+
+                    const fragement = new DocumentFragment
+                    percentages.forEach( (percentage) => {
+                        const circumference = 31.4
+                        const strokeDash = (percentage * circumference) / 100
+                        const strokeDashArray = `${strokeDash} ${circumference}`
+                        const el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                        el.setAttribute('r', 5)
+                        el.setAttribute('cx', 10)
+                        el.setAttribute('cy', 10)
+                        el.setAttribute('stroke-dasharray', strokeDashArray)
+                        fragement.appendChild(el)
+                    })
+                    test3El.querySelector('g').appendChild(fragement)
+                }
+                test3()
+                
+            </script>
+        </div>
 
 
     </div>
