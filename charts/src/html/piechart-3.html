@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pie Chart - 3</title>
+    <style type="text/css">
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+            flex-direction: column;
+        }
+        .chart {
+            width: 250px;
+            height: 250px;
+        }
+        .pieChart {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: lightskyblue;
+        }
+
+        hr {
+            margin: 2rem 0;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Pie Chart - 3</h1>
+    <div class="container">
+
+
+        <p>[40, 30, 20, 10]</p>
+
+
+        <h3>CSS Chart</h3>
+        <div class="chart">
+            <template>
+                <svg width="20" height="20" viewBox="0 0 20 20" class="pieChart">
+                    <circle r="10" cx="10" cy="10" fill="transparent" />
+                     <g stroke-width="10"
+                        transform="rotate(-90) translate(-20)" 
+                        fill="transparent" >
+                    </g>
+                </svg>
+            </template>
+        </div>
+
+        <hr>
+
+        <h3>SVG Chart</h3>
+        <div class="chart" id="test2">
+            <template data-template="svgChart">
+                <svg width="20" height="20" viewBox="0 0 20 20" class="pieChart">
+                    <circle r="10" cx="10" cy="10" fill="transparent" />
+                     <g stroke-width="10"
+                        transform="rotate(-90) translate(-20)" 
+                        fill="transparent" >
+                    </g>
+                </svg>
+            </template>
+        </div>
+        
+    </div>
+
+    
+    <script type="text/javascript">
+
+        function createCssPieChart(data, colors, el) {
+            // el.dataset.type = 'csschart'
+
+            const newNode = document.createElement('div')
+            newNode.classList.add('pieChart')
+
+            let sum = 0
+            let str = ''
+            data.forEach( (value, index) => {
+                const prev = sum
+                sum += value
+                str += `${colors[index]} ${prev}% ${sum}%`
+                if (index === data.length - 1) {
+                    return
+                }
+                str += ', '
+            })
+            newNode.style.background = `conic-gradient(${str})`
+            el.prepend(newNode)
+            el.querySelector('template').remove()
+        }
+
+        
+        function createSvgPieChart(data, colorsArr, el) {
+            // el.dataset.type = 'svgchart'
+
+            let sum = 0
+            let percentages = data.map( percentage => {
+                sum += percentage
+                return sum
+            })
+            percentages = percentages.reverse()
+            let colors = colorsArr.reverse()
+
+            const fragement = new DocumentFragment
+            percentages.forEach( (percentage, index) => {
+                const circumference = 31.4
+                const strokeDash = (percentage * circumference) / 100
+                const strokeDashArray = `${strokeDash} ${circumference}`
+                const el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                el.setAttribute('stroke', colors[index])
+                el.setAttribute('r', 5)
+                el.setAttribute('cx', 10)
+                el.setAttribute('cy', 10)
+                el.setAttribute('stroke-dasharray', strokeDashArray)
+                fragement.appendChild(el)
+            })
+
+            const templateEl = el.querySelector('template')
+            const svgNode = templateEl.content.firstElementChild.cloneNode(true)
+            svgNode.querySelector('g').appendChild(fragement)
+            el.prepend(svgNode)
+            el.querySelector('template').remove()
+        }
+
+
+        const data = [40, 30, 20, 10]
+        const colors = ['DodgerBlue', 'DeepSkyBlue', 'Aqua', 'Aquamarine']
+        const isSupports = CSS.supports("background", "conic-gradient(black 0 100%)")
+        const chartEl = document.querySelector('.chart')
+
+        const createChartFn = isSupports ? createCssPieChart : createSvgPieChart
+        createChartFn(data, colors, chartEl)
+
+        const test2El = document.querySelector('#test2')
+        createSvgPieChart(data, colors, test2El)
+
+
+
+
+        
+       
+    </script>
+  
+</body>
+</html>
+

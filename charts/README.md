@@ -44,3 +44,6 @@
 - [piechart-2](src/html/piechart-2.html). 
     [See live](https://thegicode.github.io/vanilaJS-lab/charts/src/html/piechart-2.html)
     * CSS
+- [piechart-3](src/html/piechart-3.html). 
+    [See live](https://thegicode.github.io/vanilaJS-lab/charts/src/html/piechart-3.html)
+    * CSS suppports check and SVG
