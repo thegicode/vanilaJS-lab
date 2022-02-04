@@ -71,6 +71,27 @@
     
     <script type="text/javascript">
 
+        /*
+        const tmpDiv = document.createElement('div')
+        tmpDiv.style.background = 'conic-gradient(white 0 100%)'
+        const _isSupports = tmpDiv.style.background.includes('conic') ? true : false
+        // const _isSupports = tmpDiv.style.background !== ''
+        */
+
+        const data = [40, 30, 20, 10]
+        const colors = ['DodgerBlue', 'DeepSkyBlue', 'Aqua', 'Aquamarine']
+        const isSupports = CSS.supports("background", "conic-gradient(white 0 100%)")
+        const chartEl = document.querySelector('.chart')
+
+        const createChartFn = isSupports ? createCssPieChart : createSvgPieChart
+        createChartFn(data, colors, chartEl)
+
+
+        // SVG Chart 화면 확인
+        const test2El = document.querySelector('#test2')
+        createSvgPieChart(data, colors, test2El)
+
+
         function createCssPieChart(data, colors, el) {
             // el.dataset.type = 'csschart'
 
@@ -110,13 +131,13 @@
                 const circumference = 31.4
                 const strokeDash = (percentage * circumference) / 100
                 const strokeDashArray = `${strokeDash} ${circumference}`
-                const el = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-                el.setAttribute('stroke', colors[index])
-                el.setAttribute('r', 5)
-                el.setAttribute('cx', 10)
-                el.setAttribute('cy', 10)
-                el.setAttribute('stroke-dasharray', strokeDashArray)
-                fragement.appendChild(el)
+                const newNode = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                newNode.setAttribute('stroke', colors[index])
+                newNode.setAttribute('r', 5)
+                newNode.setAttribute('cx', 10)
+                newNode.setAttribute('cy', 10)
+                newNode.setAttribute('stroke-dasharray', strokeDashArray)
+                fragement.appendChild(newNode)
             })
 
             const templateEl = el.querySelector('template')
@@ -127,16 +148,7 @@
         }
 
 
-        const data = [40, 30, 20, 10]
-        const colors = ['DodgerBlue', 'DeepSkyBlue', 'Aqua', 'Aquamarine']
-        const isSupports = CSS.supports("background", "conic-gradient(black 0 100%)")
-        const chartEl = document.querySelector('.chart')
-
-        const createChartFn = isSupports ? createCssPieChart : createSvgPieChart
-        createChartFn(data, colors, chartEl)
-
-        const test2El = document.querySelector('#test2')
-        createSvgPieChart(data, colors, test2El)
+        
 
 
 
