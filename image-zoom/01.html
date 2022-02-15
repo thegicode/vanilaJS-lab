@@ -6,83 +6,87 @@
     <title>01 | Image zoom</title>
     <style>
         .container {
-            overflow: scroll;
+            overflow: auto;
             width: 700px;
             height: 500px;
-            margin: 20% auto;
+            margin: 10% auto;
+        }
+        .__bg {
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="./IMG_9111.jpg">
+        <div class="__bg"></div>
     </div>
 
     <script type="text/javascript">
-        const container = document.querySelector('.container')
-        const el = document.querySelector('img')
-        // el.addEventListener('mousedown', (event) => {
-        //       console.log(event.target.offsetTop)  
-        //       console.log(event.target.offsetLeft)  
-        // })
-        // el.addEventListener('mousemove', (event) => {
-        //       console.log(event.target.offsetTop)  
-        //       console.log(event.target.offsetLeft)  
-        // })
+        const $container = document.querySelector('.container')
+        window.addEventListener('load',  () => {
+            const $bg = $container.querySelector('.__bg')
+            const $img = document.createElement('img')
+            const url = './IMG_9111.jpg'
+            $img.src = url
+            $img.onload = () => {
+                const { width, height } = $img
+                $bg.style.cssText = `
+                    background: url(${url});
+                    width: ${width}px;
+                    height: ${height}px`
+            }
+        })
 
+        let isDrag = false
+        $container.addEventListener('mousedown', (e) => {
+            isDrag = true
+        })
+        $container.addEventListener('mousemove', (e) => {
+            if (isDrag === true) {
+                onMouseMove(e)
+            }
+        })
+        window.addEventListener('mouseup', (e) => {
+            if (isDrag === true) {
+                onMouseUp(e)
+                isDrag = false
+            }
+        })
 
-
-      /*  // Variables for current position
-        var x, y;
-
-        function handleMouse(e) {
-          // Verify that x and y already have some value
-          if (x && y) {
-            // Scroll window by difference between current and previous positions
-            container.scrollBy(e.clientX - x, e.clientY - y);
-            console.log(container.leftValue)
-          }
-
-          // Store current position
-          x = e.clientX;
-          y = e.clientY;
-        }
-
-        // Assign handleMouse to mouse movement events
-        container.onmousemove = handleMouse;*/
-
-
-        container.addEventListener('mousedown', () => {
-            container.addEventListener('mousemove', onMouseMove);
-            container.addEventListener('mouseup', () => {
-                console.log('mouseup')
-                container.removeEventListener('mousemove', onMouseMove);
-            });
-        });
+        $container.addEventListener('scroll', (e) => {
+            onScroll(e)
+        })
 
         let x, y
-        let leftValue = 0
-        let TopValue = 0
+        let leftScorllValue = 0
+        let TopScrollValue = 0
         function onMouseMove(event){
-            const { clientX, clientY } = event
-            console.log(x, clientX, x - clientX)
-
+            const { offsetX: _ox, offsetY: _oy } = event
             if (x > 0 || y > 0) {
-                leftValue += x - clientX
-                TopValue += y - clientY
-
-
-                console.log(x, clientX, leftValue)
-                // console.log(TopValue)
-
-                container.scroll(leftValue, TopValue)
-                
+                leftScorllValue += x - _ox
+                TopScrollValue += y - _oy
             }
-
-            x = clientX
-            y = clientY
-
+            $container.scroll(leftScorllValue, TopScrollValue)
+            x = _ox
+            y = _oy
         }
+
+        function onMouseUp(event) {
+            x = 0, y = 0
+        }
+
+        function onScroll(event) {
+            const { scrollLeft: _sl, scrollTop: _st } = $container
+            const a = leftScorllValue - _sl
+            const b = TopScrollValue - _st
+            if (a < -2 || a > 2 ) {
+                leftScorllValue = _sl
+            }
+            if (b < -2 || b > 2 ) {
+                TopScrollValue = _st
+            }
+        }
+
+
     </script>
 </body>
 </html>
