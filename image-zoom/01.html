@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>01 | Image zoom</title>
+    <style>
+        .container {
+            overflow: scroll;
+            width: 700px;
+            height: 500px;
+            margin: 20% auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="./IMG_9111.jpg">
+    </div>
+
+    <script type="text/javascript">
+        const container = document.querySelector('.container')
+        const el = document.querySelector('img')
+        // el.addEventListener('mousedown', (event) => {
+        //       console.log(event.target.offsetTop)  
+        //       console.log(event.target.offsetLeft)  
+        // })
+        // el.addEventListener('mousemove', (event) => {
+        //       console.log(event.target.offsetTop)  
+        //       console.log(event.target.offsetLeft)  
+        // })
+
+
+
+      /*  // Variables for current position
+        var x, y;
+
+        function handleMouse(e) {
+          // Verify that x and y already have some value
+          if (x && y) {
+            // Scroll window by difference between current and previous positions
+            container.scrollBy(e.clientX - x, e.clientY - y);
+            console.log(container.leftValue)
+          }
+
+          // Store current position
+          x = e.clientX;
+          y = e.clientY;
+        }
+
+        // Assign handleMouse to mouse movement events
+        container.onmousemove = handleMouse;*/
+
+
+        container.addEventListener('mousedown', () => {
+            container.addEventListener('mousemove', onMouseMove);
+            container.addEventListener('mouseup', () => {
+                console.log('mouseup')
+                container.removeEventListener('mousemove', onMouseMove);
+            });
+        });
+
+        let x, y
+        let leftValue = 0
+        let TopValue = 0
+        function onMouseMove(event){
+            const { clientX, clientY } = event
+            console.log(x, clientX, x - clientX)
+
+            if (x > 0 || y > 0) {
+                leftValue += x - clientX
+                TopValue += y - clientY
+
+
+                console.log(x, clientX, leftValue)
+                // console.log(TopValue)
+
+                container.scroll(leftValue, TopValue)
+                
+            }
+
+            x = clientX
+            y = clientY
+
+        }
+    </script>
+</body>
+</html>
