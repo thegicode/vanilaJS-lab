@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Move</title>
+    <style>
+        body {
+            overflow: hidden;
+        }
+        .container {
+            overflow: hidden;
+            width: 700px;
+            height: 500px;
+            margin: 10% auto;
+            outline: solid 2px rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.7);
+        }
+        .__bg {
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="__bg"></div>
+    </div>
+
+    <script type="text/javascript">
+        const $container = document.querySelector('.container')
+        const $bg = $container.querySelector('.__bg')
+        let imgHeight = 0, imgWidth = 0
+        window.addEventListener('load',  () => {
+            const $img = document.createElement('img')
+            const url = '../assets/01.jpg'
+            $img.src = url
+            $img.onload = () => {
+                const { width, height } = $img
+                imgWidth = width
+                imgHeight = height
+                $bg.style.cssText = `
+                    background: url(${url});
+                    width: ${width}px;
+                    height: ${height}px`
+            }
+        })
+
+        let isDrag = false
+        $container.addEventListener('mousedown', (e) => {
+            isDrag = true
+        })
+        $container.addEventListener('mousemove', (e) => {
+            if (isDrag === true) {
+                onMouseMove(e)
+            }
+        })
+        window.addEventListener('mouseup', (e) => {
+            if (isDrag === true) {
+                onMouseUp(e)
+                isDrag = false
+            }
+        })
+
+        let x, y
+        let leftValue = 0
+        let topValue = 0
+        const { offsetWidth: containerWidth, offsetHeight: containerHeight} = $container
+        function onMouseMove(event){
+            const { offsetX: _ox, offsetY: _oy } = event
+            if (x > 0 || y > 0) {
+                leftValue += x - _ox
+                topValue += y - _oy
+            }
+
+            if (leftValue < -20) {
+                leftValue = 0
+            }
+            if (topValue < -20) {
+                topValue = 0
+            }
+
+            const _w = imgWidth - containerWidth
+            const _h = imgHeight - containerHeight
+            if (_w - leftValue < -20 ) {
+                leftValue =_w
+            }
+            if (_h - topValue < -20 ) {
+                topValue =_h 
+            }
+
+            $bg.style.transform = `translate(${-leftValue}px, ${-topValue}px`
+            x = _ox
+            y = _oy
+        }
+
+        function onMouseUp(event) {
+            x = 0, y = 0
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Move</title>
+    <style>
+        .container {
+            overflow: auto;
+            width: 700px;
+            height: 500px;
+            margin: 10% auto;
+        }
+        .__bg {
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="__bg"></div>
+    </div>
+
+    <script type="text/javascript">
+        const $container = document.querySelector('.container')
+        window.addEventListener('load',  () => {
+            const $bg = $container.querySelector('.__bg')
+            const $img = document.createElement('img')
+            const url = '../assets/01.jpg'
+            $img.src = url
+            $img.onload = () => {
+                const { width, height } = $img
+                $bg.style.cssText = `
+                    background: url(${url});
+                    width: ${width}px;
+                    height: ${height}px`
+            }
+        })
+
+        let isDrag = false
+        $container.addEventListener('mousedown', (e) => {
+            isDrag = true
+        })
+        $container.addEventListener('mousemove', (e) => {
+            if (isDrag === true) {
+                onMouseMove(e)
+            }
+        })
+        window.addEventListener('mouseup', (e) => {
+            if (isDrag === true) {
+                onMouseUp(e)
+                isDrag = false
+            }
+        })
+
+        $container.addEventListener('scroll', (e) => {
+            onScroll(e)
+        })
+
+        let x, y
+        let leftScorllValue = 0
+        let topScrollValue = 0
+        function onMouseMove(event){
+            const { offsetX: _ox, offsetY: _oy } = event
+            if (x > 0 || y > 0) {
+                leftScorllValue += x - _ox
+                topScrollValue += y - _oy
+            }
+            $container.scroll(leftScorllValue, topScrollValue)
+            x = _ox
+            y = _oy
+        }
+
+        function onMouseUp(event) {
+            x = 0, y = 0
+        }
+
+        // function onScroll(event) {
+        //     const { scrollLeft: _sl, scrollTop: _st } = $container
+        //     const a = leftScorllValue - _sl
+        //     const b = topScrollValue - _st
+        //     if (a < -2 || a > 2 ) {
+        //         leftScorllValue = _sl
+        //     }
+        //     if (b < -2 || b > 2 ) {
+        //         topScrollValue = _st
+        //     }
+        // }
+
+
+    </script>
+</body>
+</html>
