@@ -63,7 +63,7 @@
         let x, y
         let leftValue = 0
         let topValue = 0
-        const { offsetWidth: containerWidth, offsetHeight: containerHeight} = $container
+        // const { offsetWidth: containerWidth, offsetHeight: containerHeight} = $container
         function onMouseMove(event){
             const { offsetX: _ox, offsetY: _oy } = event
             if (x > 0 || y > 0) {
@@ -71,7 +71,7 @@
                 topValue += y - _oy
             }
 
-            if (leftValue < -20) {
+            /*if (leftValue < -20) {
                 leftValue = 0
             }
             if (topValue < -20) {
@@ -85,7 +85,7 @@
             }
             if (_h - topValue < -20 ) {
                 topValue =_h 
-            }
+            }*/
 
             $bg.style.transform = `translate(${-leftValue}px, ${-topValue}px`
             x = _ox
