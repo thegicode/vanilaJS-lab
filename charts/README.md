@@ -2,9 +2,9 @@
 # VailaJs Graphs
 
 ## Charts
-- [charts](src/html/charts.html). 
-    [See live](https://thegicode.github.io/vanilaJS-lab/charts/src/html/charts.html)
-    * Bar Chart, Line Chart
+- [charts](src/html/bar.html). 
+    [See live](https://thegicode.github.io/vanilaJS-lab/charts/src/html/bar.html)
+    * Bar Chart
 
 ## polyline - line graph
 - [polyline-1](src/html/polyline-1.html). 

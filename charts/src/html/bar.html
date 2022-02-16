@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bar Chart | VanilaJS</title>
+    <link rel="stylesheet" type="text/css" href="../css/bar.css">
+</head>
+<body>
+    <div class="app">
+        <app-barchart class="app-barChart">
+            <div class="chart">
+
+                <div class="chart-container">
+                    <div class="chart-lines" role="presentation">
+                        <span class="__line"></span>
+                        <span class="__line"></span>
+                        <span class="__line"></span>
+                        <span class="__line"></span>
+                    </div>
+                    <div class="chart-graphs"></div>
+                </div>
+
+                <div class="chart-dates" role="presentation"></div>
+
+                <!-- <div class="chart-info" role="presentation" 
+                                        aria-hidden="true" data-direction="">
+                    <div class="infos"></div>
+                    <span class="__arrow"></span>
+                </div> -->
+                <div class="chart-info" hidden>
+                        <p class="__date"></p>
+                        <p class="amounts">
+                            <span class="__label">주문</span>
+                            <spab class="__price"></spab>
+                        </p>
+                        <div class="arrow"></div>
+                    </div>
+            </div>
+        </app-barchart>
+    </div>
+
+    <template id="tp-chart-cell">
+        <div class="cell">
+            <span class="__bar"></span>
+        </div>
+    </template>
+    <template id="tp-chart-date">
+        <span class="__date"></span>
+    </template>
+
+    <script type="module" src="../js/bar.js"></script>
+</body>
+</html>

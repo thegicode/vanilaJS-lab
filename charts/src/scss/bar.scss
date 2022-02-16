@@ -1,0 +1,168 @@
+
+:root {
+    --color1: #5cad96;
+    --color2: #0e5e5e
+}
+
+html {
+    height: 100%;
+}
+body {
+    height: 100%;
+    margin: 0;
+    background-color: #f2f2f2;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.app {
+    width: 80%;
+    height: 500px;
+    padding: 1rem;
+    background-color: #fff;
+
+    &-barChart {
+      display: block;
+      height: 100%;
+    }
+}
+
+
+.chart {
+    height: 100%;
+    margin: 0 7px;
+
+    display: flex;
+    flex-direction: column;
+    position: relative;
+
+
+    &-container {
+        flex: 1;
+
+        display: flex;
+        position: relative;
+        z-index: 1;
+        
+    } 
+   &-lines {
+         .__line {
+             position: absolute;
+             width: 100%;
+             border-top: 1px dashed #e5eaee;
+             bottom: 25%;
+             &:nth-child(2) {
+                 bottom: 50%;
+             }
+             &:nth-child(3) {
+                 bottom: 75%;
+             }
+             &:nth-child(4) {
+                 bottom: 100%;
+             }
+         }
+     }
+   &-graphs {
+         flex: 1;
+
+         display: flex;
+         position: relative;
+         .cell {
+            flex: 1;
+
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            .__bar {
+                display: inline-block;
+                width: 60%;
+                border-radius: 3px 3px 0 0;
+                background-color: var(--color1);
+                // &:hover{
+                //     background-color: var(--color2);
+                // }
+            }
+        }
+        
+     }
+    &-dates {
+        flex: none;
+        height: 30px;
+        border-top: 1px solid #c9c9c9;
+
+        display: flex;
+        padding-top: 1rem;
+        .__date {
+            flex: 1;
+
+            text-align: center;
+            font-size: 12px;
+            color: #89949c;
+            white-space: nowrap;
+        }
+        
+    }
+
+    &-info {
+        $arrowBorder: 6px;
+        $arrowPosition: 10px;
+        $control: calc($arrowBorder + $arrowPosition);
+
+        &:not([hidden]){
+            display: block;
+        }
+        position: absolute;
+        z-index: 1;
+        padding: 10px 1rem;
+        background-color: #292f33;
+        border-radius: 6px;
+        transform: translateY(-100%);
+        font-size: 12px;
+        color: #fff;
+        .__date {
+            margin: 0;
+        }
+        .amounts {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0 0;
+            // .__label {
+            // }
+            .__price {
+                margin-left: 8px;
+                font-weight: 700;
+            }
+        }
+        .arrow {
+            position: absolute;
+            bottom: -6px;
+            width: 0;
+            height: 0;
+            border-right: $arrowBorder solid transparent;
+            border-top: $arrowBorder solid #292f33;
+            border-left: $arrowBorder solid transparent;
+        }
+        &[data-direction="left"] {
+            margin-left: -$control;
+            .arrow {
+                left: $arrowPosition;
+            }
+        }
+        &[data-direction="center"] {
+            .arrow {
+                left: 50%;
+                margin-left: -$arrowBorder;
+            }
+        }
+        &[data-direction="right"] {
+            margin-right: -$control;
+            .arrow {
+                right: $arrowPosition;
+            }
+        }
+    }
+}
+
