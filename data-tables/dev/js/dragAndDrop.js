@@ -1,9 +1,9 @@
 
 
 const isMove = (el, event) => {
-    let spaceVal = el.offsetTop - event.clientY
-    if(spaceVal < 0) spaceVal = -spaceVal
-    if (spaceVal > el.offsetHeight/4) {
+    let val = el.offsetTop - event.clientY
+    if(val < 0) val = -val
+    if (val > el.offsetHeight/4) {
         return true
     }
     return false
