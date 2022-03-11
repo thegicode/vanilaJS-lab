@@ -1,4 +1,16 @@
 
+
+const isMove = (el, event) => {
+    let spaceVal = el.offsetTop - event.clientY
+    if(spaceVal < 0) spaceVal = -spaceVal
+    if (spaceVal > el.offsetHeight/4) {
+        return true
+    }
+    return false
+}
+
+
+
 const dragAndDrop = (rootEl, events, render) => {
     const tbodyEl = rootEl.querySelector('tbody')
 
@@ -24,6 +36,8 @@ const dragAndDrop = (rootEl, events, render) => {
             }, 1)
         })
         node.addEventListener("dragend", () => {
+            if (!targetedEl) return
+
             tbodyEl.dataset.drop = true
             const draggedIndex = draggedEl.dataset.index
             const pos = targetedEl.dataset.pos || 'top'
@@ -47,10 +61,12 @@ const dragAndDrop = (rootEl, events, render) => {
             })
         })
     
-        node.addEventListener("dragenter", () => {
+        node.addEventListener("dragenter", (event) => {
             window.requestAnimationFrame( () => {
-                // css 간편화를 위해, 중간에 originEl이 있으면 css가 복잡
-                tbodyEl.appendChild(originEl)
+                if(isMove(originEl, event)) {
+                    // css 간편화를 위해, 중간에 originEl이 있으면 css가 복잡
+                    tbodyEl.appendChild(originEl)
+                } 
 
                 if( node === originEl || node === targetedEl ) {
                     return
@@ -81,18 +97,21 @@ const dragAndDrop = (rootEl, events, render) => {
                 let el = targetedEl
                 const mouseY = event.clientY
                 const elHalfVal = el.offsetTop + el.offsetHeight/2
-                if( mouseY > elHalfVal) { 
+
+                let spaceVal = el.offsetTop - mouseY
+                if(spaceVal < 0) spaceVal = -spaceVal
+
+                if(mouseY > elHalfVal) { 
                     // 마우스 위치가 el의 절반 위치보다 크면
                     el.dataset.pos = 'bottom'
-                } else { 
-                    // 마우스 위치가 el의 절반 위치보다 작으면
+                } else if(spaceVal > el.offsetHeight/4) { 
                     el.dataset.pos = 'top'
-                }
+                } 
             })
             
         })
-
     }
+
 
     return {
         addEvents,
