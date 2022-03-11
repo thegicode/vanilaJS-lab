@@ -98,13 +98,10 @@ const dragAndDrop = (rootEl, events, render) => {
                 const mouseY = event.clientY
                 const elHalfVal = el.offsetTop + el.offsetHeight/2
 
-                let spaceVal = el.offsetTop - mouseY
-                if(spaceVal < 0) spaceVal = -spaceVal
-
                 if(mouseY > elHalfVal) { 
                     // 마우스 위치가 el의 절반 위치보다 크면
                     el.dataset.pos = 'bottom'
-                } else if(spaceVal > el.offsetHeight/4) { 
+                } else if(isMove(el, event)) { 
                     el.dataset.pos = 'top'
                 } 
             })
