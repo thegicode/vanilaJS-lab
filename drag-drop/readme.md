@@ -37,6 +37,9 @@
 - 03-10 _ 다른 버전으로 해보았으나 3-9가 훨씬 좋다.
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-10.html)
 
+- 03-11 _ 3-9에서 추가 작업 중(진행 중)
+[See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/03-11.html)
+
 
 - 04 _ Table에 적용.
 [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop/04.html)
