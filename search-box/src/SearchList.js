@@ -75,6 +75,7 @@ export default class SearchList extends HTMLDivElement {
 
     addEvent(aNode, text) {
         aNode.addEventListener('click', (event) => {
+            event.preventDefault()
             window.dispatchEvent(new CustomEvent('onItemClick'))
             document.querySelector('.result').textContent = text
             this.hidden = true

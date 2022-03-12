@@ -1,0 +1,66 @@
+body {
+  margin: 1rem;
+}
+
+.root {
+  position: relative;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+}
+.header input {
+  flex: 1;
+  padding: 5px;
+}
+.header button {
+  margin-left: 5px;
+}
+.header .ico {
+  margin-left: 10px;
+  font-size: 1.5rem;
+}
+
+.search-list {
+  overflow: auto;
+  position: absolute;
+  width: 100%;
+  max-height: 200px;
+  border-radius: 5px;
+  border: solid 1px #ddd;
+  background-color: #fff;
+}
+.search-list[aria-hidden=true] {
+  display: none;
+}
+.search-list ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.search-list li {
+  border-bottom: solid 1px #ddd;
+}
+.search-list a {
+  display: block;
+  padding: 1rem;
+  color: #666;
+  text-decoration: none;
+  cursor: pointer;
+}
+.search-list a:hover, .search-list a:focus, .search-list a:focus-visible {
+  outline: none;
+  background-color: rgba(0, 100, 200, 0.05);
+}
+
+.loading {
+  text-align: center;
+  padding: 1rem;
+}
+
+.result {
+  margin: 1rem;
+}
+
+/*# sourceMappingURL=style.css.map */

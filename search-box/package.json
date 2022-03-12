@@ -1,18 +1,18 @@
 {
-  "name": "vanilajs-test",
+  "name": "serach-box",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "directories": {
+    "doc": "doc"
+  },
   "scripts": {
-    "start": "node server",
+    "css": "sass --watch src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "express": "^4.17.1"
-  },
   "dependencies": {
-    "scss": "^0.2.4"
+    "sass": "^1.49.9"
   }
 }
