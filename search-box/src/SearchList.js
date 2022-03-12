@@ -16,6 +16,7 @@ export default class SearchList extends HTMLDivElement {
         this.ul = this.querySelector('ul')
         this.loading = this.querySelector('.loading')
 
+        this.data = []
         this.selected = undefined
     }
 
@@ -30,28 +31,29 @@ export default class SearchList extends HTMLDivElement {
 
     connectedCallback() {
         window.addEventListener('onSubmit', () => {
+            this.selected.querySelector('a').click()
+
             /** Enter key
-             *  if $search-list 가 visible 이면 selected item > a click event
-             *  if $search-list 가 hiddne 이면 input event와 동일한 기능  
+             *  if $search-list 가 visible 이면 selected item > a click event -> 필요없음
+             *  if $search-list 가 hidden 이면 input event와 동일한 기능  
              */
-            switch(this.hidden) {
+            /*switch(this.hidden) {
                 case 'true':
                     this.onInput()
                     break
                 case 'false':
                     this.selected.querySelector('a').click()
                     break
-            }
+            }*/
         })
 
-        window.addEventListener('onInput', () => {
-            this.onInput()
+        window.addEventListener('onReset', () => {
+            // this.selected = undefined
+            this.hidden = true
         })
 
-        window.addEventListener('click', event => {
-            if (event.target.tagName !== 'A') {
-                this.hidden = true
-            }
+        window.addEventListener('onInput', (event) => {
+            this.onInput(event)
         })
 
         window.addEventListener('onKeydown', event => {
@@ -60,24 +62,44 @@ export default class SearchList extends HTMLDivElement {
             }
         })
 
+        window.addEventListener('onFocusOut', event => {
+            // console.log('onFocusOut', this.hidden)
+
+        })
+
+        // window.addEventListener('click', event => {
+        //     if (event.target.tagName !== 'A') {
+        //         this.hidden = true
+        //     }
+        // })
+
     }
 
 
-    onInput() {
+    onInput(event) {
+        const isNewKeyword = event.detail.isNewKeyword
+
         this.hidden = false
         this.loading.hidden = false
         this.ul.innerHTML = ''
 
-        const getData = new Promise( resolve => {
-            setTimeout( () => {
-                resolve(getDataArr())
-            }, 500)
-        })
+        if (isNewKeyword === false ) {
+            this.render(this.data)
+        } else {
+            const keyword = event.detail.keyword
+            const getData = new Promise( resolve => {
+                setTimeout( () => {
+                    resolve(getDataArr())
+                }, 500)
+            })
+            getData.then( (data) => {
+                this.loading.hidden = true
+                this.data = data
+                this.render(data)
+            })
+        }
 
-        getData.then( (data) => {
-            this.loading.hidden = true
-            this.render(data)
-        })
+        
     }
 
     onKeydown() {
@@ -105,6 +127,7 @@ export default class SearchList extends HTMLDivElement {
     }
 
     render(data) {
+        // TODO
         data.forEach( (item, index) => {
            this.ul.appendChild(this.getElement(item, index))
         })
@@ -127,6 +150,7 @@ export default class SearchList extends HTMLDivElement {
 
     addEvent(node, aNode, text) {
         aNode.addEventListener('click', (event) => {
+            console.log('click')
             event.preventDefault()
             window.dispatchEvent(new CustomEvent('onItemClick'))
             document.querySelector('.result').textContent = text
