@@ -10,7 +10,7 @@ export default class SearchInput extends HTMLFormElement {
     connectedCallback() {
 
         // Enter key -> search-list link element click
-        this.addEventListener('submit', (event) => {
+        this.addEventListener('submit', event => {
             event.preventDefault()
             window.dispatchEvent(new CustomEvent('onSubmit'))
         })
@@ -19,8 +19,7 @@ export default class SearchInput extends HTMLFormElement {
             window.dispatchEvent(new CustomEvent('onReset'))
         })
 
-        // TODO : add settimeout
-        this.inputEl.addEventListener('input', (event) => {
+        this.inputEl.addEventListener('input', event => {
             const isNewKeyword = this.isNewKeyword(this.inputEl.value)
             window.dispatchEvent(new CustomEvent('onInput', {
                 detail: {

@@ -1,7 +1,7 @@
 
 const { faker } = window
 
-const getDataArr = () => {
+const __getDataArr = () => {
     const arr = []
     for(let i = 0; i< 5 ; i++) {
         arr.push(faker.random.word())
@@ -18,6 +18,7 @@ export default class SearchList extends HTMLDivElement {
 
         this.data = []
         this.selected = undefined
+        this.timeId = ''
     }
 
     static observedAttributes = ["hidden"]
@@ -75,7 +76,6 @@ export default class SearchList extends HTMLDivElement {
 
     }
 
-
     onInput(event) {
         const isNewKeyword = event.detail.isNewKeyword
 
@@ -85,21 +85,23 @@ export default class SearchList extends HTMLDivElement {
 
         if (isNewKeyword === false ) {
             this.render(this.data)
-        } else {
-            const keyword = event.detail.keyword
-            const getData = new Promise( resolve => {
-                setTimeout( () => {
-                    resolve(getDataArr())
-                }, 500)
+            return
+        } 
+        
+
+        clearTimeout(this.timeId)
+        const keyword = event.detail.keyword
+        this.timeId = setTimeout( () => {
+            new Promise( resolve => {
+                resolve(__getDataArr())
             })
-            getData.then( (data) => {
+            .then( data => {
                 this.loading.hidden = true
                 this.data = data
                 this.render(data)
             })
-        }
+        }, 500)
 
-        
     }
 
     onKeydown() {
