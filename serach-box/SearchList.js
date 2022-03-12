@@ -36,10 +36,6 @@ export default class SearchList extends HTMLDivElement {
             }
         })
 
-        // window.addEventListener('onInputFocusOut', (event) => {
-        //     this.onInputFocusOut(event)
-        // })
-
     }
 
     onInput() {
@@ -59,35 +55,26 @@ export default class SearchList extends HTMLDivElement {
         })
     }
 
-    onInputFocusOut(event) {
-        console.log('event', event.detail)
-
-        if (this.ariaHidden === 'false') {
-            console.log('focusout')
-            this.hidden = true
-        }
-    }
-
     render(data) {
         data.forEach( (item, index) => {
            this.ul.appendChild(this.getElement(item, index))
         })
+        this.ul.querySelector('a').focus()
     }
-
-
 
     getElement(text, index) {
         const node = document.createElement('li')
-        const a = document.createElement('a')
+        const aNode = document.createElement('a')
         node.dataset.index = index
-        a.textContent = text
-        node.appendChild(a)
-        this.addEvent(a, text)
+        aNode.textContent = text
+        aNode.href = `${index}`
+        node.appendChild(aNode)
+        this.addEvent(aNode, text)
         return node
     }
 
-    addEvent(a, text) {
-        a.addEventListener('click', (event) => {
+    addEvent(aNode, text) {
+        aNode.addEventListener('click', (event) => {
             window.dispatchEvent(new CustomEvent('onItemClick'))
             document.querySelector('.result').textContent = text
             this.hidden = true

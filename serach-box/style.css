@@ -47,6 +47,13 @@ body {
     padding: 1rem;
     color: #666;
     text-decoration: none;
+    cursor: pointer;
+}
+.search-list a:hover,
+.search-list a:focus,
+.search-list a:focus-visible {
+    outline: none;
+    background-color: rgba(0, 100, 200, 0.05);
 }
 
 .loading {
