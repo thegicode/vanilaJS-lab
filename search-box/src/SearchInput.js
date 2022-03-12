@@ -37,6 +37,7 @@ export default class SearchInput extends HTMLFormElement {
                         isNewKeyword: false
                     }
                 }))
+                // window.dispatchEvent(new CustomEvent('onFocus'))
             }
         })
 

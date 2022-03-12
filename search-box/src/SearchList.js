@@ -49,7 +49,7 @@ export default class SearchList extends HTMLDivElement {
         })
 
         window.addEventListener('onReset', () => {
-            // this.selected = undefined
+            this.selected = undefined
             this.hidden = true
         })
 
@@ -65,7 +65,6 @@ export default class SearchList extends HTMLDivElement {
 
         window.addEventListener('onFocusOut', event => {
             // console.log('onFocusOut', this.hidden)
-
         })
 
         // window.addEventListener('click', event => {
@@ -80,15 +79,13 @@ export default class SearchList extends HTMLDivElement {
         const isNewKeyword = event.detail.isNewKeyword
 
         this.hidden = false
-        this.loading.hidden = false
-        this.ul.innerHTML = ''
-
         if (isNewKeyword === false ) {
-            this.render(this.data)
             return
         } 
-        
 
+        // New Keyword
+        this.loading.hidden = false
+        this.ul.innerHTML = ''
         clearTimeout(this.timeId)
         const keyword = event.detail.keyword
         this.timeId = setTimeout( () => {
@@ -160,6 +157,9 @@ export default class SearchList extends HTMLDivElement {
         })
     }
 
+    __onlyShow() {
+        
+    }
 
     __handleScroll() {
         const selectedEl = this.selected
