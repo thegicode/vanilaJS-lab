@@ -1,11 +1,13 @@
 
-const INITIAL_DATA = [
-    '바나나1',
-    '바나나2',
-    '바나나3',
-    '바나나4',
-    '바나나5'
-]
+const { faker } = window
+
+const getDataArr = () => {
+    const arr = []
+    for(let i = 0; i< 5 ; i++) {
+        arr.push(faker.random.word())
+    }
+    return arr
+}
 
 export default class SearchList extends HTMLDivElement {
 
@@ -24,7 +26,6 @@ export default class SearchList extends HTMLDivElement {
         this.ariaHidden = value
     }
 
-  
     connectedCallback() {
         window.addEventListener('onInput', () => {
             this.onInput()
@@ -45,13 +46,13 @@ export default class SearchList extends HTMLDivElement {
 
         const getData = new Promise( resolve => {
             setTimeout( () => {
-                resolve()
+                resolve(getDataArr())
             }, 500)
         })
 
-        getData.then( () => {
+        getData.then( (data) => {
             this.loading.hidden = true
-            this.render(INITIAL_DATA)
+            this.render(data)
         })
     }
 
@@ -59,7 +60,7 @@ export default class SearchList extends HTMLDivElement {
         data.forEach( (item, index) => {
            this.ul.appendChild(this.getElement(item, index))
         })
-        this.ul.querySelector('a').focus()
+        // this.ul.querySelector('a').dataset.selected = true
     }
 
     getElement(text, index) {
@@ -70,6 +71,9 @@ export default class SearchList extends HTMLDivElement {
         aNode.href = `${index}`
         node.appendChild(aNode)
         this.addEvent(aNode, text)
+        if (index === 0) {
+            node.dataset.selected = true
+        }
         return node
     }
 
@@ -81,7 +85,6 @@ export default class SearchList extends HTMLDivElement {
             this.hidden = true
         })
     }
-
 
 
     /*render(datas) {

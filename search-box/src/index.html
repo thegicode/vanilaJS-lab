@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Search Box</title>
     <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.js"></script>
 </head>
 <body>
 
@@ -11,22 +12,26 @@
         <h1>Search Box</h1>
 
         <form class="header" is="search-input">
-            <input type="text" autocomplete="off" name="keyword" 
-            required placeholder="검색어를 입력하세요." title="검색어 입력" >
+            <input type="text" 
+                autocomplete="off" 
+                name="keyword" 
+                placeholder="검색어를 입력하세요." 
+                required 
+                title="검색어 입력" >
             <button type="reset">&#x2715</button>
             <!-- <span class="ico">&uarr;</span> -->
         </form>
         <div is="search-list" class="search-list" aria-hidden="true">
-            <div class="loading">loading</div>
             <ul></ul>
+            <div class="loading">
+                <span>Loading...</span>
+            </div>
         </div>
 
         <div class="result">---</div>
     </div>
 
-
     <script type="module" src="index.js"></script>
-
 
 </body>
 </html>

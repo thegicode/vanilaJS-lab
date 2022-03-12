@@ -17,6 +17,13 @@ export default class SearchInput extends HTMLFormElement {
             window.dispatchEvent(new CustomEvent('onInput'))
         })
 
+        this.inputEl.addEventListener('focus', (event) => {
+            this.dataset.focus = true
+        })
+        this.inputEl.addEventListener('focusout', (event) => {
+            this.dataset.focus = false
+        })
+
         window.addEventListener('onItemClick', (event) => {
             this.inputEl.value = ''
         })

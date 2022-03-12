@@ -9,16 +9,43 @@ body {
 .header {
     display: flex;
     align-items: center;
+    border-radius: 5px;
+    border: solid 1px #ddd;
 
-    & input {
+    &[data-focus="true"] {
+        border-color: rgba(0, 100, 200);
+    }
+
+    input {
         flex: 1;
-        padding: 5px;
+        padding: 1rem;
+        border-radius: 5px;
+        border: none;
+        outline: none;
+        font-size: 1rem;
+        // &::-webkit-search-cancel-button{
+        //     -webkit-appearance: none;
+        //     position:relative;
+        //     right: 0;  
+        //     height: 20px;
+        //     width: 20px;
+        //     border-radius:10px;
+        // }
     }
-    & button{
-        margin-left: 5px;
+    
+    button{
+        margin: 0 5px;
+        border: none;
+        background-color: transparent;
+        &:hover {
+            background-color: rgba(0, 100, 200, 0.05);
+        }
     }
-    & .ico {
-        margin-left: 10px;
+    input:invalid + button {
+        display: none;
+    }
+    .ico {
+        margin: 0 10px;
         font-size: 1.5rem;
     }
 }
@@ -35,33 +62,46 @@ body {
     &[aria-hidden="true"] {
         display: none;
     }
-    & ul {
+    ul {
         margin: 0;
         padding: 0;
         list-style: none;
     }
-    & li {
+    li {
+        box-sizing: border-box;
+        height: 50px;
         border-bottom: solid 1px #ddd;
+
     }
-    & a {
+    a {
         display:  block;
         padding: 1rem;
         color: #666;
         text-decoration: none;
         cursor: pointer;
-    }
-    & a:hover,
-    & a:focus,
-    & a:focus-visible {
         outline: none;
+    }
+
+    a:hover,
+    a:focus,
+    a:focus-visible,
+    li[data-selected="true"] a {
         background-color: rgba(0, 100, 200, 0.05);
     }
 
 }
 
 .loading {
+    margin: 1rem;
     text-align: center;
-    padding: 1rem;
+    color: rgba(0, 100, 200);
+    span {
+        display: inline-block;
+        padding: 5px 20px;
+        border-radius: 5px;
+        background-color: rgba(0, 100, 200, 0.05);
+        font-size: 14px;
+    }
 }
 
 .result {

@@ -9,16 +9,33 @@ body {
 .header {
   display: flex;
   align-items: center;
+  border-radius: 5px;
+  border: solid 1px #ddd;
+}
+.header[data-focus=true] {
+  border-color: #0064c8;
 }
 .header input {
   flex: 1;
-  padding: 5px;
+  padding: 1rem;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-size: 1rem;
 }
 .header button {
-  margin-left: 5px;
+  margin: 0 5px;
+  border: none;
+  background-color: transparent;
+}
+.header button:hover {
+  background-color: rgba(0, 100, 200, 0.05);
+}
+.header input:invalid + button {
+  display: none;
 }
 .header .ico {
-  margin-left: 10px;
+  margin: 0 10px;
   font-size: 1.5rem;
 }
 
@@ -40,6 +57,8 @@ body {
   list-style: none;
 }
 .search-list li {
+  box-sizing: border-box;
+  height: 50px;
   border-bottom: solid 1px #ddd;
 }
 .search-list a {
@@ -48,15 +67,26 @@ body {
   color: #666;
   text-decoration: none;
   cursor: pointer;
-}
-.search-list a:hover, .search-list a:focus, .search-list a:focus-visible {
   outline: none;
+}
+.search-list a:hover,
+.search-list a:focus,
+.search-list a:focus-visible,
+.search-list li[data-selected=true] a {
   background-color: rgba(0, 100, 200, 0.05);
 }
 
 .loading {
+  margin: 1rem;
   text-align: center;
-  padding: 1rem;
+  color: #0064c8;
+}
+.loading span {
+  display: inline-block;
+  padding: 5px 20px;
+  border-radius: 5px;
+  background-color: rgba(0, 100, 200, 0.05);
+  font-size: 14px;
 }
 
 .result {
