@@ -15,6 +15,8 @@ export default class SearchList extends HTMLDivElement {
         super()
         this.ul = this.querySelector('ul')
         this.loading = this.querySelector('.loading')
+
+        this.selected = undefined
     }
 
     static observedAttributes = ["hidden"]
@@ -27,6 +29,21 @@ export default class SearchList extends HTMLDivElement {
     }
 
     connectedCallback() {
+        window.addEventListener('onSubmit', () => {
+            /** Enter key
+             *  if $search-list 가 visible 이면 selected item > a click event
+             *  if $search-list 가 hiddne 이면 input event와 동일한 기능  
+             */
+            switch(this.hidden) {
+                case 'true':
+                    this.onInput()
+                    break
+                case 'false':
+                    this.selected.querySelector('a').click()
+                    break
+            }
+        })
+
         window.addEventListener('onInput', () => {
             this.onInput()
         })
@@ -37,7 +54,14 @@ export default class SearchList extends HTMLDivElement {
             }
         })
 
+        window.addEventListener('onKeydown', event => {
+            if (this.hidden === 'false') {
+                this.onKeydown()
+            }
+        })
+
     }
+
 
     onInput() {
         this.hidden = false
@@ -56,11 +80,34 @@ export default class SearchList extends HTMLDivElement {
         })
     }
 
+    onKeydown() {
+        const oldEl = this.selected
+        switch (event.detail.keyCode) {
+            case 38: // up
+                if(oldEl.previousElementSibling) {
+                    oldEl.dataset.selected = false
+                    this.selected = oldEl.previousElementSibling
+                    this.selected.dataset.selected = true
+                    this.__handleScroll()
+                }
+                break
+            case 40: // down
+                if(oldEl.nextElementSibling) {
+                    oldEl.dataset.selected = false
+                    this.selected = oldEl.nextElementSibling
+                    this.selected.dataset.selected = true
+                    this.__handleScroll()
+                }
+                break
+            default:
+                console.log('default')
+        }
+    }
+
     render(data) {
         data.forEach( (item, index) => {
            this.ul.appendChild(this.getElement(item, index))
         })
-        // this.ul.querySelector('a').dataset.selected = true
     }
 
     getElement(text, index) {
@@ -70,20 +117,33 @@ export default class SearchList extends HTMLDivElement {
         aNode.textContent = text
         aNode.href = `${index}`
         node.appendChild(aNode)
-        this.addEvent(aNode, text)
+        this.addEvent(node, aNode, text)
         if (index === 0) {
             node.dataset.selected = true
+            this.selected = node
         }
         return node
     }
 
-    addEvent(aNode, text) {
+    addEvent(node, aNode, text) {
         aNode.addEventListener('click', (event) => {
             event.preventDefault()
             window.dispatchEvent(new CustomEvent('onItemClick'))
             document.querySelector('.result').textContent = text
             this.hidden = true
         })
+    }
+
+
+    __handleScroll() {
+        const selectedEl = this.selected
+        const containerHeight = this.offsetHeight
+        if (selectedEl.offsetTop >= containerHeight) {
+            this.scrollTop = selectedEl.offsetTop + selectedEl.offsetHeight - containerHeight
+        }
+        if (selectedEl.offsetTop <= this.scrollTop) {
+            this.scrollTop = selectedEl.offsetTop 
+        }
     }
 
 

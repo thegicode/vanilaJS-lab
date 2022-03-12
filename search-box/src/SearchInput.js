@@ -10,7 +10,7 @@ export default class SearchInput extends HTMLFormElement {
 
         this.addEventListener('submit', (event) => {
             event.preventDefault()
-            window.dispatchEvent(new CustomEvent('onInput'))
+            window.dispatchEvent(new CustomEvent('onSubmit'))
         })
 
         this.inputEl.addEventListener('input', (event) => {
@@ -22,6 +22,17 @@ export default class SearchInput extends HTMLFormElement {
         })
         this.inputEl.addEventListener('focusout', (event) => {
             this.dataset.focus = false
+        })
+
+        this.inputEl.addEventListener('keydown', (event) => {
+            const keyCode = event.keyCode
+            if (keyCode === 38 || keyCode === 40) {
+                window.dispatchEvent(new CustomEvent('onKeydown', {
+                    detail: {
+                        keyCode
+                    }
+                }))
+            }
         })
 
         window.addEventListener('onItemClick', (event) => {
