@@ -53,9 +53,39 @@ export default class SearchList extends HTMLDivElement {
         this.isItemOver = false
     }
 
-    connectedCallback() {}
+    connectedCallback() {
+        window.addEventListener('onSubmit', () => {
+            if (this.selected) {
+                this.selected.querySelector('a').click()
+            }
+        })
+
+        window.addEventListener('onReset', () => {
+            this.selected = undefined
+            this.hidden = true
+        })
+
+        window.addEventListener('onInput', (event) => {
+            this.onInput(event.detail.keyword)
+        })
+
+        window.addEventListener('onKeydown', event => {
+            if (this.hidden === 'false') {
+                this.onKeydown(event.detail.keyCode)
+            }
+        })
+
+        window.addEventListener('onFocusOut', event => {
+            if (this.isItemOver === false) {
+                this.hidden = true
+            }
+        })
+
+
+    }
 
     onInput(keyword) {
+
         this.data = []
         this.ul.innerHTML = ''
         this.loading.hidden = false
@@ -118,6 +148,25 @@ export default class SearchList extends HTMLDivElement {
     }
 
     render(data, index, hasNextPage) {
+
+        /*let str = ''
+        data.forEach( (data, idx) => {
+            const _idx = index + idx
+            str += `<li data-index=${_idx}><a href="${_idx}">${data}</a></li>`
+        })
+        this.ul.innerHTML += str
+        this.ul.querySelectorAll('li')
+            .forEach( el => {
+                this.addEvent(el)
+            })*/
+
+        /*const fragment = new DocumentFragment
+        data.forEach( (item, idx) => {
+            const el = this.element(item, index + idx)
+            fragment.appendChild(el)
+        })
+        this.ul.appendChild(fragment)*/
+
         data.forEach( (item, idx) => {
             const el = this.element(item, index + idx)
             this.ul.appendChild(el)
@@ -135,7 +184,6 @@ export default class SearchList extends HTMLDivElement {
         }
 
         this.observe()
-
     }
 
     element(text, index) {
@@ -203,25 +251,3 @@ export default class SearchList extends HTMLDivElement {
     }
 
 }
-
-
-
-
-        /*let str = ''
-        data.forEach( (data, idx) => {
-            const _idx = index + idx
-            str += `<li data-index=${_idx}><a href="${_idx}">${data}</a></li>`
-        })
-        this.ul.innerHTML += str
-        this.ul.querySelectorAll('li')
-            .forEach( el => {
-                this.addEvent(el)
-            })*/
-
-        /*const fragment = new DocumentFragment
-        data.forEach( (item, idx) => {
-            const el = this.element(item, index + idx)
-            fragment.appendChild(el)
-        })
-        this.ul.appendChild(fragment)*/
-

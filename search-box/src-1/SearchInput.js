@@ -4,7 +4,6 @@ export default class SearchInput extends HTMLFormElement {
     constructor() {
         super()
         this.inputEl = this.querySelector('input')
-        this.keywordStr = ''
     }
   
     connectedCallback() {
@@ -29,11 +28,6 @@ export default class SearchInput extends HTMLFormElement {
 
         this.inputEl.addEventListener('focus', event => {
             this.dataset.focus = true
-
-            // 다시 확인
-            // if (this.inputEl.value === '') {
-            //     return
-            // }
 
             if (this.inputEl.validity.valid === true) {
                 window.dispatchEvent(new CustomEvent('onInput', {
