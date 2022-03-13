@@ -1,11 +1,8 @@
 
 const { faker } = window
 
-
 /** 임시 데이터 가져오기 **/
 const __get = (index) => {
-    console.log('__get', index)
-
     // 데이터가 없는 경우 확인용
     /*return {
        data: [],
@@ -143,12 +140,7 @@ export default class SearchList extends HTMLDivElement {
                 this.memo.hidden = false
             }
 
-            /*if (hasNextPage === false) {
-                return
-            } */
-
             this.data = [...this.data, ...data]
-            console.log(this.data.length)
             this.render(data, index, hasNextPage)
         })
     }
@@ -201,7 +193,7 @@ export default class SearchList extends HTMLDivElement {
     }
 
     observe() {
-        const targetEl = this.ul.querySelector('li:last-child')
+        const targetEl = this.querySelector('#test')
         const options = {
             root: null,
             rootMargin: '0px',
