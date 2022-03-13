@@ -3,16 +3,18 @@ const { faker } = window
 
 /** 임시 데이터 가져오기 **/
 const __get = (index) => {
+
     // 데이터가 없는 경우 확인용
     /*return {
        data: [],
        hasNextPage: false
     }*/
 
-    const randomLen = Math.floor(Math.random() * 101)
-    if (index >= randomLen) {
+    // const randomLen = Math.floor(Math.random() * 101)
+    if (index >= 20) {
+        console.log('randomLen', 20, 'index', index)
         return {
-            data: ['end 1', 'end 2', 'end 3'],
+            data: ['end'],
             hasNextPage: false,
         }
     }
@@ -22,6 +24,7 @@ const __get = (index) => {
     for(let i = _len; i < _len + 5 ; i++) {
         arr.push(`${i+1} - ${faker.random.words()}`)
     }
+    console.log(arr)
     return {
        data: arr,
        hasNextPage: true
@@ -55,7 +58,9 @@ export default class SearchList extends HTMLDivElement {
 
     connectedCallback() {
         window.addEventListener('onSubmit', () => {
-            this.selected.querySelector('a').click()
+            if (this.selected) {
+                this.selected.querySelector('a').click()
+            }
         })
 
         window.addEventListener('onReset', () => {
@@ -84,23 +89,23 @@ export default class SearchList extends HTMLDivElement {
 
     onInput(keyword) {
 
-        // 빈 값인 경우
-        if (keyword === '') {
-            this.hidden = true
-            return
-        }
-
+        this.data = []
         this.ul.innerHTML = ''
         this.loading.hidden = false
         this.memo.hidden = true
-        this.hidden = false
+        this.hidden = true
+
+        // 빈 값인 경우
+        if (keyword === '') {
+            return
+        }
 
         clearTimeout(this.timeId)
+        this.hidden = false
         this.timeId = setTimeout( () => {
-            this.data = []
             this.callData(0)
             this.loading.hidden = true
-        }, 500)
+        }, 1000)
     }
 
     onKeydown() {
@@ -146,11 +151,29 @@ export default class SearchList extends HTMLDivElement {
     }
 
     render(data, index, hasNextPage) {
-        // TODO : Like DocumentFragment
-        data.forEach( item => {
-            const el = this.element(item, index)
-            this.ul.appendChild(el)
+
+        let str = ''
+        data.forEach( (data, idx) => {
+            const _idx = index + idx
+            str += `<li data-index=${_idx}><a href="${_idx}">${data}</a></li>`
         })
+        this.ul.innerHTML += str
+        this.ul.querySelectorAll('li')
+            .forEach( el => {
+                this.addEvent(el)
+            })
+
+        /*const fragment = new DocumentFragment
+        data.forEach( (item, idx) => {
+            const el = this.element(item, index + idx)
+            fragment.appendChild(el)
+        })
+        this.ul.appendChild(fragment)*/
+
+        /*data.forEach( (item, idx) => {
+            const el = this.element(item, index + idx)
+            this.ul.appendChild(el)
+        })*/
 
         // First item set selected
         if (index === 0) {
@@ -168,20 +191,22 @@ export default class SearchList extends HTMLDivElement {
 
     element(text, index) {
         const node = document.createElement('li')
-        const aEl = document.createElement('a')
+        const aNode = document.createElement('a')
         node.dataset.index = index
-        aEl.textContent = text
-        aEl.href = `${index}`
-        node.appendChild(aEl)
-        this.addEvent(aEl, text)
+        aNode.textContent = text
+        aNode.href = `${index}`
+        node.appendChild(aNode)
+        this.addEvent(node)
         return node
     }
 
-    addEvent(aEl, text) {
+    addEvent(el) {
+        const aEl = el.querySelector('a')
         aEl.addEventListener('click', event => {
+            console.log(event.target)
             event.preventDefault()
             window.dispatchEvent(new CustomEvent('onItemClick'))
-            document.querySelector('.result').textContent = text
+            document.querySelector('.result').textContent = aEl.textContent
             this.hidden = true
         })
         aEl.addEventListener('mouseenter', event => {
@@ -193,7 +218,8 @@ export default class SearchList extends HTMLDivElement {
     }
 
     observe() {
-        const targetEl = this.querySelector('#test')
+        const targetEl = this.ul.querySelector('li:last-child')
+        let observer
         const options = {
             root: null,
             rootMargin: '0px',
@@ -206,7 +232,7 @@ export default class SearchList extends HTMLDivElement {
             // 해제
             observer.unobserve(targetEl)
         }
-        let observer = new IntersectionObserver( entries => {
+        observer = new IntersectionObserver( entries => {
             entries.forEach( entry => {
                 if (entry.isIntersecting) {
                     callback()
@@ -227,19 +253,5 @@ export default class SearchList extends HTMLDivElement {
             this.scrollTop = selectedEl.offsetTop 
         }
     }
-
-
-
-    /*render(datas) {
-        const ul = this.querySelector('ul')
-        let str = ''
-        datas.forEach( data => {
-            str += `<li><a href="#">${data}</a></li>`
-        })
-        ul.innerHTML = str
-        this.hidden = false
-    }*/
-
-   
 
 }
