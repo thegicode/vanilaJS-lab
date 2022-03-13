@@ -101,12 +101,12 @@ h1 {
   font-size: 14px;
 }
 
-.end {
+.memo {
   margin: 1rem;
   text-align: center;
   color: #0064c8;
 }
-.end span {
+.memo span {
   display: block;
   padding: 5px 20px;
   border-radius: 5px;

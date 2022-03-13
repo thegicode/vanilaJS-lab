@@ -4,20 +4,18 @@ const { faker } = window
 
 /** 임시 데이터 가져오기 **/
 const __get = (index) => {
+    console.log('__get', index)
 
     // 데이터가 없는 경우 확인용
-    /*if ( !index ) {
-       return {
-           data: [],
-           hasNextPage: false
-       }
-    } */
+    /*return {
+       data: [],
+       hasNextPage: false
+    }*/
 
-    // 20개로 제한 
     const randomLen = Math.floor(Math.random() * 101)
     if (index >= randomLen) {
         return {
-            data: [],
+            data: ['end 1', 'end 2', 'end 3'],
             hasNextPage: false,
         }
     }
@@ -49,7 +47,7 @@ export default class SearchList extends HTMLDivElement {
 
         this.ul = this.querySelector('ul')
         this.loading = this.querySelector('.loading')
-        // this.end = this.querySelector('.end')
+        this.memo = this.querySelector('.memo')
 
         this.data = []
         this.selected = undefined
@@ -61,19 +59,6 @@ export default class SearchList extends HTMLDivElement {
     connectedCallback() {
         window.addEventListener('onSubmit', () => {
             this.selected.querySelector('a').click()
-
-            /** Enter key
-             *  if $search-list 가 visible 이면 selected item > a click event -> 필요없음
-             *  if $search-list 가 hidden 이면 input event와 동일한 기능  
-             */
-            /*switch(this.hidden) {
-                case 'true':
-                    this.onInput()
-                    break
-                case 'false':
-                    this.selected.querySelector('a').click()
-                    break
-            }*/
         })
 
         window.addEventListener('onReset', () => {
@@ -84,9 +69,6 @@ export default class SearchList extends HTMLDivElement {
         window.addEventListener('onInput', (event) => {
             this.onInput(event.detail.keyword)
         })
-        // window.addEventListener('onFocus', event => {
-        //     console.log('onFocus', event.detail.keyword)
-        // })
 
         window.addEventListener('onKeydown', event => {
             if (this.hidden === 'false') {
@@ -111,21 +93,12 @@ export default class SearchList extends HTMLDivElement {
             return
         }
 
-        // const isNewKeyword = event.detail.isNewKeyword
-        this.hidden = false
-
-        // 이전과 같은 키워드이면 중단 : 
-        /*if (isNewKeyword === false) {
-            return
-        } */
-
-        // 새로운 키워드이면 진행
         this.ul.innerHTML = ''
         this.loading.hidden = false
-        // this.end.hidden = true
+        this.memo.hidden = true
+        this.hidden = false
 
         clearTimeout(this.timeId)
-        // const keyword = event.detail.keyword
         this.timeId = setTimeout( () => {
             this.data = []
             this.callData(0)
@@ -165,18 +138,22 @@ export default class SearchList extends HTMLDivElement {
         .then( obj => {
             const { data, hasNextPage } = obj
 
-            if (hasNextPage === false) {
-                // this.end.hidden = false
+            if ( index === 0 && data.length === 0) {
+                this.memo.textContent = '검색 결과가 없습니다.'
+                this.memo.hidden = false
+            }
+
+            /*if (hasNextPage === false) {
                 return
-            } 
+            } */
 
             this.data = [...this.data, ...data]
-            // console.log(this.data.length)
-            this.render(data, index)
+            console.log(this.data.length)
+            this.render(data, index, hasNextPage)
         })
     }
 
-    render(data, index) {
+    render(data, index, hasNextPage) {
         // TODO : Like DocumentFragment
         data.forEach( item => {
             const el = this.element(item, index)
@@ -188,6 +165,10 @@ export default class SearchList extends HTMLDivElement {
             const firstEl = this.ul.querySelector('li')
             firstEl.dataset.selected = true
             this.selected = firstEl
+        }
+
+        if (hasNextPage === false) {
+            return
         }
 
         this.observe()
@@ -219,19 +200,8 @@ export default class SearchList extends HTMLDivElement {
         })
     }
 
-    handleScroll() {
-        const selectedEl = this.selected
-        const containerHeight = this.offsetHeight
-        if (selectedEl.offsetTop >= containerHeight) {
-            this.scrollTop = selectedEl.offsetTop + selectedEl.offsetHeight - containerHeight
-        }
-        if (selectedEl.offsetTop <= this.scrollTop) {
-            this.scrollTop = selectedEl.offsetTop 
-        }
-    }
-
-
     observe() {
+        const targetEl = this.ul.querySelector('li:last-child')
         const options = {
             root: null,
             rootMargin: '0px',
@@ -242,7 +212,7 @@ export default class SearchList extends HTMLDivElement {
             this.callData(this.data.length)
 
             // 해제
-            observer.unobserve(this);
+            observer.unobserve(targetEl)
         }
         let observer = new IntersectionObserver( entries => {
             entries.forEach( entry => {
@@ -252,7 +222,18 @@ export default class SearchList extends HTMLDivElement {
             })
         }, options)
 
-        observer.observe(this.ul.querySelector('li:last-child'))
+        observer.observe(targetEl)
+    }
+
+    handleScroll() {
+        const selectedEl = this.selected
+        const containerHeight = this.offsetHeight
+        if (selectedEl.offsetTop >= containerHeight) {
+            this.scrollTop = selectedEl.offsetTop + selectedEl.offsetHeight - containerHeight
+        }
+        if (selectedEl.offsetTop <= this.scrollTop) {
+            this.scrollTop = selectedEl.offsetTop 
+        }
     }
 
 
