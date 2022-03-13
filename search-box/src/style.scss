@@ -69,12 +69,12 @@ body {
         list-style: none;
     }
     li {
-        
         box-sizing: border-box;
         height: 50px;
-        border-bottom: solid 1px #ddd;
-
-
+        border-top: solid 1px #ddd;
+        &:first-child {
+            border-top: none;
+        }
     }
     a {
         display:  block;

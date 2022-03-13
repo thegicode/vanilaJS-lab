@@ -60,7 +60,10 @@ body {
 .search-list li {
   box-sizing: border-box;
   height: 50px;
-  border-bottom: solid 1px #ddd;
+  border-top: solid 1px #ddd;
+}
+.search-list li:first-child {
+  border-top: none;
 }
 .search-list a {
   display: block;

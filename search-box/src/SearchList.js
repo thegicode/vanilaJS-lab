@@ -25,7 +25,7 @@ const __get = (index) => {
     const _len = index | 0
     const arr = []
     for(let i = _len; i < _len + 5 ; i++) {
-        arr.push(`${i} ${faker.random.words()}`)
+        arr.push(`${i+1} : ${faker.random.words()}`)
     }
     return {
        data: arr,
@@ -163,6 +163,7 @@ export default class SearchList extends HTMLDivElement {
             } 
 
             this.data = [...this.data, ...data]
+            console.log(this.data.length)
             this.render(data, index)
         })
     }
@@ -170,7 +171,7 @@ export default class SearchList extends HTMLDivElement {
     render(data, index) {
         // TODO : Like DocumentFragment
         data.forEach( item => {
-            const el = this.getElement(item, index)
+            const el = this.element(item, index)
             this.ul.appendChild(el)
         })
 
@@ -184,18 +185,14 @@ export default class SearchList extends HTMLDivElement {
         this.observe()
     }
 
-    getElement(text, index) {
+    element(text, index) {
         const node = document.createElement('li')
-        const aNode = document.createElement('a')
+        const aEl = document.createElement('a')
         node.dataset.index = index
-        aNode.textContent = text
-        aNode.href = `${index}`
-        node.appendChild(aNode)
-        this.addEvent(node, aNode, text)
-        // if (index === 0) {
-        //     node.dataset.selected = true
-        //     this.selected = node
-        // }
+        aEl.textContent = text
+        aEl.href = `${index}`
+        node.appendChild(aEl)
+        this.addEvent(node, aEl, text)
         return node
     }
 
