@@ -32,6 +32,11 @@ export default class SearchInput extends HTMLFormElement {
 
         this.inputEl.addEventListener('focus', event => {
             this.dataset.focus = true
+
+            if (this.inputEl.value === '') {
+                return
+            }
+
             if (this.inputEl.validity.valid === true) {
                 window.dispatchEvent(new CustomEvent('onInput', {
                     detail: {
@@ -49,7 +54,6 @@ export default class SearchInput extends HTMLFormElement {
         this.inputEl.addEventListener('focusout', (event) => {
             this.dataset.focus = false
             // window.dispatchEvent(new CustomEvent('onFocusOut'))
-
         })
 
         this.inputEl.addEventListener('keydown', (event) => {

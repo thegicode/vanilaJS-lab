@@ -81,8 +81,11 @@ export default class SearchList extends HTMLDivElement {
         })
 
         window.addEventListener('onInput', (event) => {
-            this.onInput(event)
+            this.onInput(event.detail.keyword)
         })
+        // window.addEventListener('onFocus', event => {
+        //     console.log('onFocus', event.detail.keyword)
+        // })
 
         window.addEventListener('onKeydown', event => {
             if (this.hidden === 'false') {
@@ -90,19 +93,21 @@ export default class SearchList extends HTMLDivElement {
             }
         })
 
-        window.addEventListener('onFocusOut', event => {
-            // console.log('onFocusOut', this.hidden)
-        })
+        /*window.addEventListener('onFocusOut', event => {
+            console.log('onFocusOut')
+            if (this.hidden === 'false') {
+                this.hidden = true
+            }
+        })*/
 
-        // window.addEventListener('click', event => {
-        //     if (event.target.tagName !== 'A') {
-        //         this.hidden = true
-        //     }
-        // })
+        document.querySelector('h1')
+            .addEventListener('click', event => {
+                this.hidden = true
+        })
 
     }
 
-    onInput(event) {
+    onInput(keyword) {
         // const isNewKeyword = event.detail.isNewKeyword
         this.hidden = false
 
@@ -117,7 +122,7 @@ export default class SearchList extends HTMLDivElement {
         // this.end.hidden = true
 
         clearTimeout(this.timeId)
-        const keyword = event.detail.keyword
+        // const keyword = event.detail.keyword
         this.timeId = setTimeout( () => {
             this.data = []
             this.callData(0)
@@ -163,7 +168,7 @@ export default class SearchList extends HTMLDivElement {
             } 
 
             this.data = [...this.data, ...data]
-            console.log(this.data.length)
+            // console.log(this.data.length)
             this.render(data, index)
         })
     }
