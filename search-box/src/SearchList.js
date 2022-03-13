@@ -108,6 +108,13 @@ export default class SearchList extends HTMLDivElement {
     }
 
     onInput(keyword) {
+
+        // 빈 값인 경우
+        if (keyword === '') {
+            this.hidden = true
+            return
+        }
+
         // const isNewKeyword = event.detail.isNewKeyword
         this.hidden = false
 
@@ -197,12 +204,12 @@ export default class SearchList extends HTMLDivElement {
         aEl.textContent = text
         aEl.href = `${index}`
         node.appendChild(aEl)
-        this.addEvent(node, aEl, text)
+        this.addEvent(aEl, text)
         return node
     }
 
-    addEvent(node, aNode, text) {
-        aNode.addEventListener('click', (event) => {
+    addEvent(aEl, text) {
+        aEl.addEventListener('click', (event) => {
             event.preventDefault()
             window.dispatchEvent(new CustomEvent('onItemClick'))
             document.querySelector('.result').textContent = text
