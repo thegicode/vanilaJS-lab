@@ -53,7 +53,7 @@ export default class SearchInput extends HTMLFormElement {
         // TODO
         this.inputEl.addEventListener('focusout', (event) => {
             this.dataset.focus = false
-            // window.dispatchEvent(new CustomEvent('onFocusOut'))
+            window.dispatchEvent(new CustomEvent('onFocusOut'))
         })
 
         this.inputEl.addEventListener('keydown', (event) => {

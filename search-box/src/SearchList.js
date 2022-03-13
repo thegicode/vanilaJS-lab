@@ -25,7 +25,7 @@ const __get = (index) => {
     const _len = index | 0
     const arr = []
     for(let i = _len; i < _len + 5 ; i++) {
-        arr.push(`${i+1} : ${faker.random.words()}`)
+        arr.push(`${i+1} - ${faker.random.words()}`)
     }
     return {
        data: arr,
@@ -54,6 +54,7 @@ export default class SearchList extends HTMLDivElement {
         this.data = []
         this.selected = undefined
         this.timeId = ''
+        this.isItemOver = false
     }
 
 
@@ -93,17 +94,12 @@ export default class SearchList extends HTMLDivElement {
             }
         })
 
-        /*window.addEventListener('onFocusOut', event => {
-            console.log('onFocusOut')
-            if (this.hidden === 'false') {
+        window.addEventListener('onFocusOut', event => {
+            if (this.isItemOver === false) {
                 this.hidden = true
             }
-        })*/
-
-        document.querySelector('h1')
-            .addEventListener('click', event => {
-                this.hidden = true
         })
+
 
     }
 
@@ -209,13 +205,31 @@ export default class SearchList extends HTMLDivElement {
     }
 
     addEvent(aEl, text) {
-        aEl.addEventListener('click', (event) => {
+        aEl.addEventListener('click', event => {
             event.preventDefault()
             window.dispatchEvent(new CustomEvent('onItemClick'))
             document.querySelector('.result').textContent = text
             this.hidden = true
         })
+        aEl.addEventListener('mouseenter', event => {
+            this.isItemOver = true
+        })
+        aEl.addEventListener('mouseleave', event => {
+            this.isItemOver = false
+        })
     }
+
+    handleScroll() {
+        const selectedEl = this.selected
+        const containerHeight = this.offsetHeight
+        if (selectedEl.offsetTop >= containerHeight) {
+            this.scrollTop = selectedEl.offsetTop + selectedEl.offsetHeight - containerHeight
+        }
+        if (selectedEl.offsetTop <= this.scrollTop) {
+            this.scrollTop = selectedEl.offsetTop 
+        }
+    }
+
 
     observe() {
         const options = {
@@ -241,18 +255,6 @@ export default class SearchList extends HTMLDivElement {
         observer.observe(this.ul.querySelector('li:last-child'))
     }
 
-
-
-    handleScroll() {
-        const selectedEl = this.selected
-        const containerHeight = this.offsetHeight
-        if (selectedEl.offsetTop >= containerHeight) {
-            this.scrollTop = selectedEl.offsetTop + selectedEl.offsetHeight - containerHeight
-        }
-        if (selectedEl.offsetTop <= this.scrollTop) {
-            this.scrollTop = selectedEl.offsetTop 
-        }
-    }
 
 
     /*render(datas) {
