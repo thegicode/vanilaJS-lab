@@ -12,7 +12,6 @@ const __get = (index) => {
 
     // const randomLen = Math.floor(Math.random() * 101)
     if (index >= 20) {
-        console.log('randomLen', 20, 'index', index)
         return {
             data: ['end'],
             hasNextPage: false,
@@ -24,7 +23,6 @@ const __get = (index) => {
     for(let i = _len; i < _len + 5 ; i++) {
         arr.push(`${i+1} - ${faker.random.words()}`)
     }
-    console.log(arr)
     return {
        data: arr,
        hasNextPage: true
@@ -55,7 +53,6 @@ export default class SearchList extends HTMLDivElement {
         this.isItemOver = false
     }
 
-
     connectedCallback() {
         window.addEventListener('onSubmit', () => {
             if (this.selected) {
@@ -74,7 +71,7 @@ export default class SearchList extends HTMLDivElement {
 
         window.addEventListener('onKeydown', event => {
             if (this.hidden === 'false') {
-                this.onKeydown()
+                this.onKeydown(event)
             }
         })
 
@@ -108,9 +105,11 @@ export default class SearchList extends HTMLDivElement {
         }, 1000)
     }
 
-    onKeydown() {
+    onKeydown(event) {
+        const { keyCode, event: _event } = event.detail
+
         const cEl = this.selected
-        switch (event.detail.keyCode) {
+        switch (keyCode) {
             case 38: // up
                 if(cEl.previousElementSibling) {
                     cEl.dataset.selected = false
@@ -152,7 +151,7 @@ export default class SearchList extends HTMLDivElement {
 
     render(data, index, hasNextPage) {
 
-        let str = ''
+        /*let str = ''
         data.forEach( (data, idx) => {
             const _idx = index + idx
             str += `<li data-index=${_idx}><a href="${_idx}">${data}</a></li>`
@@ -161,7 +160,7 @@ export default class SearchList extends HTMLDivElement {
         this.ul.querySelectorAll('li')
             .forEach( el => {
                 this.addEvent(el)
-            })
+            })*/
 
         /*const fragment = new DocumentFragment
         data.forEach( (item, idx) => {
@@ -170,10 +169,10 @@ export default class SearchList extends HTMLDivElement {
         })
         this.ul.appendChild(fragment)*/
 
-        /*data.forEach( (item, idx) => {
+        data.forEach( (item, idx) => {
             const el = this.element(item, index + idx)
             this.ul.appendChild(el)
-        })*/
+        })
 
         // First item set selected
         if (index === 0) {
@@ -203,7 +202,6 @@ export default class SearchList extends HTMLDivElement {
     addEvent(el) {
         const aEl = el.querySelector('a')
         aEl.addEventListener('click', event => {
-            console.log(event.target)
             event.preventDefault()
             window.dispatchEvent(new CustomEvent('onItemClick'))
             document.querySelector('.result').textContent = aEl.textContent

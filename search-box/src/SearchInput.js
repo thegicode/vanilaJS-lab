@@ -54,7 +54,8 @@ export default class SearchInput extends HTMLFormElement {
             if (keyCode === 38 || keyCode === 40) {
                 window.dispatchEvent(new CustomEvent('onKeydown', {
                     detail: {
-                        keyCode
+                        keyCode,
+                        event
                     }
                 }))
             }
