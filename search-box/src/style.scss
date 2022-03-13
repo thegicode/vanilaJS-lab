@@ -69,9 +69,11 @@ body {
         list-style: none;
     }
     li {
+        
         box-sizing: border-box;
         height: 50px;
         border-bottom: solid 1px #ddd;
+
 
     }
     a {
@@ -81,6 +83,10 @@ body {
         text-decoration: none;
         cursor: pointer;
         outline: none;
+
+        overflow:hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     a:hover,
@@ -98,6 +104,19 @@ body {
     color: rgba(0, 100, 200);
     span {
         display: inline-block;
+        padding: 5px 20px;
+        border-radius: 5px;
+        background-color: rgba(0, 100, 200, 0.05);
+        font-size: 14px;
+    }
+}
+
+.end {
+    margin: 1rem;
+    text-align: center;
+    color: rgba(0, 100, 200);
+    span {
+        display: block;
         padding: 5px 20px;
         border-radius: 5px;
         background-color: rgba(0, 100, 200, 0.05);

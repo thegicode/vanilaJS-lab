@@ -20,21 +20,24 @@ export default class SearchInput extends HTMLFormElement {
         })
 
         this.inputEl.addEventListener('input', event => {
-            const isNewKeyword = this.isNewKeyword(this.inputEl.value)
+            // const isNewKeyword = this.isNewKeyword(this.inputEl.value)
             window.dispatchEvent(new CustomEvent('onInput', {
                 detail: {
-                    isNewKeyword,
-                    keyword: this.keywordStr
+                    keyword: this.inputEl.value
+                    // isNewKeyword,
+                    // keyword: this.keywordStr
                 }
             }))
         })
 
-        this.inputEl.addEventListener('focus', (event) => {
+        this.inputEl.addEventListener('focus', event => {
             this.dataset.focus = true
             if (this.inputEl.validity.valid === true) {
                 window.dispatchEvent(new CustomEvent('onInput', {
                     detail: {
-                        isNewKeyword: false
+                        keyword: this.inputEl.value
+                        // isNewKeyword: false
+                        // keyword: this.keywordStr
                     }
                 }))
                 // window.dispatchEvent(new CustomEvent('onFocus'))
@@ -67,7 +70,7 @@ export default class SearchInput extends HTMLFormElement {
     }
 
 
-    isNewKeyword(newString) {
+    /*isNewKeyword(newString) {
         const str = this.keywordStr
         if (str === newString) {
             return false
@@ -75,7 +78,7 @@ export default class SearchInput extends HTMLFormElement {
             this.keywordStr = newString
             return true
         }
-    }
+    }*/
 
 
 }

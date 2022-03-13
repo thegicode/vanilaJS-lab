@@ -1,26 +1,40 @@
 
 const { faker } = window
 
-const __getDataArr = () => {
-    const arr = []
-    for(let i = 0; i< 5 ; i++) {
-        arr.push(faker.random.word())
+
+/** 임시 데이터 가져오기 **/
+const __get = (index) => {
+
+    // 데이터가 없는 경우 확인용
+    /*if ( !index ) {
+       return {
+           data: [],
+           hasNextPage: false
+       }
+    } */
+
+    // 20개로 제한 
+    const randomLen = Math.floor(Math.random() * 101)
+    if (index >= randomLen) {
+        return {
+            data: [],
+            hasNextPage: false,
+        }
     }
-    return arr
+
+    const _len = index | 0
+    const arr = []
+    for(let i = _len; i < _len + 5 ; i++) {
+        arr.push(`${i} ${faker.random.words()}`)
+    }
+    return {
+       data: arr,
+       hasNextPage: true
+    }
 }
 
+
 export default class SearchList extends HTMLDivElement {
-
-    constructor() {
-        super()
-        this.ul = this.querySelector('ul')
-        this.loading = this.querySelector('.loading')
-
-        this.data = []
-        this.selected = undefined
-        this.timeId = ''
-    }
-
     static observedAttributes = ["hidden"]
 
     get hidden() {
@@ -29,6 +43,19 @@ export default class SearchList extends HTMLDivElement {
     set hidden(value) {
         this.ariaHidden = value
     }
+
+    constructor() {
+        super()
+
+        this.ul = this.querySelector('ul')
+        this.loading = this.querySelector('.loading')
+        // this.end = this.querySelector('.end')
+
+        this.data = []
+        this.selected = undefined
+        this.timeId = ''
+    }
+
 
     connectedCallback() {
         window.addEventListener('onSubmit', () => {
@@ -76,48 +103,45 @@ export default class SearchList extends HTMLDivElement {
     }
 
     onInput(event) {
-        const isNewKeyword = event.detail.isNewKeyword
-
+        // const isNewKeyword = event.detail.isNewKeyword
         this.hidden = false
-        if (isNewKeyword === false ) {
-            return
-        } 
 
-        // New Keyword
-        this.loading.hidden = false
+        // 이전과 같은 키워드이면 중단 : 
+        /*if (isNewKeyword === false) {
+            return
+        } */
+
+        // 새로운 키워드이면 진행
         this.ul.innerHTML = ''
+        this.loading.hidden = false
+        // this.end.hidden = true
+
         clearTimeout(this.timeId)
         const keyword = event.detail.keyword
         this.timeId = setTimeout( () => {
-            new Promise( resolve => {
-                resolve(__getDataArr())
-            })
-            .then( data => {
-                this.loading.hidden = true
-                this.data = data
-                this.render(data)
-            })
+            this.data = []
+            this.callData(0)
+            this.loading.hidden = true
         }, 500)
-
     }
 
     onKeydown() {
-        const oldEl = this.selected
+        const cEl = this.selected
         switch (event.detail.keyCode) {
             case 38: // up
-                if(oldEl.previousElementSibling) {
-                    oldEl.dataset.selected = false
-                    this.selected = oldEl.previousElementSibling
+                if(cEl.previousElementSibling) {
+                    cEl.dataset.selected = false
+                    this.selected = cEl.previousElementSibling
                     this.selected.dataset.selected = true
-                    this.__handleScroll()
+                    this.handleScroll()
                 }
                 break
             case 40: // down
-                if(oldEl.nextElementSibling) {
-                    oldEl.dataset.selected = false
-                    this.selected = oldEl.nextElementSibling
+                if(cEl.nextElementSibling) {
+                    cEl.dataset.selected = false
+                    this.selected = cEl.nextElementSibling
                     this.selected.dataset.selected = true
-                    this.__handleScroll()
+                    this.handleScroll()
                 }
                 break
             default:
@@ -125,11 +149,39 @@ export default class SearchList extends HTMLDivElement {
         }
     }
 
-    render(data) {
-        // TODO
-        data.forEach( (item, index) => {
-           this.ul.appendChild(this.getElement(item, index))
+    callData(index) {
+        new Promise( resolve => {
+            const obj = __get(index) // TODO : __get() 특정문자 포함 문자열로 가져오기
+            resolve(obj)
         })
+        .then( obj => {
+            const { data, hasNextPage } = obj
+
+            if (hasNextPage === false) {
+                // this.end.hidden = false
+                return
+            } 
+
+            this.data = [...this.data, ...data]
+            this.render(data, index)
+        })
+    }
+
+    render(data, index) {
+        // TODO : Like DocumentFragment
+        data.forEach( item => {
+            const el = this.getElement(item, index)
+            this.ul.appendChild(el)
+        })
+
+        // First item set selected
+        if (index === 0) {
+            const firstEl = this.ul.querySelector('li')
+            firstEl.dataset.selected = true
+            this.selected = firstEl
+        }
+
+        this.observe()
     }
 
     getElement(text, index) {
@@ -140,16 +192,15 @@ export default class SearchList extends HTMLDivElement {
         aNode.href = `${index}`
         node.appendChild(aNode)
         this.addEvent(node, aNode, text)
-        if (index === 0) {
-            node.dataset.selected = true
-            this.selected = node
-        }
+        // if (index === 0) {
+        //     node.dataset.selected = true
+        //     this.selected = node
+        // }
         return node
     }
 
     addEvent(node, aNode, text) {
         aNode.addEventListener('click', (event) => {
-            console.log('click')
             event.preventDefault()
             window.dispatchEvent(new CustomEvent('onItemClick'))
             document.querySelector('.result').textContent = text
@@ -157,11 +208,33 @@ export default class SearchList extends HTMLDivElement {
         })
     }
 
-    __onlyShow() {
-        
+    observe() {
+        const options = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        }
+        const callback = () => {
+            // 실행
+            this.callData(this.data.length)
+
+            // 해제
+            observer.unobserve(this);
+        }
+        let observer = new IntersectionObserver( entries => {
+            entries.forEach( entry => {
+                if (entry.isIntersecting) {
+                    callback()
+                }
+            })
+        }, options)
+
+        observer.observe(this.ul.querySelector('li:last-child'))
     }
 
-    __handleScroll() {
+
+
+    handleScroll() {
         const selectedEl = this.selected
         const containerHeight = this.offsetHeight
         if (selectedEl.offsetTop >= containerHeight) {

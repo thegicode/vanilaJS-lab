@@ -69,6 +69,9 @@ body {
   text-decoration: none;
   cursor: pointer;
   outline: none;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 .search-list a:hover,
 .search-list a:focus,
@@ -84,6 +87,19 @@ body {
 }
 .loading span {
   display: inline-block;
+  padding: 5px 20px;
+  border-radius: 5px;
+  background-color: rgba(0, 100, 200, 0.05);
+  font-size: 14px;
+}
+
+.end {
+  margin: 1rem;
+  text-align: center;
+  color: #0064c8;
+}
+.end span {
+  display: block;
   padding: 5px 20px;
   border-radius: 5px;
   background-color: rgba(0, 100, 200, 0.05);
