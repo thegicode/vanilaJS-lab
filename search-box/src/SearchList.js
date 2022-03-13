@@ -71,7 +71,7 @@ export default class SearchList extends HTMLDivElement {
 
         window.addEventListener('onKeydown', event => {
             if (this.hidden === 'false') {
-                this.onKeydown(event)
+                this.onKeydown(event.detail.keyCode)
             }
         })
 
@@ -105,9 +105,7 @@ export default class SearchList extends HTMLDivElement {
         }, 1000)
     }
 
-    onKeydown(event) {
-        const { keyCode, event: _event } = event.detail
-
+    onKeydown(keyCode) {
         const cEl = this.selected
         switch (keyCode) {
             case 38: // up
