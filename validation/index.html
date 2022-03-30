@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validation</title>
+    <link rl="stylesheet" type="text/css" href="css/main.css">
+    <style>
+        body {
+            margin: 2rem;
+        }
+        input {
+            width: 80%;
+            padding: 5px;
+        }
+        input-biznumber {
+            display: block;
+        }
+        input-biznumber[data-valid="false"] {
+            outline: 1px solid red;
+        }
+    </style>
+        
+</head>
+<body>
+    <input-biznumber>
+        <input type="text" 
+                placeholder="사업자등록번호를 입력해주세요." 
+            maxlength="12">
+    </input-biznumber>
+    <br>
+   <!--  <input-biznumber2>
+        <input type="text" 
+                placeholder="사업자등록번호를 입력해주세요." 
+            maxlength="12">
+    </input-biznumber2> -->
+    <script type="module" src="index.js"></script>
+</body>
+</html>
