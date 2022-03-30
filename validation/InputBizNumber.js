@@ -27,13 +27,7 @@ export default class InputBizNumber extends HTMLElement {
     }
 
     getForamt(value) {
-        const _index = value.length - 5; 
-        const result = [
-            value.slice(0, 3), 
-            value.slice(3, _index), 
-            value.slice(_index)
-        ].join('-');
-        return result
+        return value.replace(/^(\d{3})(\d{2})(\d{5})$/, `$1-$2-$3`);
     }
 
     validateBizNumber(value) {

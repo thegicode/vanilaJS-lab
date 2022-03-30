@@ -1,14 +1,14 @@
 
-export default class InputBizNumber2 extends HTMLElement {
+export default class InputBizNumber extends HTMLElement {
 
     constructor() {
         super()
-        this.value = ''
         this.input = this.querySelector('input')
     }
 
     set valid(v) {
         this.dataset.valid = v
+        console.log('isValid', v)
     }
 
     connectedCallback() {
@@ -16,34 +16,18 @@ export default class InputBizNumber2 extends HTMLElement {
     }
 
     onInput() {
-        this.valid = false
         let numberStr = this.input.value.replace(/\D/g,'')
-        this.getForamt(numberStr)
-        console.log(this.input.value)
-
-        // if (numberStr.length >= 10) {
-        //     const isValid = this.validateBizNumber(numberStr)
-        //     this.dataset.valid = isValid
-        //     console.log('isValid', isValid)
-        //     return
-        // } 
-        // this.input.value = numberStr
+        if (numberStr.length >= 10) {
+            this.input.value = this.getForamt(numberStr)
+            this.valid = this.validateBizNumber(numberStr)
+        } else {
+            this.input.value = numberStr
+            this.valid = false
+        }
     }
 
-    getForamt(numberStr) {
-        let result = numberStr
-        if (numberStr.length === 3 || numberStr.length === 5) {
-            result = numberStr + '-'
-            this.value = result
-            this.input.value = result
-        }
-        // const _index = value.length - 5; 
-        // const result = [
-        //     value.slice(0, 3), 
-        //     value.slice(3, _index), 
-        //     value.slice(_index)
-        // ].join('-');
-        return result
+    getForamt(value) {
+        return value.replace(/^(\d{2,3})(\d{3,4})(\d{4})$/, `$1-$2-$3`);
     }
 
     validateBizNumber(value) {

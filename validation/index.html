@@ -13,25 +13,36 @@
             width: 80%;
             padding: 5px;
         }
+        input-phonenumber,
         input-biznumber {
             display: block;
         }
-        input-biznumber[data-valid="false"] {
+        *[data-valid="false"] input {
             outline: 1px solid red;
+            outline-offset: 2px;
         }
     </style>
         
 </head>
 <body>
+    <h5>전화번호</h5>
+    <input-phonenumber>
+        <input type="text" 
+            placeholder="전화번호를 입력해주세요." 
+            maxlength="13">
+    </input-phonenumber>
+
+    <br>
+    <h5>사업자번호</h5>
     <input-biznumber>
         <input type="text" 
-                placeholder="사업자등록번호를 입력해주세요." 
+            placeholder="사업자등록번호를 입력해주세요." 
             maxlength="12">
     </input-biznumber>
     <br>
-   <!--  <input-biznumber2>
+    <!-- <input-biznumber2>
         <input type="text" 
-                placeholder="사업자등록번호를 입력해주세요." 
+            placeholder="사업자등록번호를 입력해주세요." 
             maxlength="12">
     </input-biznumber2> -->
     <script type="module" src="index.js"></script>
