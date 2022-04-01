@@ -5,87 +5,41 @@ const __cloneDeep = x => {
   
 const __freeze = x => Object.freeze(__cloneDeep(x))
 
-const INITIAL_DATA = [
+
+// INITIAL_DATA가 화면에 그려져 있지 않음, Drag and drop 으로 change data 확인하는 용도
+const INITIAL_DATA = [ 
     {
-        amount: 0,
-        price: 1000,
-        isCheck: true,
-        discountPrice: 0
+        amount: 0
     },
     {
-        amount: 1,
-        price: 2000,
-        isCheck: true,
-        discountPrice: 200
+        amount: 1
     },
     {
-        amount: 2,
-        price: 3000,
-        isCheck: false,
-        discountPrice: null
+        amount: 2
     },
     {
-        amount: 3,
-        price: 4000,
-        isCheck: false,
-        discountPrice: null
+        amount: 3
     },
     {
-        amount: 4,
-        price: 5000,
-        isCheck: false,
-        discountPrice: null
+        amount: 4
     }
 ]
 
 export default () => {
-
     let state = __cloneDeep(INITIAL_DATA)
 
-    const store = {
-        get data() {
-            return __freeze(state)
-        }
-    }
+    /** 
+     * Drag and Drop 이벤트 데이터 업데이트
+     * @param {string} type          드랍되는 위치, 타겟 엘리먼트의 상단이냐 하단이냐, (top, bottom)
+     * @param {string} draggedIdx    드레그된 엘리먼트 index
+     * @param {string} targetIdx     드랍 대상이 되는 엘리먼트 index
+     */
+    const exchangeItem = (type, draggedIdx, targetIdx) => {
 
-    const addItem = (amount, price) => {
-        state.push({
-            amount: Number(amount),
-            price: Number(price),
-            isCheck: false
-        })
-        console.log('add: ', Array.from(state, item => (item.amount || item.price)))
-    }
-    
-    const updateItem = (index, key, value) => {
-        const data = state[index]
-        if (key === 'amount' || key === 'price') {
-            value = Number(value)
-        }
-        if (data[key] === value ) {
-            return
-        }
-        
-        data[key] = value
+        // console.log(type, targetIdx, draggedIdx)
 
-        if( data.isCheck ) {
-            discount(index)
-        }
-
-        console.log(data)
-        // console.log('update: ', Array.from(state, item => item[key]) )
-    }
-    
-    const deleteItem = (index) => {
-        const deleted = state.splice(index, 1)
-        console.log('delete: ', Array.from(state, item => item.amount))
-        return deleted
-    }
-    
-    const exchangeItem = (type, targetIdx, draggedIdx) => {
-        console.log(type, targetIdx, draggedIdx)
         let arr, item
-    
+
         const targetIndex = Number(targetIdx)
         const draggedIndex = Number(draggedIdx)
 
@@ -97,7 +51,7 @@ export default () => {
             item = state.splice(draggedIndex, 1)
             arr = state.splice(0, index)
         }
-    
+
         switch(type) {
             case 'top':
                 if (targetIndex > draggedIndex) {
@@ -119,27 +73,7 @@ export default () => {
         state = [...arr, ...item, ...state]
         console.log('exchange: ', Array.from(state, item => item.amount))
     }
-
-    const discount = (index, isCheck) => {
-        const data = state[index]
-        let dsPrice = null
-        isCheck = isCheck || data.isCheck
-        if (isCheck === true) {
-            dsPrice = data.amount * data.price * 0.1
-        } 
-        data.discountPrice = dsPrice
-        console.log('discount: ', Array.from(state, item => item.discountPrice))
-        return dsPrice
-    }
-
     return {
-        store,
-        addItem,
-        updateItem,
-        deleteItem,
-        exchangeItem,
-        discount
+        exchangeItem
     }
 }
-
-

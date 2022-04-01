@@ -1,25 +1,29 @@
+
+import models from './model.js'
+const { exchangeItem } = models()
+
 export default class DataTables extends HTMLElement {
     constructor() {
         super()
         this.tbody = this.querySelector('tbody')
-        this.originEl
-        this.draggedEl
-        this.targetedEl
+        this.dragOriginEl
+        this.dragDraggedEl
+        this.dragTargetedEl
     }
 
     connectedCallback() {
         this.tbody.querySelectorAll('tr')
             .forEach( tr => {
-                this.addDragger(tr)
+                this.addDraggerEvents(tr)
             })
         document.addEventListener("dragover", this.onDragover.bind(this))
     }
 
     disconnectedCallback() {
-        console.log('disconnectedCallback')
+        document.removeEventListener("dragover", this.onDragover.bind(this))
     }
 
-    addDragger(node) {
+    addDraggerEvents(node) {
         const draggerButton = node.querySelector('button[name="dragger"]')
         
         draggerButton.addEventListener('mousedown', () => {
@@ -30,33 +34,31 @@ export default class DataTables extends HTMLElement {
         })
 
         node.addEventListener("dragstart", (event) => {
-            // this.draggedEl = node.cloneNode(true)
-            // this.addDragger(this.draggedEl)
-            this.draggedEl = document.importNode(node, true)
-
-            this.addDragger(this.draggedEl)
-            this.originEl = node
+            this.dragDraggedEl = node.cloneNode(true)
+            this.addDraggerEvents(this.dragDraggedEl)
+            this.dragOriginEl = node
             setTimeout( () => {
-                this.originEl.dataset.origin = true
+                this.dragOriginEl.dataset.origin = true
             }, 1)
         })
         node.addEventListener("dragend", () => {
-            if (!this.targetedEl) return
+            if (!this.dragTargetedEl) return
 
             this.tbody.dataset.drop = true
-            const draggedIndex = this.draggedEl.dataset.index
-            const pos = this.targetedEl.dataset.pos || 'top'
+            const draggedIndex = this.dragDraggedEl.dataset.index
+            const pos = this.dragTargetedEl.dataset.pos || 'top'
             window.requestAnimationFrame( () => {
                 if (pos === 'bottom') {
-                    this.targetedEl.after(this.draggedEl)
+                    this.dragTargetedEl.after(this.dragDraggedEl)
                 } else {
-                    this.targetedEl.before(this.draggedEl)
+                    this.dragTargetedEl.before(this.dragDraggedEl)
                 }
-                // exchangeItem(pos, this.targetedEl.dataset.index, draggedIndex)
 
-                delete this.targetedEl.dataset.pos
-                this.originEl.remove()
-                this.draggedEl.removeAttribute('draggable')
+                exchangeItem(pos, draggedIndex, this.dragTargetedEl.dataset.index)
+
+                delete this.dragTargetedEl.dataset.pos
+                this.dragOriginEl.remove()
+                this.dragDraggedEl.removeAttribute('draggable')
 
                 this.renderIndex()
 
@@ -67,21 +69,20 @@ export default class DataTables extends HTMLElement {
         })
         node.addEventListener("dragenter", (event) => {
             window.requestAnimationFrame( () => {
-                if(this.isMove(this.originEl, event)) {
-                    // css 간편화를 위해 끝으로, 중간에 originEl이 있으면 css가 복잡
-                    this.tbody.appendChild(this.originEl)
-                    console.log('dragenter', 'isMove true')
+                if(this.isMove(this.dragOriginEl, event)) {
+                    // css 간편화를 위해 끝으로, 중간에 dragOriginEl이 있으면 css가 복잡
+                    this.tbody.appendChild(this.dragOriginEl)
                 } 
 
-                if( node === this.originEl || node === this.targetedEl ) {
+                if( node === this.dragOriginEl || node === this.dragTargetedEl ) {
                     return
                 }
         
-                // 이전 targetedEl의 data 속성 제거
-                if ( this.targetedEl ) {
-                    delete this.targetedEl.dataset.pos
+                // 이전 dragTargetedEl의 data 속성 제거
+                if ( this.dragTargetedEl ) {
+                    delete this.dragTargetedEl.dataset.pos
                 }
-                this.targetedEl = node
+                this.dragTargetedEl = node
             })
             
         })
@@ -91,14 +92,14 @@ export default class DataTables extends HTMLElement {
     onDragover(event) {
         event.preventDefault()
             
-        if (!this.targetedEl) {
-            this.originEl.removeAttribute('draggable')
-            delete this.originEl.dataset.origin
+        if (!this.dragTargetedEl) {
+            this.dragOriginEl.removeAttribute('draggable')
+            delete this.dragOriginEl.dataset.origin
             return
         }
 
         window.requestAnimationFrame( () => {
-            let el = this.targetedEl
+            let el = this.dragTargetedEl
             const mouseY = event.clientY
             const elHalfVal = el.offsetTop + el.offsetHeight/2
 
@@ -118,14 +119,12 @@ export default class DataTables extends HTMLElement {
             })
     }
 
-
     isMove(el, event) {
         let val = el.offsetTop - event.clientY
-        if(val < 0) val = -val
+        if (val < 0) val = -val
         if (val > el.offsetHeight/4) {
             return true
         }
         return false
     }
-
 }
