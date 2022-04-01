@@ -25,7 +25,6 @@ export default class DataTables extends HTMLElement {
 
     addDraggerEvents(node) {
         const draggerButton = node.querySelector('button[name="dragger"]')
-        
         draggerButton.addEventListener('mousedown', () => {
             node.draggable = true
         })
@@ -128,3 +127,5 @@ export default class DataTables extends HTMLElement {
         return false
     }
 }
+
+
