@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node server",
-    "css": "sass --watch dev/scss:dev/css",
+    "start": "node server & npm run css",
+    "css": "sass --watch src/02/scss:src/02/css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",

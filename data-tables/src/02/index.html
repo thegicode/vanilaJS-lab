@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Tables</title>
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body>
+
+    <div class="root" id="root">
+        <h1>Data Tables</h1>
+
+        <data-table>
+            <table class="table">
+                <colgroup>
+                    <col width="10%">
+                    <col>
+                    <col>
+                    <col>
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Amount</th>
+                        <th>Price</th>
+                        <th>Check</th>
+                        <th>Discount</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody><tr data-index="0">
+                    <td class="dragger">
+                        <button type="button" name="dragger" tabindex="-1">=</button>
+                    </td>
+                    <td class="amount">
+                        <input type="number" name="amount" min="0" max="10000" placeholder="수량을 입력하세요." required="" value="0">
+                    </td>
+                    <td class="price">
+                        <input type="number" name="price" min="0" max="1000000" placeholder="단가를 입력하세요." required="">
+                    </td>
+                    <td class="check">
+                        <label>
+                            <input type="checkbox" name="check">
+                            <span>Check</span>
+                        </label>
+                    </td>
+                    <td class="discount">0</td>
+                    <td class="actions">
+                        <button type="button" class="button" name="delete">Delete</button>
+                    </td>
+                </tr><tr data-index="1">
+                    <td class="dragger">
+                        <button type="button" name="dragger" tabindex="-1">=</button>
+                    </td>
+                    <td class="amount">
+                        <input type="number" name="amount" min="0" max="10000" placeholder="수량을 입력하세요." required="" value="1">
+                    </td>
+                    <td class="price">
+                        <input type="number" name="price" min="0" max="1000000" placeholder="단가를 입력하세요." required="">
+                    </td>
+                    <td class="check">
+                        <label>
+                            <input type="checkbox" name="check">
+                            <span>Check</span>
+                        </label>
+                    </td>
+                    <td class="discount">200</td>
+                    <td class="actions">
+                        <button type="button" class="button" name="delete">Delete</button>
+                    </td>
+                </tr><tr data-index="2">
+                    <td class="dragger">
+                        <button type="button" name="dragger" tabindex="-1">=</button>
+                    </td>
+                    <td class="amount">
+                        <input type="number" name="amount" min="0" max="10000" placeholder="수량을 입력하세요." required="" value="2">
+                    </td>
+                    <td class="price">
+                        <input type="number" name="price" min="0" max="1000000" placeholder="단가를 입력하세요." required="">
+                    </td>
+                    <td class="check">
+                        <label>
+                            <input type="checkbox" name="check">
+                            <span>Check</span>
+                        </label>
+                    </td>
+                    <td class="discount"></td>
+                    <td class="actions">
+                        <button type="button" class="button" name="delete">Delete</button>
+                    </td>
+                </tr><tr data-index="3">
+                    <td class="dragger">
+                        <button type="button" name="dragger" tabindex="-1">=</button>
+                    </td>
+                    <td class="amount">
+                        <input type="number" name="amount" min="0" max="10000" placeholder="수량을 입력하세요." required="" value="3">
+                    </td>
+                    <td class="price">
+                        <input type="number" name="price" min="0" max="1000000" placeholder="단가를 입력하세요." required="">
+                    </td>
+                    <td class="check">
+                        <label>
+                            <input type="checkbox" name="check">
+                            <span>Check</span>
+                        </label>
+                    </td>
+                    <td class="discount"></td>
+                    <td class="actions">
+                        <button type="button" class="button" name="delete">Delete</button>
+                    </td>
+                </tr><tr data-index="4">
+                    <td class="dragger">
+                        <button type="button" name="dragger" tabindex="-1">=</button>
+                    </td>
+                    <td class="amount">
+                        <input type="number" name="amount" min="0" max="10000" placeholder="수량을 입력하세요." required="" value="4">
+                    </td>
+                    <td class="price">
+                        <input type="number" name="price" min="0" max="1000000" placeholder="단가를 입력하세요." required="">
+                    </td>
+                    <td class="check">
+                        <label>
+                            <input type="checkbox" name="check">
+                            <span>Check</span>
+                        </label>
+                    </td>
+                    <td class="discount"></td>
+                    <td class="actions">
+                        <button type="button" class="button" name="delete">Delete</button>
+                    </td>
+                </tr></tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3">수량 합계</th>
+                        <td colspan="3" class="amount">10</td>
+                    </tr>
+                    <tr>
+                        <th colspan="3">금액 합계</th>
+                        <td colspan="3" class="price">40,000</td>
+                    </tr>
+                    <tr>
+                        <th colspan="3">할인 금액 합계</th>
+                        <td colspan="3" class="discount">200</td>
+                    </tr>
+                    <tr>
+                        <th colspan="3">정산 금액</th>
+                        <td colspan="3" class="total">39,800</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </data-table>
+
+        <div class="app-actions">
+            <button type="button" name="add">Add</button>
+        </div>
+
+        <!-- <template>
+            <tr>
+                <td class="dragger">
+                    <button type="button" name="dragger" tabindex="-1">=</button>
+                </td>
+                <td class="amount">
+                    <input type="number" 
+                        name="amount" 
+                        min="0" max="10000" 
+                        placeholder="수량을 입력하세요."
+                        required>
+                </td>
+                <td class="price">
+                    <input type="number" 
+                        name="price" 
+                        min="0" max="1000000" 
+                        placeholder="단가를 입력하세요."
+                        required>
+                </td>
+                <td class="check">
+                    <label>
+                        <input type="checkbox" name="check">
+                        <span>Check</span>
+                    </label>
+                </td>
+                <td class="discount"></td>
+                <td class="actions">
+                    <button type="button" class="button" name="delete">Delete</button>
+                </td>
+            </tr>
+        </template> -->
+    </div>
+
+    <!-- <div class="loading"></div> -->
+
+    <script type="module" src="js/index.js"></script>
+</body>
+</html>
