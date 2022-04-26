@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cursor</title>
+    <style>
+        body {
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 1rem;
+        }
+        input {
+            box-sizing: border-box;
+            width: 100%;
+            max-width: 500px;
+            padding: 1rem;
+            font-size: 1.5rem;
+            color: #333;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+    <label>
+        <input type="text" name="flower" value="피울 수 있는 꽃">
+    </label>
+    <script>
+        const fn1 = () => {
+            const input = document.querySelector('[name=flower]')
+            input.addEventListener('mouseup', () => {
+                const len = input.value.length
+                input.setSelectionRange(len, len)
+            })
+        }
+        fn1()
+    </script>
+
+    
+    <label>
+        <input type="text" name="price" value="100원">
+    </label>
+    <script>
+        const fn2 = () => {
+            const input = document.querySelector('[name=price]')
+            input.addEventListener('mouseup', () => {
+                const len = input.value.length - 1
+                input.setSelectionRange(len, len)
+            })
+        }
+        fn2()
+    </script>
+
+    
+</body>
+</html>
