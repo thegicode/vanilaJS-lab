@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MVC</title>
+    <script type="module" src="index.js" defer></script>
+    <style>
+        body {
+            margin: 2rem;
+        }
+
+        input {
+            padding: 5px 10px;
+        }
+
+        #card {
+            box-sizing: border-box;
+            margin-top: 1rem;
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        #card p {
+            margin: 5px 0 10px;
+        }
+        #card .thumb {
+            box-sizing: border-box;
+            min-height: 100px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <app-mvc>
+        <label>Id : <input id=index type=number></label>
+        <div id=card>Loading data</div>
+    </app-mvc>
+
+</body>
+</html>
