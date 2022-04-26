@@ -2,6 +2,8 @@
 import AppModel from './Model.js'
 import AppView from './View.js'
 
+import PersonInput from './PersonInput.js'
+import PersonCard from './PersonCard.js'
 
 //CONTROLLER
 class Controller extends HTMLElement {
@@ -20,3 +22,5 @@ class Controller extends HTMLElement {
 }
 
 customElements.define('app-mvc', Controller)
+customElements.define('person-input', PersonInput)
+customElements.define('person-card', PersonCard)

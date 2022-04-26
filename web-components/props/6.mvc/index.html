@@ -15,6 +15,7 @@
         }
 
         #card {
+            display: block;
             box-sizing: border-box;
             margin-top: 1rem;
             padding: 10px;
@@ -33,9 +34,21 @@
 <body>
 
     <app-mvc>
-        <label>Id : <input id=index type=number></label>
-        <div id=card>Loading data</div>
+        <person-input>
+            <label>Id : <input id=index type=number></label>
+        </person-input>
+        <person-card id=card>Loading data</person-card>
     </app-mvc>
+
+    <template>
+        <p>Name : 
+            <span class="first_name"></span> 
+            <span class="last_name"></span>
+        </p>
+		<div class="thumb">
+            <img src="" alt="썸네일 이미지">
+        </div>
+    </template>
 
 </body>
 </html>
