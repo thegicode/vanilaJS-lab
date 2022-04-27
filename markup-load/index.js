@@ -2,74 +2,96 @@ const fs = require('fs');
 
 const utfCode = 'utf8'
 
-const path = {
-    template: './htmls/template/',
-    components: './htmls/components/',
-    content: './htmls/content/',
-    layout: './htmls/layout/',
-    page: './htmls/page/',
+// 마크업 html file PATH
+const PATH = {
+    component: './htmls/component/',    // 공통 컴포넌트
+    template: './htmls/template/',      // template tag
+    content: './htmls/content/',        // 페이지별 컨텐츠(페이지당 하나)
+    frame: './htmls/frame/',            // 페이지별 document 
+    page: './htmls/page/',              // 최종 html 파일
 }
 
-
-// Get template string
-const getTemplateString = (names) => {
-    const templateArr = names.map( name => {
-        const url = `${path.template}${name}.html`
-        return fs.readFileSync(url, utfCode)
-    })
-    return templateArr.join('\n')
+// { component, template } 타입에 따라 경로/파일 읽은 후 html 코드 삽입
+const insertHtml = (type, name, contentHtml) => {
+    const url = `${PATH[type]}${name}.html`
+    const str = fs.readFileSync(url, utfCode)
+    contentHtml = contentHtml.replace(`{${name}}`, str)
+    return contentHtml
 }
 
-// Get components string
-const getComponents = (names) => {
-    const obj = {}
-    names.forEach( name => {
-        const url = `${path.components}${name}.html`
-        const str = fs.readFileSync(url, utfCode)
-        obj[name] = str
-    })
-    return obj
-}
-
-// Make page file func
-const writePage = (pageName, templateNames, componentNames) => {
+// content/*.html 코드 가져오는 걸로 시작하여 
+// component, template 코드 넣은 후 
+// frame안에 집어 넣고 page 폴더안에 최종 파일을 생성
+const writePage = (pageName) => {
     try {
         const fileName = `${pageName}.html`
-        const contentUrl = `${path.content}${fileName}`
-        const layoutUrl = `${path.layout}${fileName}`
-        const pageUrl = `${path.page}${fileName}`
+
+        // 카테고리별 경로
+        const contentUrl = `${PATH.content}${fileName}`
+        const frameUrl = `${PATH.frame}${fileName}`
+        const pageUrl = `${PATH.page}${fileName}`
         
-        const templateStr = getTemplateString(templateNames)
-        let contentStr = fs.readFileSync(contentUrl, utfCode)
+        // contentHtml을 추적하면 이해가 빠르다.
+        let contentHtml = fs.readFileSync(contentUrl, utfCode)
 
-        const componentObj = getComponents(componentNames)
-        for (const [key, value] of Object.entries(componentObj)) {
-            contentStr = contentStr.replace(`{${key}}`, value)
-        }
+        // 정규표현식으로 삽입할 문자열 찾는다.
+        const regex = /\{(\S+)\}/gm                 // {}
+        const matches = contentHtml.match(regex)
+        matches.map(item => {
+            // 문자열 타입에 따라 html 코드 삽입
+            const regex1 = /\{(\S+)\}/              // template이 아닌 것 : {~}, component
+            const regex2 = /\{(template\S+)\}/      // {template~~}
+            let name, type
+            if (!regex2.test(item)) {
+                name = item.match(regex1)[1]
+                type = 'component'
+            } else {
+                name = item.match(regex2)[1]
+                type = 'template'
+            }
+            contentHtml = insertHtml(type, name, contentHtml)
+        })
+       
+        // frame/*.html 파일 안에 {component, template} 삽입한 contentHtml 코드를 넣는다.
+        const frameHtml = fs.readFileSync(frameUrl, utfCode)
+        const htmlStr = frameHtml.replace('{content}', contentHtml)
 
-        const layoutStr = fs.readFileSync(layoutUrl, utfCode)
-    
-        let str = `${contentStr}\n${templateStr}`
-        str = layoutStr.replace('{content}', str)
-        fs.writeFileSync(pageUrl, str)
+        // page/*.html 안에 최종 삽입
+        fs.writeFileSync(pageUrl, htmlStr)
     
     } catch (err) {
         console.error(err)
     }
 }
 
-// Page names, template names
-const pages = {
-    main: {
-        templateNames: ['template', 'template2'],
-        componentNames: ['component1', 'component2'],
-    },
-    list: {
-        templateNames: ['template', 'template3'],
-        componentNames: ['component1', 'component2'],
-    }
-}
-for (const [key, value] of Object.entries(pages)) {
-    writePage(key, value.templateNames, value.componentNames)
-}
+// Pages
+const pages = ['main', 'list']  // 페이지명
+pages.forEach( page => {
+    writePage(page)
+})
 
+
+
+
+
+
+// const getTemplates = (names) => {
+//     const obj = {}
+//     names.forEach( name => {
+//         const url = `${PATH.template}${name}.html`
+//         const str = fs.readFileSync(url, utfCode)
+//         obj[name] = str
+//     })
+//     return obj
+// }
+
+
+        // for (const [key, value] of Object.entries(componentObj)) {
+        //     contentHtml = contentHtml.replace(`{${key}}`, value)
+        // }
+
+
+         // const templateObj = getTemplates(templateNames)
+        // for (const [key, value] of Object.entries(templateObj)) {
+        //     contentHtml = contentHtml.replace(`{${key}}`, value)
+        // }
