@@ -1,26 +1,53 @@
 const fs = require('fs');
 
-const templateUrl = './htmls/template/template.html'
-const contentUrl = './htmls/content/content.html'
-const layoutUrl = './htmls/layout/main.html'
-const viewUrl = './htmls/view/main.html'
+const utfCode = utfCode
 
-let str = ''
+const path = {
+    content: './htmls/content/',
+    template: './htmls/template/',
+    layout: './htmls/layout/',
+    page: './htmls/page/',
+}
 
-// Get string : template html, content html, layout html
-try {
-    const templateStr = fs.readFileSync(templateUrl, 'utf8')
-    const contentStr = fs.readFileSync(contentUrl, 'utf8')
-    const layoutStr = fs.readFileSync(layoutUrl, 'utf8')
-    str = `${contentStr}\n${templateStr}`
-    str = layoutStr.replace('{content}', str)
-} catch (err) {
-    console.error(err)
-}   
+// Get template string
+const getTemplateString = (templateNames) => {
+    const templateArr = templateNames.map( name => {
+        const url = `${path.template}${name}.html`
+        return fs.readFileSync(url, utfCode)
+    })
+    return templateArr.join('\n')
+}
 
-// write 
-try {
-    fs.writeFileSync(viewUrl, str)
-} catch (err) {
-    console.error(err)
+// Make page file func
+const writePage = (pageName, templateNames) => {
+    try {
+        const fileName = `${pageName}.html`
+        const contentUrl = `${path.content}${fileName}`
+        const layoutUrl = `${path.layout}${fileName}`
+        const pageUrl = `${path.page}${fileName}`
+        
+        const templateStr = getTemplateString(templateNames)
+        const contentStr = fs.readFileSync(contentUrl, utfCode)
+        const layoutStr = fs.readFileSync(layoutUrl, utfCode)
+    
+        let str = `${contentStr}\n${templateStr}`
+        str = layoutStr.replace('{content}', str)
+        fs.writeFileSync(pageUrl, str)
+    
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+// Page names, template names
+const pages = {
+    main: {
+        templateNames: ['template', 'template2']
+    },
+    list: {
+        templateNames: ['template', 'template3']
+    }
+}
+for (const [key, value] of Object.entries(pages)) {
+    writePage(key, value.templateNames)
 }
