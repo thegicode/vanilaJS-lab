@@ -1,3 +1,5 @@
+console.log('markup start')
+
 const fs = require('fs');
 
 const utfCode = 'utf8'
@@ -5,7 +7,7 @@ const utfCode = 'utf8'
 // 마크업 html file PATH
 const PATH = {
     component: './htmls/component/',    // 공통 컴포넌트
-    template: './htmls/template/',      // template tag
+    template: './htmls/template/',      // template element
     content: './htmls/content/',        // 페이지별 컨텐츠(페이지당 하나)
     frame: './htmls/frame/',            // 페이지별 document 
     page: './htmls/page/',              // 최종 html 파일
@@ -39,8 +41,8 @@ const writePage = (pageName) => {
         const matches = contentHtml.match(regex)
         matches.map(item => {
             // 문자열 타입에 따라 html 코드 삽입
-            const regex1 = /\{(\S+)\}/              // template이 아닌 것 : {~}, component
-            const regex2 = /\{(template\S+)\}/      // {template~~}
+            const regex1 = /\{(\S+)\}/              // template이 아닌 것 : component
+            const regex2 = /\{(template\S+)\}/      // template~~
             let name, type
             if (!regex2.test(item)) {
                 name = item.match(regex1)[1]
