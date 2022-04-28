@@ -1,0 +1,11 @@
+body {
+    margin: 2rem;
+}
+
+#modal1 [slot="modal-footer"] {
+    display: flex;
+    justify-content: space-between;
+}
+#modal1 [slot="modal-footer"] button {
+    flex: 1;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slot test</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="index.js" defer></script>
+</head>
+
+<body>
+
+    <h1>Slot test</h1>
+
+    <modal-dialog id="modal1">
+        <p slot="modal-title">타이틀1</p>
+        <div slot="modal-content">
+            <p>내용1</p>
+            <p>내용1</p>
+            <p>내용1</p>
+        </div>
+        <div slot="modal-footer">
+            <button>button</button>
+            <button>button</button>
+        </div>
+    </modal-dialog>
+
+    <modal-dialog id="" modal2>
+        <p slot="modal-title">타이틀1</p>
+        <div slot="modal-content">
+            <p>내용1</p>
+            <p>내용1</p>
+            <p>내용1</p>
+        </div>
+        <div slot="modal-footer">
+            <button>button</button>
+            <button>button</button>
+        </div>
+    </modal-dialog>
+
+    <template>
+        <link rel="stylesheet" href="modal.css">
+        <div class="modal">
+            <header class="modal-header">
+                <slot class="modal-title" name="modal-title"></slot>
+                <button id="closeButton">close</button>
+            </header>
+            <div class="modal-content">
+                <slot name="modal-content"></slot>
+            </div>
+            <footer class="modal-footer">
+                <slot name="modal-footer"></slot>
+            </footer>
+        </div>
+    </template>
+
+
+
+</body>
+
+</html>

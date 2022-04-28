@@ -63,8 +63,6 @@ const writePage = (pageName) => {
        
         // page/*.html 안에 최종 삽입
         fs.writeFileSync(pageUrl, htmlStr)
-
-       
     
     } catch (err) {
         console.error(err)

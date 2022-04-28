@@ -1,0 +1,22 @@
+.modal {
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.modal-content {
+    border-top: 1px solid #ddd;
+}
+
+[name="modal-footer"] {
+    background-color: #ddd;
+    /* display: flex; */
+    /* justify-content: space-between; */
+}
