@@ -10,10 +10,8 @@
   },
   "author": "thegi.code@gmail.com",
   "license": "ISC",
-  "dependencies": {
-    "express": "^4.18.0"
-  },
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "^2.0.15",
+    "express": "^4.18.0"
   }
 }
