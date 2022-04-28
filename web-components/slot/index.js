@@ -17,3 +17,6 @@ class ModalDialog extends HTMLElement {
     }
 }
 customElements.define('modal-dialog', ModalDialog)
+
+// header는 간편하게 된다.
+// footer는 레이어가 중첩되고 그로 인해 css 작업도 추적이 잘 안되서 불편하다.
