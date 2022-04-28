@@ -4,16 +4,14 @@
     "description": "노드에서 html 파일 합치기",
     "main": "index.js",
     "scripts": {
-        "html": "nodemon -e html --watch htmls/ index.js",
-        "prettier": "npx prettier --write htmls/*/*.html",
-        "prettier-check": "npx prettier --check htmls/*/*.html",
+        "html": "nodemon -e html --watch htmls/ markup.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "author": "thegi.code@gmail.com",
     "license": "ISC",
     "devDependencies": {
         "nodemon": "^2.0.15",
-        "prettier": "2.6.2"
+        "prettier": "^2.6.2"
     },
     "nodemonConfig": {
         "ignore": [

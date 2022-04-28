@@ -1,21 +1,23 @@
-console.log('markup start')
+console.log('Run markup')
 
-const fs = require('fs');
+const fs = require('fs')
+const path = require('path')
+const prettier = require("prettier")
 
 const utfCode = 'utf8'
 
 // 마크업 html file PATH
 const PATH = {
-    component: './htmls/component/',    // 공통 컴포넌트
-    template: './htmls/template/',      // template element
-    content: './htmls/content/',        // 페이지별 컨텐츠(페이지당 하나)
-    frame: './htmls/frame/',            // 페이지별 document 
-    page: './htmls/page/',              // 최종 html 파일
+    COMPONENT: './htmls/component/',    // 공통 컴포넌트
+    TEMPLATE: './htmls/template/',      // template element
+    CONTENT: './htmls/content/',        // 페이지별 컨텐츠(페이지당 하나)
+    FRAME: './htmls/frame/',            // 페이지별 document 
+    PAGE: './htmls/page/',              // 최종 html 파일
 }
 
 // { component, template } 타입에 따라 경로/파일 읽은 후 html 코드 삽입
 const insertHtml = (type, name, contentHtml) => {
-    const url = `${PATH[type]}${name}.html`
+    const url = path.join(PATH[type.toUpperCase()], `${name}.html`)
     const str = fs.readFileSync(url, utfCode)
     contentHtml = contentHtml.replace(`{${name}}`, str)
     return contentHtml
@@ -29,9 +31,9 @@ const writePage = (pageName) => {
         const fileName = `${pageName}.html`
 
         // 카테고리별 경로
-        const contentUrl = `${PATH.content}${fileName}`
-        const frameUrl = `${PATH.frame}${fileName}`
-        const pageUrl = `${PATH.page}${fileName}`
+        const contentUrl = path.join(PATH.CONTENT, fileName)
+        const frameUrl = path.join(PATH.FRAME, fileName)
+        const pageUrl = path.join(PATH.PAGE, fileName)
         
         // contentHtml을 추적하면 이해가 빠르다.
         let contentHtml = fs.readFileSync(contentUrl, utfCode)
@@ -56,10 +58,13 @@ const writePage = (pageName) => {
        
         // frame/*.html 파일 안에 {component, template} 삽입한 contentHtml 코드를 넣는다.
         const frameHtml = fs.readFileSync(frameUrl, utfCode)
-        const htmlStr = frameHtml.replace('{content}', contentHtml)
-
+        let htmlStr = frameHtml.replace('{content}', contentHtml)
+        htmlStr = prettier.format(htmlStr, { tabWidth: 4, parser: "html" })
+       
         // page/*.html 안에 최종 삽입
         fs.writeFileSync(pageUrl, htmlStr)
+
+       
     
     } catch (err) {
         console.error(err)
