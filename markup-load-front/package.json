@@ -2,8 +2,9 @@
   "name": "markup-load-front",
   "version": "1.0.0",
   "description": "template element 개선",
-  "main": "template-to-js.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node app & npm run template",
     "template": "nodemon -e html --watch src/template/ template-to-js.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
