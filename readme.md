@@ -8,5 +8,5 @@
 - [Markup load](markup-load). [See live](https://thegicode.github.io/vanilaJS-lab/markup-load)
 - [Markup load front](markup-load-front). [See live](https://thegicode.github.io/vanilaJS-lab/markup-load-front)
 - [Redner Lab](render-lab). [See live](https://thegicode.github.io/vanilaJS-lab/render-lab)
-- [Search Box](search-box). [See live](https://thegicode.github.io/vanilaJS-lab/search-box). 작업중
+- [Search](search). [See live](https://thegicode.github.io/vanilaJS-lab/search)
 - [Web Components](web-components). [See live](https://thegicode.github.io/vanilaJS-lab/web-components)

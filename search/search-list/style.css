@@ -14,34 +14,46 @@ h1 {
 .header {
   display: flex;
   align-items: center;
+  position: relative;
+  height: 50px;
   border-radius: 5px;
-  border: solid 1px #ddd;
-}
-.header[data-focus=true] {
-  border-color: #0064c8;
 }
 .header input {
   flex: 1;
-  padding: 1rem;
+  height: 50px;
+  padding: 0 3rem;
   border-radius: 5px;
-  border: none;
-  outline: none;
+  border: solid 1px #ddd;
   font-size: 1rem;
 }
-.header button {
-  margin: 0 5px;
-  border: none;
-  background-color: transparent;
-}
-.header button:hover {
-  background-color: rgba(0, 100, 200, 0.05);
-}
-.header input:invalid + button {
+.header input:placeholder-shown ~ button {
   display: none;
 }
-.header .ico {
-  margin: 0 10px;
-  font-size: 1.5rem;
+.header .icon {
+  position: absolute;
+  left: 1rem;
+  width: 25px;
+  height: 25px;
+}
+.header .icon svg {
+  height: 100%;
+  width: 100%;
+}
+.header button {
+  position: absolute;
+  right: 1rem;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background-color: rgba(0, 100, 200, 0.1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.header button:hover {
+  background-color: rgba(0, 100, 200, 0.2);
 }
 
 .search-list {
@@ -50,6 +62,7 @@ h1 {
   width: 100%;
   max-height: 300px;
   box-sizing: border-box;
+  margin-top: 1px;
   border-radius: 5px;
   border: solid 1px #ddd;
   background-color: #fff;

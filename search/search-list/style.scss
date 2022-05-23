@@ -1,0 +1,150 @@
+body {
+  margin: 1rem;
+}
+
+.root {
+  position: relative;
+}
+
+h1 {
+  margin: 0;
+  padding: 1rem 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+
+  position: relative;
+  height: 50px;
+  border-radius: 5px;
+
+  //   &[data-focus="true"] {
+  //     border-color: rgba(0, 100, 200);
+  //   }
+
+  input {
+    flex: 1;
+
+    height: 50px;
+    padding: 0 3rem;
+    border-radius: 5px;
+    border: solid 1px #ddd;
+    // outline: none;
+    font-size: 1rem;
+  }
+
+  input:placeholder-shown {
+    & ~ button {
+      display: none;
+    }
+  }
+
+  .icon {
+    position: absolute;
+    left: 1rem;
+    width: 25px;
+    height: 25px;
+    svg {
+      height: 100%;
+      width: 100%;
+    }
+  }
+
+  button {
+    position: absolute;
+    right: 1rem;
+
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    border: none;
+    background-color: rgba(0, 100, 200, 0.1);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(0, 100, 200, 0.2);
+    }
+  }
+}
+
+.search-list {
+  overflow: auto;
+  position: absolute;
+  width: 100%;
+  max-height: 300px;
+  box-sizing: border-box;
+  margin-top: 1px;
+  border-radius: 5px;
+  border: solid 1px #ddd;
+  background-color: #fff;
+  &[aria-hidden="true"] {
+    display: none;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  li {
+    box-sizing: border-box;
+    height: 50px;
+    border-top: solid 1px #ddd;
+    &:first-child {
+      border-top: none;
+    }
+  }
+  a {
+    display: block;
+    padding: 1rem;
+    color: #666;
+    text-decoration: none;
+    cursor: pointer;
+    outline: none;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  a:hover,
+  a:focus,
+  a:focus-visible,
+  li[data-selected="true"] a {
+    background-color: rgba(0, 100, 200, 0.05);
+  }
+}
+
+.loading {
+  margin: 1rem;
+  text-align: center;
+  color: rgba(0, 100, 200);
+  span {
+    display: block;
+    padding: 1rem 0;
+    border-radius: 5px;
+    background-color: rgba(0, 100, 200, 0.05);
+    font-size: 14px;
+  }
+}
+
+.memo {
+  margin: 1rem;
+  text-align: center;
+  color: rgba(0, 100, 200);
+  span {
+    display: block;
+    padding: 5px 20px;
+    border-radius: 5px;
+    background-color: rgba(0, 100, 200, 0.05);
+    font-size: 14px;
+  }
+}
+
+.result {
+  margin: 1rem;
+}
