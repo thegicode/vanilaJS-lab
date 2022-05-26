@@ -54,7 +54,7 @@ function getOrderDays() {
       case "friday":
         return 5;
       case "saturday":
-        return 5;
+        return 6;
     }
   });
   // console.log(arr);
