@@ -13,13 +13,13 @@ const $calendar = document.querySelector("#calendar");
 const ORDER_DAYS = getOrderDays(); // 숫자(0 일요일, 6 토요일)
 console.log(ORDER_DAYS);
 
-window.onload = () => {
+window.addEventListener("load", () => {
   // 오늘 날짜
   setOrderDate(new Date());
 
   // 달력 이벤트
   $calendar.addEventListener("change", onChange);
-};
+});
 
 function onChange(event) {
   const date = new Date($calendar.value);
@@ -68,6 +68,5 @@ function setOrderDate(date) {
     return;
   }
   const nextDate = new Date(date.setDate(date.getDate() + 1));
-  const days = nextDate.getDay();
   setOrderDate(nextDate);
 }
