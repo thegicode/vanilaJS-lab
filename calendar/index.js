@@ -7,6 +7,7 @@ const DAYS_API = {
   saturday: false,
   sunday: false,
 };
+console.log(DAYS_API);
 
 // const today = new Date();
 // console.log(today);
@@ -15,6 +16,7 @@ const DAYS_API = {
 
 const $calendar = document.querySelector("#calendar");
 const ORDER_DAYS = getOrderDays(); // 숫자(0 일요일, 6 토요일)
+console.log(ORDER_DAYS);
 
 window.onload = () => {
   // 오늘 날짜
