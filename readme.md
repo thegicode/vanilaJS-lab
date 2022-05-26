@@ -1,5 +1,6 @@
 # VanilaJS-lab
 
+- [Calendar](calendar). [See live](https://thegicode.github.io/vanilaJS-lab/calendar)
 - [Charts](charts). [See live](https://thegicode.github.io/vanilaJS-lab/charts)
 - [Data-tables](data-tables). [See live](https://thegicode.github.io/vanilaJS-lab/data-tables/)
 - [Drag-Drop](drag-drop). [See live](https://thegicode.github.io/vanilaJS-lab/drag-drop)
