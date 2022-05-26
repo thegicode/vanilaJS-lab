@@ -43,9 +43,9 @@ function getOrderDays() {
 }
 
 /* DOM */
-window.addEventListener("load", () => {
-  const $calendar = document.querySelector("#calendar");
+const $calendar = document.querySelector("#calendar");
 
+window.addEventListener("load", () => {
   // 오늘 날짜
   setOrderDate(new Date());
 
