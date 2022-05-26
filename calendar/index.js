@@ -45,13 +45,11 @@ function getOrderDays() {
 /* DOM */
 const $calendar = document.querySelector("#calendar");
 
-window.addEventListener("load", () => {
-  // 오늘 날짜
-  setOrderDate(new Date());
+// 오늘 날짜
+setOrderDate(new Date());
 
-  // 달력 이벤트
-  $calendar.addEventListener("change", onChange);
-});
+// 달력 이벤트
+$calendar.addEventListener("change", onChange);
 
 function onChange(event) {
   const date = new Date($calendar.value);
