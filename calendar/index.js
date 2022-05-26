@@ -1,3 +1,4 @@
+// Received API
 const DAYS_API = {
   monday: true,
   tuesday: false,
@@ -9,22 +10,9 @@ const DAYS_API = {
 };
 console.log(DAYS_API);
 
-const $calendar = document.querySelector("#calendar");
+// Make Order Days
 const ORDER_DAYS = getOrderDays(); // 숫자(0 일요일, 6 토요일)
 console.log(ORDER_DAYS);
-
-window.addEventListener("load", () => {
-  // 오늘 날짜
-  setOrderDate(new Date());
-
-  // 달력 이벤트
-  $calendar.addEventListener("change", onChange);
-});
-
-function onChange(event) {
-  const date = new Date($calendar.value);
-  setOrderDate(date);
-}
 
 function getOrderDays() {
   let arr = [];
@@ -52,6 +40,22 @@ function getOrderDays() {
     }
   });
   return arr;
+}
+
+/* DOM */
+window.addEventListener("load", () => {
+  const $calendar = document.querySelector("#calendar");
+
+  // 오늘 날짜
+  setOrderDate(new Date());
+
+  // 달력 이벤트
+  $calendar.addEventListener("change", onChange);
+});
+
+function onChange(event) {
+  const date = new Date($calendar.value);
+  setOrderDate(date);
 }
 
 function setOrderDate(date) {
