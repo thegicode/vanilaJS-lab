@@ -9,11 +9,6 @@ const DAYS_API = {
 };
 console.log(DAYS_API);
 
-// const today = new Date();
-// console.log(today);
-// console.log(Date.parse(today));
-// console.log(Date.now());
-
 const $calendar = document.querySelector("#calendar");
 const ORDER_DAYS = getOrderDays(); // 숫자(0 일요일, 6 토요일)
 console.log(ORDER_DAYS);
@@ -62,9 +57,11 @@ function getOrderDays() {
 }
 
 function setOrderDate(date) {
+  console.log("확인 날짜: ", date.toLocaleDateString());
   const day = date.getDay();
   if (ORDER_DAYS.includes(day)) {
     setDate(date);
+    console.log("* 주문 가능 날짜: ", date.toLocaleDateString(), day);
   } else {
     const nextDate = new Date(date.setDate(date.getDate() + 1));
     const days = nextDate.getDay();
