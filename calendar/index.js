@@ -33,7 +33,6 @@ function getOrderDays() {
       arr.push(key);
     }
   }
-  // console.log(arr);
   arr = arr.map((day) => {
     switch (day) {
       case "sunday":
@@ -52,22 +51,23 @@ function getOrderDays() {
         return 6;
     }
   });
-  // console.log(arr);
   return arr;
 }
 
 function setOrderDate(date) {
   console.log("확인 날짜: ", date.toLocaleDateString());
+
   const day = date.getDay();
   if (ORDER_DAYS.includes(day)) {
-    setDate(date);
-    console.log("* 주문 가능 날짜: ", date.toLocaleDateString(), day);
-  } else {
-    const nextDate = new Date(date.setDate(date.getDate() + 1));
-    const days = nextDate.getDay();
-    setOrderDate(nextDate);
+    $calendar.value = date.toISOString().substring(0, 10);
+    console.log(
+      "* 주문 가능 날짜: ",
+      date.toLocaleDateString(),
+      `(day: ${day})`
+    );
+    return;
   }
-}
-function setDate(date) {
-  $calendar.value = date.toISOString().substring(0, 10);
+  const nextDate = new Date(date.setDate(date.getDate() + 1));
+  const days = nextDate.getDay();
+  setOrderDate(nextDate);
 }
